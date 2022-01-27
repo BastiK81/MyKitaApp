@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+    datasource:
+      url: api
+
+security:
+  jwt:
+    secret: ${JWT_SECRET}
