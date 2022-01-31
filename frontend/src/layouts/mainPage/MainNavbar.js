@@ -1,7 +1,5 @@
 import {alpha, styled} from "@mui/material/styles";
-import {AppBar, Box, Icon, Stack, Toolbar} from "@mui/material";
-import IconButton from "../../theme/overrides/IconButton";
-import menu2Fill from '@iconify/icons-eva/menu-2-fill';
+import {AppBar, Box, Stack, Toolbar} from "@mui/material";
 import AccountPopover from "./AccountPopover";
 import NotificationsPopover from "./NotificationsPopover";
 

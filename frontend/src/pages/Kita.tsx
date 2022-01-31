@@ -18,7 +18,7 @@ const Kita = () => {
 
     useEffect(() => {
         handleOnload()
-    },[])
+    })
 
     const STORAGE_KEY = 'JWT';
     const navigate = useNavigate();
@@ -96,7 +96,7 @@ const Kita = () => {
                 if (response.ok) {
                     return response.json()
                 }
-                if (response.status == 403) {
+                if (response.status === 403) {
                     navigate('/404', { replace: true });
                 }
                 throw new Error("HTTP status " + response.status);

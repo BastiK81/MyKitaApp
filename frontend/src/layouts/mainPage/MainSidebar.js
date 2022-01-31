@@ -1,9 +1,9 @@
 import Scrollbar from "../../components/Scrollbar";
 
-import {Link as RouterLink, useLocation} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Typography, Avatar} from '@mui/material';
 import Logo from "../../components/Logo";
 import account from "../../_mocks_/account";
 import NavSection from "../../components/NavSection";
