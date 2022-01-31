@@ -37,7 +37,6 @@ export default function RegisterForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      console.log({email: formik.getFieldProps('email').value, password: formik.getFieldProps('password').value, lastName: formik.getFieldProps('lastName').value, firstName: formik.getFieldProps('firstName').value})
       register()
     }
   });

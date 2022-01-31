@@ -24,6 +24,9 @@ App für die Kommunikation zwischen Kita, Erziehern und Eltern.
 - Bilder hochladen
 - Termine
 - Mitbringlisten
+- Feedback
+- Dokumente hochladen
+- Frontend komplett in TS
 
 ##Umsetzung
 ###Woche 1
