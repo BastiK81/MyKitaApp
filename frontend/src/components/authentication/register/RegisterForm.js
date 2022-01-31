@@ -12,8 +12,11 @@ import { LoadingButton } from '@mui/lab';
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
+
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const STORAGE_KEY = 'JWT';
+
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -34,14 +37,40 @@ export default function RegisterForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+      console.log({email: formik.getFieldProps('email').value, password: formik.getFieldProps('password').value, lastName: formik.getFieldProps('lastName').value, firstName: formik.getFieldProps('firstName').value})
+      register()
     }
   });
+
+  const register = () => {
+
+    fetch("/auth/signin", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({email: formik.getFieldProps('email').value, password: formik.getFieldProps('password').value, lastName: formik.getFieldProps('lastName').value, firstName: formik.getFieldProps('firstName').value})
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("HTTP status " + response.status);
+        }
+        response.text()
+      })
+      .then(text => {
+        localStorage.setItem(STORAGE_KEY, text)
+        navigate('/main', { replace: true });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        navigate('/404', { replace: true });
+      });
+  }
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
-    <FormikProvider value={formik}>
+      <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -102,6 +131,6 @@ export default function RegisterForm() {
           </LoadingButton>
         </Stack>
       </Form>
-    </FormikProvider>
+      </FormikProvider>
   );
 }

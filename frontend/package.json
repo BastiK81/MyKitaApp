@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "mykitaapp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -63,5 +63,6 @@
     "@iconify-icons/eva": "^1.1.1",
     "@iconify/react": "^3.1.3",
     "react-helmet-async": "^1.2.2"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
