@@ -6,12 +6,18 @@ import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
+import homeFill from "@iconify/icons-eva/home-fill";
 
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
+  {
+    title: 'Kita',
+    path: '/main/kita',
+    icon: getIcon(homeFill)
+  },
   {
     title: 'board',
     path: '/main/board',

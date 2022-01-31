@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,16 +16,16 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.HashMap;
 
 @Service
-public class LoginService {
+public class AppUserService {
 
-    Logger logger = LoggerFactory.getLogger(LoginService.class);
+    Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
     private final AppUserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JWTUtils jwtUtils;
 
-    public LoginService(AppUserRepository repository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTUtils jwtUtils) {
+    public AppUserService(AppUserRepository repository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTUtils jwtUtils) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -51,5 +52,10 @@ public class LoginService {
             logger.warn(String.format("Invalid credentials user: %s", user.getEmail()));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid credentials");
         }
+    }
+
+    public AppUser getUserByEmail(String userEmail) {
+        return repository.findByEmail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User " + userEmail + " not found!"));
     }
 }

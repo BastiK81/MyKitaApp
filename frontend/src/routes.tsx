@@ -9,6 +9,7 @@ import NotFound from './pages/Page404';
 import MainPage from "./pages/MainPage";
 import Products from './pages/Products';
 import Blog from "./pages/Blog";
+import Kita from "./pages/Kita";
 
 export default function Router() {
     return useRoutes([
@@ -17,6 +18,7 @@ export default function Router() {
             element: <MainLayout />,
             children: [
                 { element: <Navigate to="/main/board" replace /> },
+                { path: 'kita', element: <Kita />},
                 { path: 'board', element: <MainPage /> },
                 { path: 'user', element: <User /> },
                 { path: 'products', element: <Products /> },

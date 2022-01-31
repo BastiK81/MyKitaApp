@@ -1,7 +1,7 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.items.AppUser;
-import de.bastisdevelopment.mykitaapp.service.LoginService;
+import de.bastisdevelopment.mykitaapp.service.AppUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +15,9 @@ public class LoginController {
 
     Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private final LoginService loginService;
+    private final AppUserService loginService;
 
-    public LoginController(LoginService loginService) {
+    public LoginController(AppUserService loginService) {
         this.loginService = loginService;
     }
 

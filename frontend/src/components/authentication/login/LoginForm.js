@@ -48,15 +48,19 @@ export default function LoginForm() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({email: formik.getFieldProps('email').value, password: formik.getFieldProps('password').value})
+      body: JSON.stringify({
+        email: formik.getFieldProps('email').value,
+        password: formik.getFieldProps('password').value
+      })
     })
         .then(response => {
           if (!response.ok) {
             throw new Error("HTTP status " + response.status);
           }
-          response.text()
+          return response.text()
         })
         .then(text => {
+          console.log(text)
           localStorage.setItem(STORAGE_KEY, text)
           navigate('/main', { replace: true });
         })
