@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface KitaGroupRepository extends MongoRepository<KitaGroupDBItem, String> {
 
-    Optional<KitaGroupDBItem> findByNameAAndKitaId(String name, String kitaId);
+    Optional<KitaGroupDBItem> findByNameAndKitaId(String name, String kitaId);
 
     List<KitaGroupDBItem> findByKitaId(String kitaId);
 

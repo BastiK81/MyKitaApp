@@ -17,4 +17,11 @@ public class KitaGroupDTO {
         this.kitaId = item.getKitaId();
         this.kitaName = item.getKitaName();
     }
+
+    public KitaGroupDTO(String name, String kitaId, String kitaName) {
+        super();
+        this.name = name;
+        this.kitaId = kitaId;
+        this.kitaName = kitaName;
+    }
 }

@@ -18,7 +18,7 @@ public class KitaGroupService {
     }
 
     public List<KitaGroupDTO> addNewGroup(KitaGroupDTO groupDTO) throws Exception {
-        if (repository.findByNameAAndKitaId(groupDTO.getName(), groupDTO.getKitaId()).isPresent()) {
+        if (repository.findByNameAndKitaId(groupDTO.getName(), groupDTO.getKitaId()).isPresent()) {
             throw new Exception(String.format("Group with name %s already exist in Kita %s", groupDTO.getName(), groupDTO.getKitaName()));
         }
         repository.save(new KitaGroupDBItem(groupDTO));

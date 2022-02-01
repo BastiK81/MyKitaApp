@@ -33,7 +33,7 @@ export default function Router() {
             element: <MainLayout userInformation={userInformation} kitaInformation={kitaInformation}/>,
             children: [
                 { path: 'kita', element: <Kita kitaInformation={kitaInformation}/>},
-                { path: 'gruppen', element: <Gruppen groups={gruppenInformationService}/>},
+                { path: 'gruppen', element: <Gruppen groups={gruppenInformationService} kitaName={kitaInformation.name} kitaId={kitaInformation.kitaId}/>},
                 { path: 'board', element: <MainPage /> },
                 { path: 'user', element: <User /> },
                 { path: 'products', element: <Products /> },
