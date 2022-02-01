@@ -7,9 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { RegisterForm } from '../components/authentication/register';
-import AuthSocial from '../components/authentication/AuthSocial';
-
-// ----------------------------------------------------------------------
+import {Dispatch, SetStateAction} from "react";
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -38,8 +36,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Register() {
+interface AppProps{
+  setJwt: Dispatch<SetStateAction<string>>
+}
+
+export default function Register(props:AppProps) {
   return (
+      // @ts-ignore
     <RootStyle title="Register | My Kita App">
       <AuthLayout>
         Already have an account? &nbsp;
@@ -66,7 +69,7 @@ export default function Register() {
             </Typography>
           </Box>
 
-          <RegisterForm />
+          <RegisterForm setJwt={props.setJwt}/>
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
             By registering, I agree to Minimal&nbsp;

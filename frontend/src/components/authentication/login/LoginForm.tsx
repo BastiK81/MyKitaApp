@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
@@ -17,9 +17,11 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
-// ----------------------------------------------------------------------
+interface AppProps{
+  setJwt: Dispatch<SetStateAction<string>>
+}
 
-export default function LoginForm() {
+const LoginForm = (props:AppProps) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const STORAGE_KEY = 'JWT';
@@ -60,12 +62,11 @@ export default function LoginForm() {
           return response.text()
         })
         .then(text => {
-          console.log(text)
           localStorage.setItem(STORAGE_KEY, text)
+          props.setJwt(text)
           navigate('/main', { replace: true });
         })
-        .catch((error) => {
-          console.error('Error:', error);
+        .catch(() => {
           navigate('/404', { replace: true });
         });
   }
@@ -134,3 +135,5 @@ export default function LoginForm() {
     </FormikProvider>
   );
 }
+
+export default LoginForm

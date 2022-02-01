@@ -4,7 +4,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import GlobalStyles from "./theme/globalStyles";
 import {BaseOptionChartStyle} from "./components/charts/BaseOptionChart";
 
-import Router from "./routes";
+import Router from "./Router";
 
 function App() {
   return (

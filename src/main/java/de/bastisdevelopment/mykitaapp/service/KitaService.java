@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class KitaService {
 
-    Logger logger = LoggerFactory.getLogger(KitaService.class);
+    private static final Logger logger = LoggerFactory.getLogger(KitaService.class);
     private final KitaRepository repository;
     private final AppUserService userService;
 
@@ -31,14 +31,12 @@ public class KitaService {
         return this.userService.getUserByEmail(currentPrincipalName);
     }
 
-    public KitaDTO getKitaByAdmin() throws ClassNotFoundException {
+    public KitaDTO getKitaByAdmin() throws Exception {
         AppUser user = getActualUser();
-        Optional<KitaDBItem> optionalKitaDBItem = repository.findByAdminId(user.getId());
-        if (optionalKitaDBItem.isEmpty()) {
-            throw new ClassNotFoundException(String.format("For Admin %s no Kita was found", user.getEmail()));
-        }
-        logger.info(String.format("Get Kita %s with Admin %s", optionalKitaDBItem.get().getName(), user.getEmail()));
-        return  new KitaDTO(optionalKitaDBItem.get());
+        KitaDBItem kitaDBItem = repository.findByAdminId(user.getId())
+                .orElseThrow(() -> new Exception(String.format("For Admin %s no Kita was found", user.getEmail())));
+        logger.info(String.format("Get Kita %s with Admin %s", kitaDBItem.getName(), user.getEmail()));
+        return  new KitaDTO(kitaDBItem);
     }
 
     public KitaDTO addKita(KitaDTO kita) {
