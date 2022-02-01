@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class KitaController {
 
-    Logger logger = LoggerFactory.getLogger(KitaController.class);
+   private static final Logger logger = LoggerFactory.getLogger(KitaController.class);
 
     private final KitaService service;
 
@@ -21,7 +21,7 @@ public class KitaController {
     }
 
     @GetMapping(path = "/getkita")
-    public KitaDTO getKitaByAdmin() throws ClassNotFoundException {
+    public KitaDTO getKitaByAdmin() throws Exception {
         logger.info("Try to get Kita by Admin");
         return this.service.getKitaByAdmin();
     }

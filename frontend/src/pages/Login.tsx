@@ -7,6 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { LoginForm } from '../components/authentication/login';
+import {Dispatch, SetStateAction} from "react";
 
 // ----------------------------------------------------------------------
 
@@ -35,10 +36,14 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0)
 }));
 
-// ----------------------------------------------------------------------
 
-export default function Login() {
+interface AppProps{
+  setJwt: Dispatch<SetStateAction<string>>
+}
+
+export default function Login(props:AppProps) {
   return (
+      // @ts-ignore
     <RootStyle title="Login | My Kita App">
       <AuthLayout>
         Don’t have an account? &nbsp;
@@ -51,7 +56,7 @@ export default function Login() {
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Hi, Welcome Back
           </Typography>
-          <img src="" alt="login" />
+          <img src="/static/illustrations/illustration_login.png" alt="login" />
         </SectionStyle>
 
       <Container maxWidth="sm">
@@ -64,7 +69,7 @@ export default function Login() {
           </Stack>
           {/*<AuthSocial />*/}
 
-          <LoginForm />
+          <LoginForm setJwt={props.setJwt}/>
 
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Don’t have an account?&nbsp;

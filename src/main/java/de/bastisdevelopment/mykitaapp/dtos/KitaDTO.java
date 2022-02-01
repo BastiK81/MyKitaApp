@@ -1,10 +1,9 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
-import de.bastisdevelopment.mykitaapp.items.AppUser;
 import de.bastisdevelopment.mykitaapp.items.KitaDBItem;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class KitaDTO {
 
     private String id;
@@ -13,7 +12,7 @@ public class KitaDTO {
     private String houseNumber;
     private String postcode;
     private String city;
-    private AppUser admin;
+    private String adminId;
 
     public KitaDTO(KitaDBItem kitaDBItem) {
         this.id = kitaDBItem.getId();
@@ -32,4 +31,6 @@ public class KitaDTO {
         this.postcode = postcode;
         this.city = city;
     }
+
+
 }

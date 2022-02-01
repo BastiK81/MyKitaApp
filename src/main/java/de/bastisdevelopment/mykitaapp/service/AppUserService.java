@@ -18,7 +18,7 @@ import java.util.HashMap;
 @Service
 public class AppUserService {
 
-    Logger logger = LoggerFactory.getLogger(AppUserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
     private final AppUserRepository repository;
     private final PasswordEncoder passwordEncoder;

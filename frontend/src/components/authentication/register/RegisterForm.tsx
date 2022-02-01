@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -11,7 +11,11 @@ import { LoadingButton } from '@mui/lab';
 
 // ----------------------------------------------------------------------
 
-export default function RegisterForm() {
+interface AppProps{
+  setJwt: Dispatch<SetStateAction<string>>
+}
+
+export default function RegisterForm(props:AppProps) {
 
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -54,10 +58,11 @@ export default function RegisterForm() {
         if (!response.ok) {
           throw new Error("HTTP status " + response.status);
         }
-        response.text()
+        return response.text()
       })
       .then(text => {
         localStorage.setItem(STORAGE_KEY, text)
+        props.setJwt(text)
         navigate('/main', { replace: true });
       })
       .catch((error) => {

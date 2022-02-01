@@ -10,9 +10,14 @@ import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 
-const Kita = () => {
+interface AppProps{
+    jwt: string,
+    setJwt: Dispatch<SetStateAction<string>>
+}
+
+const Kita = (props:AppProps) => {
 
     const [hasKita, setHasKita] = useState(false)
 
@@ -20,7 +25,6 @@ const Kita = () => {
         handleOnload()
     })
 
-    const STORAGE_KEY = 'JWT';
     const navigate = useNavigate();
 
     const RegisterSchema = Yup.object().shape({
@@ -51,13 +55,11 @@ const Kita = () => {
     const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
     const addKita = () => {
-
-        let jwt = localStorage.getItem(STORAGE_KEY)
         fetch("/api/addkita", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwt,
+                'Authorization': 'Bearer ' + props.jwt,
             },
             body: JSON.stringify({
                 name: formik.getFieldProps('kitaName').value,
@@ -83,13 +85,11 @@ const Kita = () => {
     }
 
     const handleOnload = () => {
-
-        let jwt = localStorage.getItem(STORAGE_KEY)
         fetch("/api/getkita", {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwt,
+                'Authorization': 'Bearer ' + props.jwt,
             }
         })
             .then(response => {
