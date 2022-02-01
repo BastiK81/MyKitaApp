@@ -7,7 +7,9 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { LoginForm } from '../components/authentication/login';
-import {Dispatch, SetStateAction} from "react";
+import {IUserInformation} from "../utils/UserInformationService";
+import {IKitaInformationService} from "../utils/KitaInformationService";
+import {ILoginSignInService} from "../utils/LoginSignInService";
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +40,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 
 interface AppProps{
-  setJwt: Dispatch<SetStateAction<string>>
+  login: ILoginSignInService
 }
 
 export default function Login(props:AppProps) {
@@ -69,7 +71,7 @@ export default function Login(props:AppProps) {
           </Stack>
           {/*<AuthSocial />*/}
 
-          <LoginForm setJwt={props.setJwt}/>
+          <LoginForm login={props.login}/>
 
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Don’t have an account?&nbsp;

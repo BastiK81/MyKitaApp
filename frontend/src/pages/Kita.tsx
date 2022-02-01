@@ -9,23 +9,13 @@ import {
 import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
-import {useNavigate} from "react-router-dom";
-import {Dispatch, SetStateAction, useEffect, useState} from "react";
+import {IKitaInformationService} from "../utils/KitaInformationService";
 
 interface AppProps{
-    jwt: string,
-    setJwt: Dispatch<SetStateAction<string>>
+    kitaInformation: IKitaInformationService
 }
 
 const Kita = (props:AppProps) => {
-
-    const [hasKita, setHasKita] = useState(false)
-
-    useEffect(() => {
-        handleOnload()
-    })
-
-    const navigate = useNavigate();
 
     const RegisterSchema = Yup.object().shape({
         kitaName: Yup.string()
@@ -40,76 +30,25 @@ const Kita = (props:AppProps) => {
 
     const formik = useFormik({
         initialValues: {
-            kitaName: '',
-            street: '',
-            houseNumber: '',
-            postcode: '',
-            city: '',
+            kitaName: props.kitaInformation.name,
+            street: props.kitaInformation.street,
+            houseNumber: props.kitaInformation.houseNumber,
+            postcode: props.kitaInformation.postcode,
+            city: props.kitaInformation.city,
         },
         validationSchema: RegisterSchema,
         onSubmit: () => {
-            addKita()
-        },
-    });
-
-    const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
-
-    const addKita = () => {
-        fetch("/api/addkita", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + props.jwt,
-            },
-            body: JSON.stringify({
+            props.kitaInformation.addKita({
                 name: formik.getFieldProps('kitaName').value,
                 street: formik.getFieldProps('street').value,
                 houseNumber: formik.getFieldProps('houseNumber').value,
                 postcode: formik.getFieldProps('postcode').value,
                 city: formik.getFieldProps('city').value
             })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("HTTP status " + response.status);
-                }
-                return response.json()
-            })
-            .then(json => {
-                setHasKita(true)
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                navigate('/404', { replace: true });
-            });
-    }
+        },
+    });
 
-    const handleOnload = () => {
-        fetch("/api/getkita", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + props.jwt,
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-                if (response.status === 403) {
-                    navigate('/404', { replace: true });
-                }
-                throw new Error("HTTP status " + response.status);
-            })
-            .then(json => {
-                formik.setFieldValue('kitaName', json.name)
-                formik.setFieldValue('street', json.street)
-                formik.setFieldValue('houseNumber', json.houseNumber)
-                formik.setFieldValue('postcode', json.postcode)
-                formik.setFieldValue('city', json.city)
-                setHasKita(true)
-            })
-    }
+    const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
     return(
         // @ts-ignore
@@ -130,7 +69,7 @@ const Kita = (props:AppProps) => {
                                     {...getFieldProps('kitaName')}
                                     error={Boolean(touched.kitaName && errors.kitaName)}
                                     helperText={touched.kitaName && errors.kitaName}
-                                    disabled={hasKita}
+                                    disabled={props.kitaInformation.hasKita}
                                 />
 
                             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -140,7 +79,7 @@ const Kita = (props:AppProps) => {
                                 {...getFieldProps('street')}
                                 error={Boolean(touched.street && errors.street)}
                                 helperText={touched.street && errors.street}
-                                disabled={hasKita}
+                                disabled={props.kitaInformation.hasKita}
                             />
 
                             <TextField
@@ -149,7 +88,7 @@ const Kita = (props:AppProps) => {
                                 {...getFieldProps('houseNumber')}
                                 error={Boolean(touched.houseNumber && errors.houseNumber)}
                                 helperText={touched.houseNumber && errors.houseNumber}
-                                disabled={hasKita}
+                                disabled={props.kitaInformation.hasKita}
                             />
 
                             </Stack>
@@ -161,7 +100,7 @@ const Kita = (props:AppProps) => {
                                     {...getFieldProps('postcode')}
                                     error={Boolean(touched.postcode && errors.postcode)}
                                     helperText={touched.postcode && errors.postcode}
-                                    disabled={hasKita}
+                                    disabled={props.kitaInformation.hasKita}
                                 />
                                 <TextField
                                     fullWidth
@@ -169,12 +108,12 @@ const Kita = (props:AppProps) => {
                                     {...getFieldProps('city')}
                                     error={Boolean(touched.city && errors.city)}
                                     helperText={touched.city && errors.city}
-                                    disabled={hasKita}
+                                    disabled={props.kitaInformation.hasKita}
                                 />
 
                             </Stack>
 
-                            {!hasKita && <LoadingButton
+                            {!props.kitaInformation.hasKita && <LoadingButton
                                 fullWidth
                                 size="large"
                                 type="submit"

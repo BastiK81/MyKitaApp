@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import {Dispatch, SetStateAction, useState} from 'react';
+import {useState} from 'react';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
@@ -16,15 +16,17 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import {IUserInformation} from "../../../utils/UserInformationService";
+import {IKitaInformationService} from "../../../utils/KitaInformationService";
+import {ILoginSignInService} from "../../../utils/LoginSignInService";
 
 interface AppProps{
-  setJwt: Dispatch<SetStateAction<string>>
+  login: ILoginSignInService
 }
 
 const LoginForm = (props:AppProps) => {
-  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
-  const STORAGE_KEY = 'JWT';
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -39,37 +41,12 @@ const LoginForm = (props:AppProps) => {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      login()
-    }
-  });
-
-  const login = () => {
-
-    fetch("/auth/login", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+      props.login.loginRegister('/auth/login', {
         email: formik.getFieldProps('email').value,
         password: formik.getFieldProps('password').value
       })
-    })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("HTTP status " + response.status);
-          }
-          return response.text()
-        })
-        .then(text => {
-          localStorage.setItem(STORAGE_KEY, text)
-          props.setJwt(text)
-          navigate('/main', { replace: true });
-        })
-        .catch(() => {
-          navigate('/404', { replace: true });
-        });
-  }
+    }
+  });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
 

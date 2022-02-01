@@ -10,20 +10,26 @@ import MainPage from "./pages/MainPage";
 import Products from './pages/Products';
 import Blog from "./pages/Blog";
 import Kita from "./pages/Kita";
+import UserInformationService, {IUserInformation} from "./utils/UserInformationService";
+import KitaInformationService, {IKitaInformationService} from "./utils/KitaInformationService";
 import {useState} from "react";
+import LoginSignInService, {ILoginSignInService} from "./utils/LoginSignInService";
 
 export default function Router() {
 
     const STORAGE_KEY = 'JWT';
     const [jwt, setJwt] = useState(localStorage.getItem(STORAGE_KEY) || '');
 
+    const kitaInformation:IKitaInformationService = KitaInformationService(jwt)
+    const userInformation:IUserInformation = UserInformationService(jwt, kitaInformation.getKita);
+    const loginSignInService:ILoginSignInService = LoginSignInService(setJwt,userInformation.getUserInformation)
+
     return useRoutes([
         {
             path: '/main',
-            element: <MainLayout />,
+            element: <MainLayout userInformation={userInformation}/>,
             children: [
-                { element: <Navigate to="/main/board" replace /> },
-                { path: 'kita', element: <Kita jwt={jwt} setJwt={setJwt}/>},
+                { path: 'kita', element: <Kita kitaInformation={kitaInformation}/>},
                 { path: 'board', element: <MainPage /> },
                 { path: 'user', element: <User /> },
                 { path: 'products', element: <Products /> },
@@ -34,8 +40,8 @@ export default function Router() {
             path: '/',
             element: <LogoOnlyLayout />,
             children: [
-                { path: 'login', element: <Login setJwt={setJwt}/> },
-                { path: 'register', element: <Register setJwt={setJwt}/> },
+                { path: 'login', element: <Login login={loginSignInService}/> },
+                { path: 'register', element: <Register register={loginSignInService} /> },
                 { path: '404', element: <NotFound /> },
                 { path: '/', element: <Navigate to="/login" /> },
                 { path: '*', element: <Navigate to="/404" /> }

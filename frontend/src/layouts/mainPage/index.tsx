@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import MainSidebar from "./MainSidebar";
 import MainNavbar from "./MainNavbar";
+import {IUserInformation} from "../../utils/UserInformationService";
 
 
 //
@@ -31,14 +32,16 @@ const MainStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-// ----------------------------------------------------------------------
+interface AppProps{
+    userInformation: IUserInformation;
+}
 
-export default function MainLayout() {
+const MainLayout = (props:AppProps) => {
 
   return (
     <RootStyle>
       <MainNavbar />
-      <MainSidebar />
+      <MainSidebar userInformation={props.userInformation}/>
 
       <MainStyle>
           <Outlet />
@@ -46,3 +49,5 @@ export default function MainLayout() {
     </RootStyle>
   );
 }
+
+export default MainLayout

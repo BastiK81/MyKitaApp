@@ -8,6 +8,7 @@ import Logo from "../../components/Logo";
 import account from "../../_mocks_/account";
 import NavSection from "../../components/NavSection";
 import sidebarConfig from "./SidebarConfig";
+import {IUserInformation} from "../../utils/UserInformationService";
 
 const DRAWER_WIDTH = 280;
 
@@ -18,17 +19,21 @@ const RootStyle = styled('div')(({ theme }) => ({
     }
 }));
 
+
 const AccountStyle = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(2, 2.5),
+    // @ts-ignore
     borderRadius: theme.shape.borderRadiusSm,
     backgroundColor: theme.palette.grey[200]
 }));
 
+interface AppProps{
+    userInformation: IUserInformation;
+}
 
-
-const MainSidebar = () => {
+const MainSidebar = (props:AppProps) => {
 
     return(
         <RootStyle>
@@ -50,10 +55,10 @@ const MainSidebar = () => {
                             <Avatar src={account.photoURL} alt="photoURL" />
                             <Box sx={{ ml: 2 }}>
                                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                                    {account.displayName}
+                                    {props.userInformation.name + ' ' + props.userInformation.lastName}
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                    {account.email}
+                                    {props.userInformation.email}
                                 </Typography>
                             </Box>
                         </AccountStyle>
