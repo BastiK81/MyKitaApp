@@ -7,10 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { RegisterForm } from '../components/authentication/register';
-import {Dispatch, SetStateAction} from "react";
-import {IUserInformation} from "../utils/UserInformationService";
-import {IKitaInformationService} from "../utils/KitaInformationService";
-import {ILoginSignInService} from "../utils/LoginSignInService";
+import {ILoginSignInService} from "../services/LoginSignInService";
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {

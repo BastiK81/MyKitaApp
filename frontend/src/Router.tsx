@@ -10,26 +10,30 @@ import MainPage from "./pages/MainPage";
 import Products from './pages/Products';
 import Blog from "./pages/Blog";
 import Kita from "./pages/Kita";
-import UserInformationService, {IUserInformation} from "./utils/UserInformationService";
-import KitaInformationService, {IKitaInformationService} from "./utils/KitaInformationService";
+import UserInformationService, {IUserInformation} from "./services/UserInformationService";
+import KitaInformationService, {IKitaInformationService} from "./services/KitaInformationService";
 import {useState} from "react";
-import LoginSignInService, {ILoginSignInService} from "./utils/LoginSignInService";
+import LoginSignInService, {ILoginSignInService} from "./services/LoginSignInService";
+import Gruppen from "./pages/Gruppen";
+import GruppenInformationService, {IGruppenInformationService} from "./services/GruppenInformationService";
 
 export default function Router() {
 
     const STORAGE_KEY = 'JWT';
     const [jwt, setJwt] = useState(localStorage.getItem(STORAGE_KEY) || '');
 
-    const kitaInformation:IKitaInformationService = KitaInformationService(jwt)
+    const gruppenInformationService:IGruppenInformationService = GruppenInformationService(jwt)
+    const kitaInformation:IKitaInformationService = KitaInformationService(jwt, gruppenInformationService.getItemsFromBackend)
     const userInformation:IUserInformation = UserInformationService(jwt, kitaInformation.getKita);
     const loginSignInService:ILoginSignInService = LoginSignInService(setJwt,userInformation.getUserInformation)
 
     return useRoutes([
         {
             path: '/main',
-            element: <MainLayout userInformation={userInformation}/>,
+            element: <MainLayout userInformation={userInformation} kitaInformation={kitaInformation}/>,
             children: [
                 { path: 'kita', element: <Kita kitaInformation={kitaInformation}/>},
+                { path: 'gruppen', element: <Gruppen groups={gruppenInformationService}/>},
                 { path: 'board', element: <MainPage /> },
                 { path: 'user', element: <User /> },
                 { path: 'products', element: <Products /> },

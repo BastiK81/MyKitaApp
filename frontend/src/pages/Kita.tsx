@@ -9,7 +9,7 @@ import {
 import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
-import {IKitaInformationService} from "../utils/KitaInformationService";
+import {IKitaInformationService} from "../services/KitaInformationService";
 
 interface AppProps{
     kitaInformation: IKitaInformationService

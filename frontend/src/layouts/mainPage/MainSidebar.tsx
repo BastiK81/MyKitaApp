@@ -8,7 +8,8 @@ import Logo from "../../components/Logo";
 import account from "../../_mocks_/account";
 import NavSection from "../../components/NavSection";
 import sidebarConfig from "./SidebarConfig";
-import {IUserInformation} from "../../utils/UserInformationService";
+import {IUserInformation} from "../../services/UserInformationService";
+import {IKitaInformationService} from "../../services/KitaInformationService";
 
 const DRAWER_WIDTH = 280;
 
@@ -30,7 +31,8 @@ const AccountStyle = styled('div')(({ theme }) => ({
 }));
 
 interface AppProps{
-    userInformation: IUserInformation;
+    userInformation: IUserInformation,
+    kitaInformation: IKitaInformationService
 }
 
 const MainSidebar = (props:AppProps) => {
@@ -64,6 +66,7 @@ const MainSidebar = (props:AppProps) => {
                         </AccountStyle>
                     </Link>
                 </Box>
+                {/*TODO: Kita Ausblenden bei keine Kita*/}
                 <NavSection navConfig={sidebarConfig} />
             </Scrollbar>
         </RootStyle>

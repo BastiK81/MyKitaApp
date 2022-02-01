@@ -150,7 +150,7 @@ function NavItem({ item, active }) {
 }
 
 NavSection.propTypes = {
-  navConfig: PropTypes.array
+  navConfig: PropTypes.array,
 };
 
 export default function NavSection({ navConfig, ...other }) {

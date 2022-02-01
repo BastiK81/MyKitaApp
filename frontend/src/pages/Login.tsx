@@ -7,9 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { LoginForm } from '../components/authentication/login';
-import {IUserInformation} from "../utils/UserInformationService";
-import {IKitaInformationService} from "../utils/KitaInformationService";
-import {ILoginSignInService} from "../utils/LoginSignInService";
+import {ILoginSignInService} from "../services/LoginSignInService";
 
 // ----------------------------------------------------------------------
 

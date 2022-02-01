@@ -1,10 +1,11 @@
 import {useNavigate} from "react-router-dom";
 import {Dispatch, SetStateAction, useState} from "react";
-import {IUserInformation} from "./UserInformationService";
 
 export interface IKitaInformationService{
     hasKita: boolean,
     setHasKita: Dispatch<SetStateAction<boolean>>,
+    kitaId: string,
+    setKitaId: Dispatch<SetStateAction<string>>,
     name: string,
     setName: Dispatch<SetStateAction<string>>,
     street: string,
@@ -19,11 +20,12 @@ export interface IKitaInformationService{
     getKita: () => void
 }
 
-const KitaInformationService = (jwt:string) => {
+const KitaInformationService = (jwt:string, getGroupInformation:(kitaId:string) => void) => {
 
     const navigate = useNavigate();
 
     const [hasKita, setHasKita] = useState(false)
+    const [kitaId, setKitaId] = useState('')
     const [name, setName] = useState('')
     const [street, setStreet] = useState('')
     const [houseNumber, setHouseNumber] = useState('')
@@ -65,6 +67,7 @@ const KitaInformationService = (jwt:string) => {
         callBackend('/api/addkita', data, 'POST')
             .then(json => {
                 setHasKita(true)
+                setKitaId(json.id)
                 setName(json.name)
                 setStreet(json.street)
                 setCity(json.city)
@@ -80,14 +83,15 @@ const KitaInformationService = (jwt:string) => {
         getInformation('/api/getkita', 'GET')
             .then(json => {
                 setHasKita(true)
+                setKitaId(json.id)
                 setName(json.name)
                 setStreet(json.street)
                 setCity(json.city)
                 setPostcode(json.postcode)
                 setHouseNumber(json.houseNumber)
+                getGroupInformation(kitaId)
             })
             .catch((error) => {
-                console.log(error)
                 navigate('/404', { replace: true });
             });
     }
@@ -95,6 +99,8 @@ const KitaInformationService = (jwt:string) => {
     return{
         hasKita,
         setHasKita,
+        kitaId,
+        setKitaId,
         name,
         setName,
         street,
