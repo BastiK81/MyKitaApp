@@ -1,14 +1,14 @@
 // material
 import { Box, Grid, Container, Typography } from '@mui/material';
 // components
-import Page from '../components/Page';
+import Page from '../../components/Page';
 import {
     AppBugReports, AppConversionRates, AppCurrentSubject, AppCurrentVisits,
     AppItemOrders, AppNewsUpdate,
     AppNewUsers, AppOrderTimeline, AppTasks, AppTrafficBySite,
     AppWebsiteVisits,
     AppWeeklySales
-} from "../components/_dashboard/app";
+} from "../components/dashboard/app";
 
 
 // ----------------------------------------------------------------------

@@ -3,13 +3,13 @@ import { useState } from 'react';
 // material
 import { Container, Stack, Typography } from '@mui/material';
 // components
-import Page from '../components/Page';
+import Page from '../../components/Page';
 import {
   ProductSort,
   ProductList,
   ProductCartWidget,
   ProductFilterSidebar
-} from '../components/_dashboard/products';
+} from '../components/dashboard/products';
 //
 import PRODUCTS from '../_mocks_/products';
 

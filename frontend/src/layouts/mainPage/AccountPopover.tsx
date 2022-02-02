@@ -9,8 +9,8 @@ import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
 // components
 //
-import account from '../../_mocks_/account';
 import MenuPopover from "../../components/MenuPopover";
+import {IUserInformation} from "../../services/UserInformationService";
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +34,12 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+interface AccountPopoverProps{
+  userInformation: IUserInformation,
+}
+
+
+export default function AccountPopover(props:AccountPopoverProps) {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -67,7 +72,7 @@ export default function AccountPopover() {
           })
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={''} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -78,10 +83,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {account.displayName}
+            {props.userInformation.name + ' ' + props.userInformation.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {props.userInformation.email}
           </Typography>
         </Box>
 

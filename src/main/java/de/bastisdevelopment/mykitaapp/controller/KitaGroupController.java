@@ -28,6 +28,7 @@ public class KitaGroupController {
 
     @GetMapping(value = "/getAllGroups/{id}")
     public List<KitaGroupDTO> getAllGroups(@PathVariable String id)  {
+        logger.info("Get Kita Groups with id: " + id);
         return service.getAllGroups(id);
     }
 

@@ -7,7 +7,7 @@ import { Box, Stack, Link, Card, Button, Divider, Typography, CardHeader } from 
 // utils
 import { mockImgCover } from '../../../utils/mockImages';
 //
-import Scrollbar from '../../Scrollbar';
+import Scrollbar from '../../../../components/Scrollbar';
 
 // ----------------------------------------------------------------------
 

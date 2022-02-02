@@ -1,14 +1,14 @@
 
 import MainLayout from "./layouts/mainPage";
 import {Navigate, useRoutes} from "react-router-dom";
-import User from "./pages/User";
+import User from "./forRefactoring/pages/User";
 import LogoOnlyLayout from "./layouts/LogoOnlyLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from './pages/Page404';
-import MainPage from "./pages/MainPage";
-import Products from './pages/Products';
-import Blog from "./pages/Blog";
+import MainPage from "./forRefactoring/pages/MainPage";
+import Products from './forRefactoring/pages/Products';
+import Blog from "./forRefactoring/pages/Blog";
 import Kita from "./pages/Kita";
 import UserInformationService, {IUserInformation} from "./services/UserInformationService";
 import KitaInformationService, {IKitaInformationService} from "./services/KitaInformationService";

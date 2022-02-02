@@ -14,14 +14,14 @@ import {
 import {Link as RouterLink} from "react-router-dom";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/_dashboard/user";
+import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
 import {IGruppenInformationService} from "../services/GruppenInformationService";
 import {ChangeEvent, MouseEventHandler, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
 import Label from "../components/Label";
 import {sentenceCase} from "change-case";
-import SearchNotFound from "../components/SearchNotFound";
+import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 import * as React from "react";
 
 export interface ITABLE_HEAD{
@@ -140,7 +140,7 @@ const Gruppen = (props: AppProps) => {
                         filterName={filterName}
                         onFilterName={handleFilterByName}
                     />
-                    <Scrollbar sx={{minWidth: 800}}>
+                    <Scrollbar >
                     <TableContainer sx={{minWidth: 800}}>
                         <Table>
                             <UserListHead

@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Button, Typography, Container } from '@mui/material';
 // components
-import { MotionContainer, varBounceIn } from '../components/animate';
+import { MotionContainer, varBounceIn } from '../forRefactoring/components/animate';
 import Page from '../components/Page';
 
 // ----------------------------------------------------------------------

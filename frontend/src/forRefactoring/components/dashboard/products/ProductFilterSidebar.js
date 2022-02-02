@@ -21,7 +21,7 @@ import {
   FormControlLabel
 } from '@mui/material';
 //
-import Scrollbar from '../../Scrollbar';
+import Scrollbar from '../../../../components/Scrollbar';
 import ColorManyPicker from '../../ColorManyPicker';
 
 // ----------------------------------------------------------------------

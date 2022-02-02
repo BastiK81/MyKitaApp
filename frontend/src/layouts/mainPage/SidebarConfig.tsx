@@ -7,12 +7,19 @@ import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import homeFill from "@iconify/icons-eva/home-fill";
+import React from "react";
 
 // ----------------------------------------------------------------------
 
 const getIcon = (name:IconifyIcon) => <Icon icon={name} width={22} height={22}/>
 
-const sidebarConfig = [
+export interface ISidebarConfig{
+  title: string
+  path: string,
+  icon:  JSX.Element
+}
+
+const sidebarConfig:ISidebarConfig[] = [
   {
     title: 'Kita',
     path: '/main/kita',

@@ -42,7 +42,7 @@ const MainLayout = (props:AppProps) => {
 
   return (
     <RootStyle>
-      <MainNavbar />
+      <MainNavbar userInformation={props.userInformation}/>
       <MainSidebar userInformation={props.userInformation} kitaInformation={props.kitaInformation}/>
 
       <MainStyle>

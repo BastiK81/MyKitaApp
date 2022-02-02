@@ -5,7 +5,6 @@ import {Link as RouterLink} from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Link, Typography, Avatar} from '@mui/material';
 import Logo from "../../components/Logo";
-import account from "../../_mocks_/account";
 import NavSection from "../../components/NavSection";
 import sidebarConfig from "./SidebarConfig";
 import {IUserInformation} from "../../services/UserInformationService";
@@ -54,7 +53,7 @@ const MainSidebar = (props:AppProps) => {
                 <Box sx={{ mb: 5, mx: 2.5 }}>
                     <Link underline="none" component={RouterLink} to="#">
                         <AccountStyle>
-                            <Avatar src={account.photoURL} alt="photoURL" />
+                            <Avatar src={''} alt="photoURL" />
                             <Box sx={{ ml: 2 }}>
                                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                                     {props.userInformation.name + ' ' + props.userInformation.lastName}
