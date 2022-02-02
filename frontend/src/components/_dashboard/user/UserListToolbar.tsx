@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+
 import { Icon } from '@iconify/react';
 import searchFill from '@iconify/icons-eva/search-fill';
 import trash2Fill from '@iconify/icons-eva/trash-2-fill';
@@ -14,6 +14,7 @@ import {
   OutlinedInput,
   InputAdornment
 } from '@mui/material';
+import {ChangeEvent} from "react";
 
 // ----------------------------------------------------------------------
 
@@ -33,19 +34,20 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
   '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
   '& fieldset': {
     borderWidth: `1px !important`,
-    borderColor: `${theme.palette.grey[500_32]} !important`
+    borderColor: `${theme.palette.grey[500]} !important`
   }
 }));
 
 // ----------------------------------------------------------------------
 
-UserListToolbar.propTypes = {
-  numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func
-};
+interface UserListToolbarProps{
+  numSelected: number,
+  filterName: string,
+  onFilterName: (event:ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
+}
 
-export default function UserListToolbar({ numSelected, filterName, onFilterName }) {
+
+export default function UserListToolbar({ numSelected, filterName, onFilterName }:UserListToolbarProps) {
   return (
     <RootStyle
       sx={{

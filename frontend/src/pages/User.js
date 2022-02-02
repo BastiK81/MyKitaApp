@@ -155,7 +155,7 @@ export default function User() {
             onFilterName={handleFilterByName}
           />
 
-          <Scrollbar>
+          <Scrollbar sx={{ minWidth: 800 }}>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <UserListHead

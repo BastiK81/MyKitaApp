@@ -1,13 +1,12 @@
 import Page from "../components/Page";
 import {
-    Avatar,
     Button,
     Card, Checkbox,
     Container,
     Stack,
     Table,
     TableBody, TableCell,
-    TableContainer,
+    TableContainer, TablePagination,
     TableRow,
     TextField,
     Typography
@@ -15,15 +14,25 @@ import {
 import {Link as RouterLink} from "react-router-dom";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserListHead, UserListToolbar} from "../components/_dashboard/user";
+import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/_dashboard/user";
 import {IGruppenInformationService} from "../services/GruppenInformationService";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, MouseEventHandler, useState} from "react";
+import {SortDirection} from "@mui/material/TableCell/TableCell";
+import Scrollbar from "../components/Scrollbar";
+import Label from "../components/Label";
+import {sentenceCase} from "change-case";
+import SearchNotFound from "../components/SearchNotFound";
+import * as React from "react";
 
+export interface ITABLE_HEAD{
+    id: string,
+    label: string,
+    alignRight:boolean
+}
 
-const TABLE_HEAD = [
+const TABLE_HEAD:ITABLE_HEAD[] = [
     {id: 'name', label: 'Name', alignRight: false},
-    {id: 'kitaName', label: 'Kita', alignRight: false},
-    {id: ''}
+    {id: 'kitaName', label: 'Kita', alignRight: false}
 ];
 
 interface AppProps {
@@ -36,21 +45,24 @@ const Gruppen = (props: AppProps) => {
 
     const [group, setGroup] = useState('');
     const [page, setPage] = useState(0);
-    const [order, setOrder] = useState('asc');
+    const [order, setOrder] = useState<SortDirection>('asc');
     const [selected, setSelected] = useState<string[]>([]);
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    // @ts-ignore
-    const handleRequestSort = (event, property) => {
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.groups.getItems().length) : 0;
+
+    const isUserNotFound = props.groups.getItems().length === 0;
+
+
+    const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property:string) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
-    // @ts-ignore
-    const handleSelectAllClick = (event) => {
+    const handleSelectAllClick = (event:ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             const newSelecteds: string[] = props.groups.getItems().map((n) => n.name);
             setSelected(newSelecteds);
@@ -59,8 +71,7 @@ const Gruppen = (props: AppProps) => {
         setSelected([]);
     };
 
-    // @ts-ignore
-    const handleFilterByName = (event) => {
+    const handleFilterByName = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setFilterName(event.target.value);
     };
 
@@ -88,13 +99,21 @@ const Gruppen = (props: AppProps) => {
         setSelected(newSelected);
     };
 
+    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
+        setPage(page);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     return (
-        // @ts-ignore
         <Page title="Kita Gruppen">
             <Container>
-                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} spacing={2}>
                     <Typography variant="h4" gutterBottom>
-                        User
+                        Kita Groups
                     </Typography>
                         <TextField
                             value={group}
@@ -121,13 +140,14 @@ const Gruppen = (props: AppProps) => {
                         filterName={filterName}
                         onFilterName={handleFilterByName}
                     />
+                    <Scrollbar sx={{minWidth: 800}}>
                     <TableContainer sx={{minWidth: 800}}>
                         <Table>
                             <UserListHead
                                 order={order}
                                 orderBy={orderBy}
                                 headLabel={TABLE_HEAD}
-                                rowCount={props.groups.getItems.length}
+                                rowCount={props.groups.getItems().length}
                                 numSelected={selected.length}
                                 onRequestSort={handleRequestSort}
                                 onSelectAllClick={handleSelectAllClick}
@@ -138,7 +158,6 @@ const Gruppen = (props: AppProps) => {
                                     .map((row) => {
                                             const {id, name, kitaId, kitaName} = row;
                                             const isItemSelected = selected.indexOf(name) !== -1;
-
                                             return (
                                                 <TableRow
                                                     hover
@@ -156,13 +175,48 @@ const Gruppen = (props: AppProps) => {
                                                     </TableCell>
                                                     <TableCell align="left">{name}</TableCell>
                                                     <TableCell align="left">{kitaName}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Label
+                                                            variant="ghost"
+                                                            color={(kitaId === 'banned' && 'error') || 'success'}
+                                                        >
+                                                            {sentenceCase(kitaId)}
+                                                        </Label>
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        <UserMoreMenu />
+                                                    </TableCell>
                                                 </TableRow>
                                             )
                                         }
                                     )}
+                                {emptyRows > 0 && (
+                                    <TableRow style={{ height: 53 * emptyRows }}>
+                                        <TableCell colSpan={6} />
+                                    </TableRow>
+                                )}
                             </TableBody>
+                            {isUserNotFound && (
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                                            <SearchNotFound searchQuery={filterName} />
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            )}
                         </Table>
                     </TableContainer>
+                    </Scrollbar>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={props.groups.getItems().length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
                 </Card>
             </Container>
         </Page>

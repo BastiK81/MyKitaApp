@@ -27,6 +27,7 @@ const LoginSignInService = (setJwt: Dispatch<SetStateAction<string>>, getUserInf
     const loginRegister = (url:string, data: {}) => {
         auth(url, data)
             .then(text => {
+                console.log('wait')
                 localStorage.setItem(STORAGE_KEY, text)
                 setJwt(text)
                 getUserInformation()

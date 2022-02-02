@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
+
 import SimpleBarReact from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import {Box, Theme} from '@mui/material';
+import React from "react";
+import {SxProps} from "@mui/system/styleFunctionSx";
 
 // ----------------------------------------------------------------------
 
@@ -36,12 +38,14 @@ const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-Scrollbar.propTypes = {
-  children: PropTypes.node.isRequired,
-  sx: PropTypes.object
-};
 
-export default function Scrollbar({ children, sx, ...other }) {
+
+interface ScrollbarProps{
+  children: React.ReactNode,
+  sx: SxProps<Theme>
+}
+
+export default function Scrollbar({ children, sx, ...other }:ScrollbarProps) {
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );

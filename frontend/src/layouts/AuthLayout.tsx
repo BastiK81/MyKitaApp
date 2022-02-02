@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 // components
 import Logo from '../components/Logo';
+import React from "react";
 //
 
 // ----------------------------------------------------------------------
@@ -27,11 +28,11 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-AuthLayout.propTypes = {
-  children: PropTypes.node
-};
+interface IAuthLayout{
+  children: React.ReactNode
+}
 
-export default function AuthLayout({ children }) {
+export default function AuthLayout({ children }:IAuthLayout) {
   return (
     <HeaderStyle>
       <RouterLink to="/">

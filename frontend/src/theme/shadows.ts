@@ -1,12 +1,13 @@
 // material
 import { alpha } from '@mui/material/styles';
 import palette from './palette';
+import {Shadows} from "@mui/material/styles/shadows";
 
 // ----------------------------------------------------------------------
 
 const LIGHT_MODE = palette.grey[500];
 
-const createShadow = (color) => {
+const createShadow = (color:string):Shadows => {
   const transparent1 = alpha(color, 0.2);
   const transparent2 = alpha(color, 0.14);
   const transparent3 = alpha(color, 0.12);
@@ -39,7 +40,23 @@ const createShadow = (color) => {
   ];
 };
 
-const createCustomShadow = (color) => {
+export interface ICustomShadows{
+  z1: string,
+  z8: string,
+  z12: string,
+  z16: string,
+  z20: string,
+  z24: string,
+  primary: string,
+  secondary: string,
+  info: string,
+  success: string,
+  warning: string,
+  error: string
+}
+
+const createCustomShadow = (color:string) => {
+
   const transparent = alpha(color, 0.24);
 
   return {
@@ -60,6 +77,6 @@ const createCustomShadow = (color) => {
 
 export const customShadows = createCustomShadow(LIGHT_MODE);
 
-const shadows = createShadow(LIGHT_MODE);
+const shadows:Shadows = createShadow(LIGHT_MODE);
 
 export default shadows;
