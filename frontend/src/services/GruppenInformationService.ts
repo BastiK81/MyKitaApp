@@ -63,7 +63,7 @@ const GruppenInformationService = (jwt:string) => {
     }
 
     const getItemsFromBackend = (kitaId:string) => {
-        getAllItems('/api/getAllGroups/{' + kitaId + '}')
+        getAllItems('/api/getAllGroups/' + kitaId)
             .then(json => {
                 let tempItems:GroupItem[] = [];
                 for (let i = 0; i < json.length; i++) {
