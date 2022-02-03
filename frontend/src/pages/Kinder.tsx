@@ -60,7 +60,7 @@ const Kinder = (props: AppProps) => {
     useEffect(() => {
         props.childs.getItemsFromBackend(props.kitaId)
         props.groups.getItemsFromBackend(props.kitaId)
-    }, []);
+    });
 
     const [showAddChild, setShowAddChild] = useState(false)
     const [page, setPage] = useState(0);

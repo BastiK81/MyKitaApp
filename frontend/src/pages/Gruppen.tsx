@@ -45,7 +45,7 @@ const Gruppen = (props: AppProps) => {
 
     useEffect(() => {
         props.groups.getItemsFromBackend(props.kitaId)
-    }, []);
+    });
 
 
     const [group, setGroup] = useState('');
