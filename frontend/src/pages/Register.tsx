@@ -7,7 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { RegisterForm } from '../components/authentication/register';
-import {Dispatch, SetStateAction} from "react";
+import {ILoginSignInService} from "../services/LoginSignInService";
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -37,7 +37,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 interface AppProps{
-  setJwt: Dispatch<SetStateAction<string>>
+  register: ILoginSignInService
 }
 
 export default function Register(props:AppProps) {
@@ -69,7 +69,7 @@ export default function Register(props:AppProps) {
             </Typography>
           </Box>
 
-          <RegisterForm setJwt={props.setJwt}/>
+          <RegisterForm register={props.register}/>
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
             By registering, I agree to Minimal&nbsp;

@@ -2,7 +2,6 @@ package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.service.KitaService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class KitaController {
 
-   private static final Logger logger = LoggerFactory.getLogger(KitaController.class);
+    private static final Logger logger = LoggerFactory.getLogger(KitaController.class);
 
     private final KitaService service;
 

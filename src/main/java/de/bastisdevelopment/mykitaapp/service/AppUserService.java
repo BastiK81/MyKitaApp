@@ -1,5 +1,6 @@
 package de.bastisdevelopment.mykitaapp.service;
 
+import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.items.AppUser;
 import de.bastisdevelopment.mykitaapp.repository.AppUserRepository;
 import org.slf4j.Logger;
@@ -7,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,4 +61,16 @@ public class AppUserService {
         return repository.findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + userEmail + " not found!"));
     }
+
+    public AppUserDTO getInformationOfActiveUser() {
+        return new AppUserDTO(getActualUser());
+    }
+
+    public AppUser getActualUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        logger.info(String.format("Get actual User %s", currentPrincipalName));
+        return repository.findByEmail(currentPrincipalName).get();
+    }
+
 }

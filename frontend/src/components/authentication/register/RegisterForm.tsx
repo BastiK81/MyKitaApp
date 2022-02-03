@@ -1,26 +1,23 @@
 import * as Yup from 'yup';
-import {Dispatch, SetStateAction, useState} from 'react';
+import {useState} from 'react';
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import {ILoginSignInService} from "../../../services/LoginSignInService";
 
 // ----------------------------------------------------------------------
 
 interface AppProps{
-  setJwt: Dispatch<SetStateAction<string>>
+    register: ILoginSignInService
 }
 
 export default function RegisterForm(props:AppProps) {
 
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const STORAGE_KEY = 'JWT';
-
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -41,35 +38,14 @@ export default function RegisterForm(props:AppProps) {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      register()
+      props.register.loginRegister('/auth/signin',{
+          email: formik.getFieldProps('email').value,
+          password: formik.getFieldProps('password').value,
+          lastName: formik.getFieldProps('lastName').value,
+          firstName: formik.getFieldProps('firstName').value
+      })
     }
   });
-
-  const register = () => {
-
-    fetch("/auth/signin", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({email: formik.getFieldProps('email').value, password: formik.getFieldProps('password').value, lastName: formik.getFieldProps('lastName').value, firstName: formik.getFieldProps('firstName').value})
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("HTTP status " + response.status);
-        }
-        return response.text()
-      })
-      .then(text => {
-        localStorage.setItem(STORAGE_KEY, text)
-        props.setJwt(text)
-        navigate('/main', { replace: true });
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        navigate('/404', { replace: true });
-      });
-  }
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
