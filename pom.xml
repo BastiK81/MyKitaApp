@@ -72,7 +72,7 @@
                 <configuration>
                     <workingDirectory>${basedir}/frontend</workingDirectory>
                     <installDirectory>${basedir}/frontend/install</installDirectory>
-                    <nodeVersion>v16.13.2</nodeVersion>
+                    <nodeVersion>v17.4.0</nodeVersion>
                     <npmVersion>8.4.0</npmVersion>
                 </configuration>
                 <executions>
