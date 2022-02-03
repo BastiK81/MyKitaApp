@@ -27,8 +27,6 @@ import * as React from "react";
 import {ChangeEvent, FormEvent, MouseEventHandler, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
-import Label from "../components/Label";
-import {sentenceCase} from "change-case";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 import {IKinderInformationService} from "../services/KinderInformationService";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -149,11 +147,11 @@ const Kinder = (props: AppProps) => {
         props.childs.addChild(data)
     }
 
-    const getGroupName = (groupId:string):string => {
+    const getGroupName = (groupId: string): string => {
         if (groupId === "") {
             return ""
         }
-        return props.groups.getItems().filter(group => group.id===groupId)[0].name
+        return props.groups.getItems().filter(group => group.id === groupId)[0].name
     }
 
     return (
@@ -265,7 +263,6 @@ const Kinder = (props: AppProps) => {
                                                         lastName,
                                                         dateOfBirth,
                                                         parents,
-                                                        kitaId,
                                                         groupId
                                                     } = row;
                                                     const isItemSelected = selected.indexOf(firstName) !== -1;

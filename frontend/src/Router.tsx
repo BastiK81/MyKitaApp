@@ -18,7 +18,6 @@ import Gruppen from "./pages/Gruppen";
 import GruppenInformationService, {IGruppenInformationService} from "./services/GruppenInformationService";
 import KinderInformationService, {IKinderInformationService} from "./services/KinderInformationService";
 import Kinder from "./pages/Kinder";
-import EditKinder from "./components/kinder/EditKinder";
 
 export default function Router() {
 

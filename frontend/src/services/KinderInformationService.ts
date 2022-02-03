@@ -1,27 +1,26 @@
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
 
-export interface IKinderInformationService{
-    addChild: (data:{}) => void
+export interface IKinderInformationService {
+    addChild: (data: {}) => void
     getItems: () => ChildItem[]
-    getItemsFromBackend: (kitaId:string) => void
+    getItemsFromBackend: (kitaId: string) => void
 }
 
-export interface ChildItem{
-    id:string,
-    firstName:string,
-    lastName:string,
-    dateOfBirth:Date,
-    parents:string[],
-    kitaId:string,
-    groupId:string
+export interface ChildItem {
+    id: string,
+    firstName: string,
+    lastName: string,
+    dateOfBirth: Date,
+    parents: string[],
+    kitaId: string,
+    groupId: string
 }
 
-const KinderInformationService = (jwt:string) => {
+const KinderInformationService = (jwt: string) => {
 
     const [childItems, setChildItems] = useState<ChildItem[]>([]);
 
-    async function getAllItems(url:string) {
+    async function getAllItems(url: string) {
         const response = await fetch(url,
             {
                 method: 'GET',
@@ -36,7 +35,7 @@ const KinderInformationService = (jwt:string) => {
         return response.json();
     }
 
-    async function addNewGroup(url:string, data:{}) {
+    async function addNewGroup(url: string, data: {}) {
         const response = await fetch(url,
             {
                 method: 'POST',
@@ -52,12 +51,12 @@ const KinderInformationService = (jwt:string) => {
         return response.json();
     }
 
-    const addChild = (data:{}) => {
+    const addChild = (data: {}) => {
         addNewGroup('/api/addNewChild', data)
             .then(json => {
-                let tempItems:ChildItem[] = [];
+                let tempItems: ChildItem[] = [];
                 for (let i = 0; i < json.length; i++) {
-                    let item:ChildItem = {
+                    let item: ChildItem = {
                         id: json[i].id,
                         firstName: json[i].firstName,
                         lastName: json[i].lastName,
@@ -73,12 +72,12 @@ const KinderInformationService = (jwt:string) => {
 
     }
 
-    const getItemsFromBackend = (kitaId:string) => {
+    const getItemsFromBackend = (kitaId: string) => {
         getAllItems('/api/getAllChilds/' + kitaId)
             .then(json => {
-                let tempItems:ChildItem[] = [];
+                let tempItems: ChildItem[] = [];
                 for (let i = 0; i < json.length; i++) {
-                    let item:ChildItem = {
+                    let item: ChildItem = {
                         id: json[i].id,
                         firstName: json[i].firstName,
                         lastName: json[i].lastName,
@@ -93,12 +92,12 @@ const KinderInformationService = (jwt:string) => {
             })
     }
 
-    return{
+    return {
         addChild,
         getItems: () => childItems,
         getItemsFromBackend
     }
-  
+
 }
 
 export default KinderInformationService
