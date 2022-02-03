@@ -16,7 +16,7 @@ import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
 import {IGruppenInformationService} from "../services/GruppenInformationService";
-import {ChangeEvent, MouseEventHandler, useState} from "react";
+import {ChangeEvent, MouseEventHandler, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
 import Label from "../components/Label";
@@ -42,6 +42,11 @@ interface AppProps {
 }
 
 const Gruppen = (props: AppProps) => {
+
+    useEffect(() => {
+        props.groups.getItemsFromBackend(props.kitaId)
+    }, []);
+
 
     const [group, setGroup] = useState('');
     const [page, setPage] = useState(0);

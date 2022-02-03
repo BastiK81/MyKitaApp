@@ -31,6 +31,11 @@ const sidebarConfig:ISidebarConfig[] = [
     icon: getIcon(peopleFill)
   },
   {
+    title: 'Kinder',
+    path: '/main/kinder',
+    icon: getIcon(peopleFill)
+  },
+  {
     title: 'board',
     path: '/main/board',
     icon: getIcon(pieChart2Fill)

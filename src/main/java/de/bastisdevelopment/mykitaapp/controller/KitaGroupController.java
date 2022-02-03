@@ -1,6 +1,6 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
-import de.bastisdevelopment.mykitaapp.dtos.KitaGroupDTO;
+import de.bastisdevelopment.mykitaapp.dtos.GroupDTO;
 import de.bastisdevelopment.mykitaapp.service.KitaGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,15 +21,15 @@ public class KitaGroupController {
     }
 
     @PostMapping(path = "/addnewgroup")
-    public List<KitaGroupDTO> addNewGroup(@RequestBody KitaGroupDTO groupDTO) throws Exception {
+    public List<GroupDTO> addNewGroup(@RequestBody GroupDTO groupDTO) throws Exception {
         logger.info("Try to add Group " + groupDTO.getName());
         return service.addNewGroup(groupDTO);
     }
 
-    @GetMapping(value = "/getAllGroups/{id}")
-    public List<KitaGroupDTO> getAllGroups(@PathVariable String id)  {
-        logger.info("Get Kita Groups with id: " + id);
-        return service.getAllGroups(id);
+    @GetMapping(value = "/getAllGroups/{kitaId}")
+    public List<GroupDTO> getAllGroups(@PathVariable String kitaId)  {
+        logger.info("Get Kita Groups with id: " + kitaId);
+        return service.getAllGroups(kitaId);
     }
 
 }

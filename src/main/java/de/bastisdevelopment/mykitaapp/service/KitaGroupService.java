@@ -1,7 +1,7 @@
 package de.bastisdevelopment.mykitaapp.service;
 
-import de.bastisdevelopment.mykitaapp.dtos.KitaGroupDTO;
-import de.bastisdevelopment.mykitaapp.items.KitaGroupDBItem;
+import de.bastisdevelopment.mykitaapp.dtos.GroupDTO;
+import de.bastisdevelopment.mykitaapp.items.GroupDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaGroupRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +17,15 @@ public class KitaGroupService {
         this.repository = repository;
     }
 
-    public List<KitaGroupDTO> addNewGroup(KitaGroupDTO groupDTO) throws Exception {
+    public List<GroupDTO> addNewGroup(GroupDTO groupDTO) throws Exception {
         if (repository.findByNameAndKitaId(groupDTO.getName(), groupDTO.getKitaId()).isPresent()) {
             throw new Exception(String.format("Group with name %s already exist in Kita %s", groupDTO.getName(), groupDTO.getKitaName()));
         }
-        repository.save(new KitaGroupDBItem(groupDTO));
+        repository.save(new GroupDBItem(groupDTO));
         return this.getAllGroups(groupDTO.getKitaId());
     }
 
-    public List<KitaGroupDTO> getAllGroups(String id) {
-        return repository.findByKitaId(id).stream().map(values -> new KitaGroupDTO(values)).collect(Collectors.toList());
+    public List<GroupDTO> getAllGroups(String kitaId) {
+        return repository.findByKitaId(kitaId).stream().map(values -> new GroupDTO(values)).collect(Collectors.toList());
     }
 }

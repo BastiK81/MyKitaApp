@@ -20,7 +20,7 @@ export interface IKitaInformationService{
     getKita: () => void
 }
 
-const KitaInformationService = (jwt:string, getGroupInformation:(kitaId:string) => void) => {
+const KitaInformationService = (jwt:string) => {
 
     const navigate = useNavigate();
 
@@ -89,7 +89,6 @@ const KitaInformationService = (jwt:string, getGroupInformation:(kitaId:string) 
                 setCity(json.city)
                 setPostcode(json.postcode)
                 setHouseNumber(json.houseNumber)
-                getGroupInformation(kitaId)
             })
             .catch((error) => {
                 navigate('/404', { replace: true });
