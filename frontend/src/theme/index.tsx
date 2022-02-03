@@ -1,22 +1,13 @@
-import PropTypes from 'prop-types';
 import React, { useMemo } from 'react';
 // material
-import {CssBaseline, PaletteMode, ThemeOptions} from '@mui/material';
+import {CssBaseline, ThemeOptions} from '@mui/material';
 import { ThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles';
 //
 import shape from './shape';
-import palette, {IGREY} from './palette';
+import palette from './palette';
 import typography from './typography';
 import componentsOverride from './overrides';
 import shadows, {customShadows, ICustomShadows} from './shadows';
-import {Mixins} from "@mui/material/styles/createMixins";
-import {
-    ColorPartial,
-    CommonColors,
-    PaletteColorOptions,
-    PaletteTonalOffset, TypeAction, TypeBackground,
-    TypeText
-} from "@mui/material/styles/createPalette";
 
 // ----------------------------------------------------------------------
 
