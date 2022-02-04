@@ -16,16 +16,20 @@ import {useState} from "react";
 import LoginSignInService, {ILoginSignInService} from "./services/LoginSignInService";
 import Gruppen from "./pages/Gruppen";
 import GruppenInformationService, {IGruppenInformationService} from "./services/GruppenInformationService";
+import KinderInformationService, {IKinderInformationService} from "./services/KinderInformationService";
+import Kinder from "./pages/Kinder";
 
 export default function Router() {
 
     const STORAGE_KEY = 'JWT';
     const [jwt, setJwt] = useState(localStorage.getItem(STORAGE_KEY) || '');
 
-    const gruppenInformationService:IGruppenInformationService = GruppenInformationService(jwt)
-    const kitaInformation:IKitaInformationService = KitaInformationService(jwt, gruppenInformationService.getItemsFromBackend)
+    const kitaInformation:IKitaInformationService = KitaInformationService(jwt)
     const userInformation:IUserInformation = UserInformationService(jwt, kitaInformation.getKita);
     const loginSignInService:ILoginSignInService = LoginSignInService(setJwt,userInformation.getUserInformation)
+
+    const gruppenInformationService:IGruppenInformationService = GruppenInformationService(jwt)
+    const kinderInformationService:IKinderInformationService = KinderInformationService(jwt)
 
     return useRoutes([
         {
@@ -34,6 +38,7 @@ export default function Router() {
             children: [
                 { path: 'kita', element: <Kita kitaInformation={kitaInformation}/>},
                 { path: 'gruppen', element: <Gruppen groups={gruppenInformationService} kitaName={kitaInformation.name} kitaId={kitaInformation.kitaId}/>},
+                { path: 'kinder', element: <Kinder childs={kinderInformationService} groups={gruppenInformationService} kitaName={kitaInformation.name} kitaId={kitaInformation.kitaId}/>},
                 { path: 'board', element: <MainPage /> },
                 { path: 'user', element: <User /> },
                 { path: 'products', element: <Products /> },

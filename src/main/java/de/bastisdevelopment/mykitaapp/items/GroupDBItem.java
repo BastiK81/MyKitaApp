@@ -1,6 +1,6 @@
 package de.bastisdevelopment.mykitaapp.items;
 
-import de.bastisdevelopment.mykitaapp.dtos.KitaGroupDTO;
+import de.bastisdevelopment.mykitaapp.dtos.GroupDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document("groupItems")
-public class KitaGroupDBItem {
+public class GroupDBItem {
 
     @Id
     private String id;
@@ -22,7 +22,7 @@ public class KitaGroupDBItem {
     private String kitaName;
 
 
-    public KitaGroupDBItem(KitaGroupDTO groupDTO) {
+    public GroupDBItem(GroupDTO groupDTO) {
         this.name = groupDTO.getName();
         this.kitaId = groupDTO.getKitaId();
         this.kitaName = groupDTO.getKitaName();

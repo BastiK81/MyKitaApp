@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/kita")
 public class KitaController {
 
     private static final Logger logger = LoggerFactory.getLogger(KitaController.class);

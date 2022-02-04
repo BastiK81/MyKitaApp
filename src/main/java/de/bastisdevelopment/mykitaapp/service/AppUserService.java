@@ -1,7 +1,7 @@
 package de.bastisdevelopment.mykitaapp.service;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
-import de.bastisdevelopment.mykitaapp.items.AppUser;
+import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.repository.AppUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class AppUserService {
         this.jwtUtils = jwtUtils;
     }
 
-    public String signIn(AppUser user) {
+    public String signIn(AppUserDBItem user) {
         if (repository.findByEmail(user.getEmail()).isPresent()) {
             logger.warn(String.format("User with email: %s already exist", user.getEmail()));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user already exist");
@@ -46,7 +46,7 @@ public class AppUserService {
         return jwtUtils.createToken(new HashMap<>(), user.getEmail());
     }
 
-    public String logIn(AppUser user) {
+    public String logIn(AppUserDBItem user) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
             logger.info("User logged in");
@@ -57,7 +57,7 @@ public class AppUserService {
         }
     }
 
-    public AppUser getUserByEmail(String userEmail) {
+    public AppUserDBItem getUserByEmail(String userEmail) {
         return repository.findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + userEmail + " not found!"));
     }
@@ -66,7 +66,7 @@ public class AppUserService {
         return new AppUserDTO(getActualUser());
     }
 
-    public AppUser getActualUser(){
+    public AppUserDBItem getActualUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         logger.info(String.format("Get actual User %s", currentPrincipalName));

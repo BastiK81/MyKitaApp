@@ -17,7 +17,7 @@ const UserInformationService = (jwt:string, getKitaInformation: () => void) => {
     const [email, setEmail] = useState('')
 
     async function getInformation() {
-        const response = await fetch("/api/getuserinformation", {
+        const response = await fetch("/api/user/getuserinformation", {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',

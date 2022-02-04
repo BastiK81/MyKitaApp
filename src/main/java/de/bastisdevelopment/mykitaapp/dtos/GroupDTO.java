@@ -1,24 +1,24 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
-import de.bastisdevelopment.mykitaapp.items.KitaGroupDBItem;
+import de.bastisdevelopment.mykitaapp.items.GroupDBItem;
 import lombok.Data;
 
 @Data
-public class KitaGroupDTO {
+public class GroupDTO {
 
     private String id;
     private String name;
     private String kitaId;
     private String kitaName;
 
-    public KitaGroupDTO(KitaGroupDBItem item) {
+    public GroupDTO(GroupDBItem item) {
         this.id = item.getId();
         this.name = item.getName();
         this.kitaId = item.getKitaId();
         this.kitaName = item.getKitaName();
     }
 
-    public KitaGroupDTO(String name, String kitaId, String kitaName) {
+    public GroupDTO(String name, String kitaId, String kitaName) {
         super();
         this.name = name;
         this.kitaId = kitaId;

@@ -20,7 +20,7 @@ export interface IKitaInformationService{
     getKita: () => void
 }
 
-const KitaInformationService = (jwt:string, getGroupInformation:(kitaId:string) => void) => {
+const KitaInformationService = (jwt:string) => {
 
     const navigate = useNavigate();
 
@@ -64,7 +64,7 @@ const KitaInformationService = (jwt:string, getGroupInformation:(kitaId:string) 
     }
 
     const addKita = (data:{}) => {
-        callBackend('/api/addkita', data, 'POST')
+        callBackend('/api/kita/addkita', data, 'POST')
             .then(json => {
                 setHasKita(true)
                 setKitaId(json.id)
@@ -80,7 +80,7 @@ const KitaInformationService = (jwt:string, getGroupInformation:(kitaId:string) 
     }
 
     const getKita = () => {
-        getInformation('/api/getkita', 'GET')
+        getInformation('/api/kita/getkita', 'GET')
             .then(json => {
                 setHasKita(true)
                 setKitaId(json.id)
@@ -89,7 +89,6 @@ const KitaInformationService = (jwt:string, getGroupInformation:(kitaId:string) 
                 setCity(json.city)
                 setPostcode(json.postcode)
                 setHouseNumber(json.houseNumber)
-                getGroupInformation(kitaId)
             })
             .catch((error) => {
                 navigate('/404', { replace: true });

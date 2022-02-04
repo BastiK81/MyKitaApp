@@ -1,8 +1,7 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
-import de.bastisdevelopment.mykitaapp.items.AppUser;
+import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import lombok.Data;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 @Data
 public class AppUserDTO {
@@ -12,7 +11,7 @@ public class AppUserDTO {
     private String lastName;
     private String firstName;
 
-    public AppUserDTO(AppUser user) {
+    public AppUserDTO(AppUserDBItem user) {
         this.id = user.getId();
         this.email = user.getEmail();
         this.lastName = user.getLastName();
