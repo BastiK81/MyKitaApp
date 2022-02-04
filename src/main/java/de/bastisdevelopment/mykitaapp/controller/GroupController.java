@@ -1,7 +1,7 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.GroupDTO;
-import de.bastisdevelopment.mykitaapp.service.KitaGroupService;
+import de.bastisdevelopment.mykitaapp.service.GroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class KitaGroupController {
+@RequestMapping("/api/group")
+public class GroupController {
 
-    private final KitaGroupService service;
+    private final GroupService service;
 
-    private static final Logger logger = LoggerFactory.getLogger(KitaGroupController.class);
+    private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 
-    public KitaGroupController(KitaGroupService service) {
+    public GroupController(GroupService service) {
         this.service = service;
     }
 

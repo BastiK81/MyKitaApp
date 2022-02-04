@@ -52,7 +52,7 @@ const KinderInformationService = (jwt: string) => {
     }
 
     const addChild = (data: {}) => {
-        addNewGroup('/api/addNewChild', data)
+        addNewGroup('/api/child/addNewChild', data)
             .then(json => {
                 let tempItems: ChildItem[] = [];
                 for (let i = 0; i < json.length; i++) {
@@ -73,7 +73,7 @@ const KinderInformationService = (jwt: string) => {
     }
 
     const getItemsFromBackend = (kitaId: string) => {
-        getAllItems('/api/getAllChilds/' + kitaId)
+        getAllItems('/api/child/getAllChildren/' + kitaId)
             .then(json => {
                 let tempItems: ChildItem[] = [];
                 for (let i = 0; i < json.length; i++) {

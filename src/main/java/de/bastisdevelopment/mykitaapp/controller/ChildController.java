@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/child")
 public class ChildController {
 
     private static final Logger logger = LoggerFactory.getLogger(ChildController.class);
@@ -26,7 +26,7 @@ public class ChildController {
         return service.addNewChild(child);
     }
 
-    @GetMapping(path = "/getAllChilds/{kitaId}")
+    @GetMapping(path = "/getAllChildren/{kitaId}")
     public List<ChildDTO> getAllChilds(@PathVariable String kitaId) {
         logger.info("get all chillds");
         return service.getAllChilds(kitaId);

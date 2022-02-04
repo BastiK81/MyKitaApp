@@ -2,18 +2,18 @@ package de.bastisdevelopment.mykitaapp.service;
 
 import de.bastisdevelopment.mykitaapp.dtos.GroupDTO;
 import de.bastisdevelopment.mykitaapp.items.GroupDBItem;
-import de.bastisdevelopment.mykitaapp.repository.KitaGroupRepository;
+import de.bastisdevelopment.mykitaapp.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class KitaGroupService {
+public class GroupService {
 
-    private final KitaGroupRepository repository;
+    private final GroupRepository repository;
 
-    public KitaGroupService(KitaGroupRepository repository) {
+    public GroupService(GroupRepository repository) {
         this.repository = repository;
     }
 

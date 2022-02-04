@@ -12,7 +12,7 @@ import java.util.Collection;
 @Data
 @Document("appUser")
 public class
-AppUser implements UserDetails {
+AppUserDBItem implements UserDetails {
 
     @Id
     private String id;

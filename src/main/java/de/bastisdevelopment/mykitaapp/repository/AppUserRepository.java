@@ -1,14 +1,14 @@
 package de.bastisdevelopment.mykitaapp.repository;
 
-import de.bastisdevelopment.mykitaapp.items.AppUser;
+import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface AppUserRepository extends MongoRepository<AppUser, String> {
+public interface AppUserRepository extends MongoRepository<AppUserDBItem, String> {
 
-    Optional<AppUser> findByEmail(String s);
+    Optional<AppUserDBItem> findByEmail(String s);
 
 }

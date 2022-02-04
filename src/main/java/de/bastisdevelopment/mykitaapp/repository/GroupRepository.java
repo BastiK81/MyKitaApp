@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface KitaGroupRepository extends MongoRepository<GroupDBItem, String> {
+public interface GroupRepository extends MongoRepository<GroupDBItem, String> {
 
     Optional<GroupDBItem> findByNameAndKitaId(String name, String kitaId);
 

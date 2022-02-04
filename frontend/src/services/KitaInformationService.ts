@@ -64,7 +64,7 @@ const KitaInformationService = (jwt:string) => {
     }
 
     const addKita = (data:{}) => {
-        callBackend('/api/addkita', data, 'POST')
+        callBackend('/api/kita/addkita', data, 'POST')
             .then(json => {
                 setHasKita(true)
                 setKitaId(json.id)
@@ -80,7 +80,7 @@ const KitaInformationService = (jwt:string) => {
     }
 
     const getKita = () => {
-        getInformation('/api/getkita', 'GET')
+        getInformation('/api/kita/getkita', 'GET')
             .then(json => {
                 setHasKita(true)
                 setKitaId(json.id)

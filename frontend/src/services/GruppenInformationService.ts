@@ -50,7 +50,7 @@ const GruppenInformationService = (jwt:string) => {
     }
 
     const addGroup = (data:{}) => {
-        addNewGroup('/api/addnewgroup', data)
+        addNewGroup('/api/group/addnewgroup', data)
             .then(json => {
                 let tempItems:GroupItem[] = [];
                 for (let i = 0; i < json.length; i++) {
@@ -63,7 +63,7 @@ const GruppenInformationService = (jwt:string) => {
     }
 
     const getItemsFromBackend = (kitaId:string) => {
-        getAllItems('/api/getAllGroups/' + kitaId)
+        getAllItems('/api/group/getAllGroups/' + kitaId)
             .then(json => {
                 let tempItems:GroupItem[] = [];
                 for (let i = 0; i < json.length; i++) {

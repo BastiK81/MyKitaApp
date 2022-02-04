@@ -1,6 +1,6 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
-import de.bastisdevelopment.mykitaapp.items.AppUser;
+import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.service.AppUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,21 +12,21 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private final AppUserService loginService;
+    private final AppUserService service;
 
-    public LoginController(AppUserService loginService) {
-        this.loginService = loginService;
+    public LoginController(AppUserService service) {
+        this.service = service;
     }
 
     @PostMapping(path = "/signin")
-    public String signInNewUser(@RequestBody AppUser user) {
+    public String signInNewUser(@RequestBody AppUserDBItem user) {
         logger.info("Sign in new user: " + user.getEmail());
-        return loginService.signIn(user);
+        return service.signIn(user);
     }
 
     @PostMapping(path = "/login")
-    public String loginUser(@RequestBody AppUser user) {
+    public String loginUser(@RequestBody AppUserDBItem user) {
         logger.info("Try to Login user: " + user.getEmail());
-        return loginService.logIn(user);
+        return service.logIn(user);
     }
 }
