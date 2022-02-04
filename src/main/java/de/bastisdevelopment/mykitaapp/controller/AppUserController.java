@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 public class AppUserController {
@@ -24,6 +26,11 @@ public class AppUserController {
     public AppUserDTO getUserInformation() {
         logger.info("Try to get User Information");
         return service.getInformationOfActiveUser();
+    }
+
+    @GetMapping(path = "/getalluser")
+    public List<AppUserDTO> getAllUser() {
+        return service.getAllUser();
     }
 
 }

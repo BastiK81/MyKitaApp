@@ -1,7 +1,7 @@
 // material
 import {visuallyHidden} from '@mui/utils';
 import {Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material';
-import {ITABLE_HEAD} from "../../../pages/Gruppen";
+import {ITABLE_HEAD} from "../../../pages/Groups";
 import {ChangeEvent, MouseEventHandler} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 

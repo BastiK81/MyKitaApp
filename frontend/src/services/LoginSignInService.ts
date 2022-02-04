@@ -1,11 +1,11 @@
 import {Dispatch, SetStateAction} from "react";
 import {useNavigate} from "react-router-dom";
 
-export interface ILoginSignInService {
+export interface LoginSignInServiceImpl {
     loginRegister: (url: string, data: {}) => void,
 }
 
-const LoginSignInService = (setJwt: Dispatch<SetStateAction<string>>, getUserInformation: () => void) => {
+const LoginSignInService = (setJwt: Dispatch<SetStateAction<string>>, refreshUser: () => void) => {
 
     const STORAGE_KEY = 'JWT';
     const navigate = useNavigate();
@@ -24,12 +24,12 @@ const LoginSignInService = (setJwt: Dispatch<SetStateAction<string>>, getUserInf
         return response.text();
     }
 
-    const loginRegister = (url:string, data: {}) => {
+    const loginRegister = (url: string, data: {}) => {
         auth(url, data)
             .then(text => {
                 localStorage.setItem(STORAGE_KEY, text)
                 setJwt(text)
-                getUserInformation()
+                refreshUser()
                 navigate('/main', {replace: true});
             })
             .catch(() => {

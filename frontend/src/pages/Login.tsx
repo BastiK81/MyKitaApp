@@ -7,7 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import {LoginForm} from '../components/authentication/login';
-import {ILoginSignInService} from "../services/LoginSignInService";
+import {LoginSignInServiceImpl} from "../services/LoginSignInService";
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ const ContentStyle = styled('div')(({theme}) => ({
 
 
 interface AppProps {
-    login: ILoginSignInService
+    login: LoginSignInServiceImpl
 }
 
 export default function Login(props: AppProps) {

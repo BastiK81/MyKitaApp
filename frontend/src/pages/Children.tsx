@@ -22,13 +22,13 @@ import {
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
-import {IGruppenInformationService} from "../services/GruppenInformationService";
+import {GroupServiceImpl} from "../services/GroupService";
 import * as React from "react";
 import {ChangeEvent, FormEvent, MouseEventHandler, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
-import {IKinderInformationService} from "../services/KinderInformationService";
+import {ChildServiceImpl} from "../services/ChildService";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {DatePicker} from "@mui/lab";
@@ -49,18 +49,18 @@ const TABLE_HEAD: ITABLE_HEAD[] = [
 ];
 
 interface AppProps {
-    childs: IKinderInformationService
-    groups: IGruppenInformationService
-    kitaId: string
-    kitaName: string
+    children: ChildServiceImpl
+    groupService: GroupServiceImpl
+    playSchoolId: string
+    playSchoolName: string
 }
 
-const Kinder = (props: AppProps) => {
+const Children = (props: AppProps) => {
 
     useEffect(() => {
-        props.childs.getItemsFromBackend(props.kitaId)
-        props.groups.getItemsFromBackend(props.kitaId)
-    });
+        props.children.refreshAllChildren(props.playSchoolId)
+        props.groupService.refreshAllGroups(props.playSchoolId)
+    }, []);
 
     const [showAddChild, setShowAddChild] = useState(false)
     const [page, setPage] = useState(0);
@@ -70,9 +70,9 @@ const Kinder = (props: AppProps) => {
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.groups.getItems().length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.groupService.getAllGroups().length) : 0;
 
-    const isUserNotFound = props.childs.getItems().length === 0;
+    const isUserNotFound = props.children.getAllChildren().length === 0;
 
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
@@ -83,7 +83,7 @@ const Kinder = (props: AppProps) => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = props.childs.getItems().map((n) => n.firstName);
+            const newSelecteds: string[] = props.children.getAllChildren().map((n) => n.firstName);
             setSelected(newSelecteds);
             return;
         }
@@ -141,17 +141,17 @@ const Kinder = (props: AppProps) => {
             lastName: lastName,
             dateOfBirth: dateOfBirth,
             parents: [''],
-            kitaId: props.kitaId,
+            kitaId: props.playSchoolId,
             groupId: selectedGroup
         }
-        props.childs.addChild(data)
+        props.children.addChild(data)
     }
 
     const getGroupName = (groupId: string): string => {
         if (groupId === "") {
             return ""
         }
-        return props.groups.getItems().filter(group => group.id === groupId)[0].name
+        return props.groupService.getAllGroups().filter(group => group.id === groupId)[0].name
     }
 
     return (
@@ -215,7 +215,7 @@ const Kinder = (props: AppProps) => {
                                                 value={selectedGroup}
                                                 onChange={handleChange}
                                             >
-                                                {props.groups.getItems().map((item) => {
+                                                {props.groupService.getAllGroups().map((item) => {
                                                     return (
                                                         <MenuItem value={item.id}>{item.name}</MenuItem>
                                                     )
@@ -248,13 +248,13 @@ const Kinder = (props: AppProps) => {
                                         order={order}
                                         orderBy={orderBy}
                                         headLabel={TABLE_HEAD}
-                                        rowCount={props.groups.getItems().length}
+                                        rowCount={props.groupService.getAllGroups().length}
                                         numSelected={selected.length}
                                         onRequestSort={handleRequestSort}
                                         onSelectAllClick={handleSelectAllClick}
                                     />
                                     <TableBody>
-                                        {props.childs.getItems()
+                                        {props.children.getAllChildren()
                                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                             .map((row) => {
                                                     const {
@@ -285,7 +285,7 @@ const Kinder = (props: AppProps) => {
                                                             <TableCell align="left">{lastName}</TableCell>
                                                             <TableCell align="left">{dateOfBirth}</TableCell>
                                                             <TableCell align="left">{parents}</TableCell>
-                                                            <TableCell align="left">{props.kitaName}</TableCell>
+                                                            <TableCell align="left">{props.playSchoolName}</TableCell>
                                                             <TableCell align="left">{getGroupName(groupId)}</TableCell>
                                                             <TableCell align="right">
                                                                 <UserMoreMenu/>
@@ -315,7 +315,7 @@ const Kinder = (props: AppProps) => {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={props.childs.getItems().length}
+                            count={props.children.getAllChildren().length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
@@ -328,4 +328,4 @@ const Kinder = (props: AppProps) => {
     )
 }
 
-export default Kinder
+export default Children
