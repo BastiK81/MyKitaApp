@@ -11,8 +11,7 @@ import java.util.Collection;
 
 @Data
 @Document("appUser")
-public class
-AppUserDBItem implements UserDetails {
+public class AppUserDBItem implements UserDetails {
 
     @Id
     private String id;
