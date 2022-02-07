@@ -7,8 +7,9 @@ import {Avatar, Box, Link, Typography} from '@mui/material';
 import Logo from "../../components/Logo";
 import NavSection from "../../components/NavSection";
 import sidebarConfig from "./SidebarConfig";
-import {UserServiceImpl} from "../../services/UserService";
-import {PlaySchoolServiceImpl} from "../../services/PlaySchoolService";
+
+import {useContext} from "react";
+import {UserCom} from "../../services/UserProvider";
 
 const DRAWER_WIDTH = 280;
 
@@ -29,12 +30,10 @@ const AccountStyle = styled('div')(({theme}) => ({
     backgroundColor: theme.palette.grey[200]
 }));
 
-interface AppProps {
-    userService: UserServiceImpl,
-    playSchoolService: PlaySchoolServiceImpl
-}
+const MainSidebar = () => {
 
-const MainSidebar = (props: AppProps) => {
+    const {user} = useContext(UserCom)
+
 
     return (
         <RootStyle>
@@ -56,10 +55,10 @@ const MainSidebar = (props: AppProps) => {
                             <Avatar src={''} alt="photoURL"/>
                             <Box sx={{ml: 2}}>
                                 <Typography variant="subtitle2" sx={{color: 'text.primary'}}>
-                                    {props.userService.user.firstName + ' ' + props.userService.user.lastName}
+                                    {user.firstName + ' ' + user.lastName}
                                 </Typography>
                                 <Typography variant="body2" sx={{color: 'text.secondary'}}>
-                                    {props.userService.user.email}
+                                    {user.email}
                                 </Typography>
                             </Box>
                         </AccountStyle>

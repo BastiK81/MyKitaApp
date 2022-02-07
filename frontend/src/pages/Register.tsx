@@ -7,7 +7,6 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import {RegisterForm} from '../components/authentication/register';
-import {LoginSignInServiceImpl} from "../services/LoginSignInService";
 
 const RootStyle = styled(Page)(({theme}) => ({
     [theme.breakpoints.up('md')]: {
@@ -36,13 +35,8 @@ const ContentStyle = styled('div')(({theme}) => ({
 
 // ----------------------------------------------------------------------
 
-interface AppProps {
-    register: LoginSignInServiceImpl
-}
-
-export default function Register(props: AppProps) {
+export default function Register() {
     return (
-        // @ts-ignore
         <RootStyle title="Register | My Kita App">
             <AuthLayout>
                 Already have an account? &nbsp;
@@ -69,7 +63,7 @@ export default function Register(props: AppProps) {
                         </Typography>
                     </Box>
 
-                    <RegisterForm register={props.register}/>
+                    <RegisterForm/>
 
                     <Typography variant="body2" align="center" sx={{color: 'text.secondary', mt: 3}}>
                         By registering, I agree to Minimal&nbsp;

@@ -22,16 +22,17 @@ import {
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
-import {GroupServiceImpl} from "../services/GroupService";
 import * as React from "react";
-import {ChangeEvent, FormEvent, MouseEventHandler, useEffect, useState} from "react";
+import {ChangeEvent, FormEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
-import {ChildServiceImpl} from "../services/ChildService";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {DatePicker} from "@mui/lab";
+import {ChildCom} from "../services/psChildProvider";
+import {GroupCom} from "../services/GrouopProvider";
+import {PlaySchoolCom} from "../services/PlaySchoolProvider";
 
 export interface ITABLE_HEAD {
     id: string,
@@ -48,16 +49,17 @@ const TABLE_HEAD: ITABLE_HEAD[] = [
     {id: 'groupId', label: 'Group', alignRight: false},
 ];
 
-interface AppProps {
-    children: ChildServiceImpl
-    groupService: GroupServiceImpl
-    playSchoolId: string
-    playSchoolName: string
-}
+const Children = () => {
 
-const Children = (props: AppProps) => {
+    const {refreshChildren, childItems, addNewChild} = useContext(ChildCom);
+    const {playSchoolItem} = useContext(PlaySchoolCom);
+    const {refreshAllGroups, groupItems} = useContext(GroupCom);
 
-    const {children, groupService, playSchoolId, playSchoolName} = props
+    useEffect(() => {
+        refreshChildren(playSchoolItem.id)
+        refreshAllGroups(playSchoolItem.id)
+        // eslint-disable-next-line
+    }, []);
 
     const [showAddChild, setShowAddChild] = useState(false)
     const [page, setPage] = useState(0);
@@ -67,15 +69,11 @@ const Children = (props: AppProps) => {
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    useEffect(() => {
-        children.refreshAllChildren(props.playSchoolId)
-        groupService.refreshAllGroups(props.playSchoolId)
 
-    }, []);
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupService.getAllGroups().length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupItems.length) : 0;
 
-    const isUserNotFound = children.getAllChildren().length === 0;
+    const isUserNotFound = childItems.length === 0;
 
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
@@ -86,7 +84,7 @@ const Children = (props: AppProps) => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = children.getAllChildren().map((n) => n.firstName);
+            const newSelecteds: string[] = childItems.map((n) => n.firstName);
             setSelected(newSelecteds);
             return;
         }
@@ -144,17 +142,17 @@ const Children = (props: AppProps) => {
             lastName: lastName,
             dateOfBirth: dateOfBirth,
             parents: [''],
-            kitaId: playSchoolId,
+            kitaId: playSchoolItem.id,
             groupId: selectedGroup
         }
-        children.addChild(data)
+        addNewChild(data)
     }
 
     const getGroupName = (groupId: string): string => {
         if (groupId === "") {
             return ""
         }
-        return groupService.getAllGroups().filter(group => group.id === groupId)[0].name
+        return groupItems.filter(group => group.id === groupId)[0].name
     }
 
     return (
@@ -218,7 +216,7 @@ const Children = (props: AppProps) => {
                                                 value={selectedGroup}
                                                 onChange={handleChange}
                                             >
-                                                {groupService.getAllGroups().map((item) => {
+                                                {groupItems.map((item) => {
                                                     return (
                                                         <MenuItem value={item.id}>{item.name}</MenuItem>
                                                     )
@@ -251,13 +249,13 @@ const Children = (props: AppProps) => {
                                         order={order}
                                         orderBy={orderBy}
                                         headLabel={TABLE_HEAD}
-                                        rowCount={groupService.getAllGroups().length}
+                                        rowCount={groupItems.length}
                                         numSelected={selected.length}
                                         onRequestSort={handleRequestSort}
                                         onSelectAllClick={handleSelectAllClick}
                                     />
                                     <TableBody>
-                                        {children.getAllChildren()
+                                        {childItems
                                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                             .map((row) => {
                                                     const {
@@ -288,7 +286,7 @@ const Children = (props: AppProps) => {
                                                             <TableCell align="left">{lastName}</TableCell>
                                                             <TableCell align="left">{dateOfBirth}</TableCell>
                                                             <TableCell align="left">{parents}</TableCell>
-                                                            <TableCell align="left">{playSchoolName}</TableCell>
+                                                            <TableCell align="left">{playSchoolItem.name}</TableCell>
                                                             <TableCell align="left">{getGroupName(groupId)}</TableCell>
                                                             <TableCell align="right">
                                                                 <UserMoreMenu/>
@@ -318,7 +316,7 @@ const Children = (props: AppProps) => {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={children.getAllChildren().length}
+                            count={childItems.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}

@@ -20,13 +20,14 @@ import {
 } from "@mui/material";
 import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
 import * as React from "react";
-import {ChangeEvent, MouseEventHandler, useEffect, useState} from "react";
+import {ChangeEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
-import {UserItem} from "../services/UserService";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
+import {UserCom} from "../services/UserProvider";
+import {PlaySchoolCom} from "../services/PlaySchoolProvider";
 
 export interface ITableHead {
     id: string,
@@ -42,14 +43,6 @@ const tableHeads: ITableHead[] = [
     {id: 'add', label: 'Add User', alignRight: false}
 ];
 
-interface UserProps {
-    addPlaySchoolUserConnection: (playSchoolId:string, userRole:string) => void,
-    refreshAllUser: () => void,
-    getAllUser: UserItem[],
-    playSchoolId: string,
-    playSchoolName: string
-}
-
 interface UserRole {
     id: string,
     role: string
@@ -63,9 +56,10 @@ const userRoles: UserRole[] = [
     {id: '5', role: 'NONE'}
 ]
 
-const User = (props: UserProps) => {
+const User = () => {
 
-    const {addPlaySchoolUserConnection, refreshAllUser, getAllUser, playSchoolId, playSchoolName} = props;
+    const {refreshAllUser, allUser, user} = useContext(UserCom);
+    const {playSchoolItem, addPlaySchoolUserConnection} = useContext(PlaySchoolCom);
 
     const [selectedUserRole, setSelectedUserRole] = React.useState('');
     const [selectedPlaySchool, setSelectedPlaySchool] = useState('')
@@ -78,10 +72,11 @@ const User = (props: UserProps) => {
 
     useEffect(() => {
         refreshAllUser()
+        // eslint-disable-next-line
     }, []);
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - getAllUser.length) : 0;
-    const isUserNotFound = getAllUser.length === 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allUser.length) : 0;
+    const isUserNotFound = allUser.length === 0;
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -91,7 +86,7 @@ const User = (props: UserProps) => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = getAllUser.map((n) => n.firstName);
+            const newSelecteds: string[] = allUser.map((n) => n.firstName);
             setSelected(newSelecteds);
             return;
         }
@@ -138,7 +133,7 @@ const User = (props: UserProps) => {
     };
 
     const addConnection = () => {
-        addPlaySchoolUserConnection(playSchoolId, selectedUserRole)
+        addPlaySchoolUserConnection(user.id, playSchoolItem.id, selectedUserRole)
     }
 
     return (
@@ -162,13 +157,13 @@ const User = (props: UserProps) => {
                                     order={order}
                                     orderBy={orderBy}
                                     headLabel={tableHeads}
-                                    rowCount={getAllUser.length}
+                                    rowCount={allUser.length}
                                     numSelected={selected.length}
                                     onRequestSort={handleRequestSort}
                                     onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
-                                    {getAllUser
+                                    {allUser
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                                 const {id, firstName, lastName} = row;
@@ -201,7 +196,7 @@ const User = (props: UserProps) => {
                                                                     onChange={handleChangePlaySchool}
                                                                 >
                                                                     <MenuItem
-                                                                        value={playSchoolId}>{playSchoolName}</MenuItem>
+                                                                        value={playSchoolItem.id}>{playSchoolItem.name}</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </TableCell>
@@ -262,7 +257,7 @@ const User = (props: UserProps) => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={getAllUser.length}
+                        count={allUser.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

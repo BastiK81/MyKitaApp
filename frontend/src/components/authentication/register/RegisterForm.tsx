@@ -1,21 +1,19 @@
 import * as Yup from 'yup';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Icon} from '@iconify/react';
 import {Form, FormikProvider, useFormik} from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-// material
+
 import {IconButton, InputAdornment, Stack, TextField} from '@mui/material';
 import {LoadingButton} from '@mui/lab';
-import {LoginSignInServiceImpl} from "../../../services/LoginSignInService";
+import {BackendCom} from "../../../services/BackendProvider";
 
 // ----------------------------------------------------------------------
 
-interface AppProps {
-    register: LoginSignInServiceImpl
-}
+export default function RegisterForm() {
 
-export default function RegisterForm(props: AppProps) {
+    const {loginRegister} = useContext(BackendCom)
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -38,7 +36,7 @@ export default function RegisterForm(props: AppProps) {
         },
         validationSchema: RegisterSchema,
         onSubmit: () => {
-            props.register.loginRegister('/auth/signin', {
+            loginRegister('/auth/signin', {
                 email: formik.getFieldProps('email').value,
                 password: formik.getFieldProps('password').value,
                 lastName: formik.getFieldProps('lastName').value,

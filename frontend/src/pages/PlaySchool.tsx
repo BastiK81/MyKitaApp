@@ -3,19 +3,16 @@ import {Box, Container, Stack, TextField, Typography} from "@mui/material";
 import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
-import {PlaySchoolServiceImpl} from "../services/PlaySchoolService";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
+import {PlaySchoolCom} from "../services/PlaySchoolProvider";
 
-interface AppProps {
-    playSchoolService: PlaySchoolServiceImpl
-}
+const PlaySchool = () => {
 
-const PlaySchool = (props: AppProps) => {
-
-    const {playSchoolService} = props
+    const {refreshPlaySchool, playSchoolItem, hasKita, addNewPlaySchool} = useContext(PlaySchoolCom)
 
     useEffect(() => {
-        playSchoolService.getKita()
+        refreshPlaySchool()
+        // eslint-disable-next-line
     }, []);
 
 
@@ -32,15 +29,15 @@ const PlaySchool = (props: AppProps) => {
 
     const formik = useFormik({
         initialValues: {
-            kitaName: playSchoolService.playSchoolItem.name,
-            street: playSchoolService.playSchoolItem.street,
-            houseNumber: playSchoolService.playSchoolItem.houseNumber,
-            postcode: playSchoolService.playSchoolItem.postcode,
-            city: playSchoolService.playSchoolItem.city,
+            kitaName: playSchoolItem.name,
+            street: playSchoolItem.street,
+            houseNumber: playSchoolItem.houseNumber,
+            postcode: playSchoolItem.postcode,
+            city: playSchoolItem.city,
         },
         validationSchema: RegisterSchema,
         onSubmit: () => {
-            playSchoolService.addKita({
+            addNewPlaySchool({
                 name: formik.getFieldProps('kitaName').value,
                 street: formik.getFieldProps('street').value,
                 houseNumber: formik.getFieldProps('houseNumber').value,
@@ -53,7 +50,6 @@ const PlaySchool = (props: AppProps) => {
     const {errors, touched, handleSubmit, isSubmitting, getFieldProps} = formik;
 
     return (
-        // @ts-ignore
         <Page title="Kita Übersicht">
             <Container maxWidth="xl">
                 <Box sx={{pb: 5}}>
@@ -71,7 +67,7 @@ const PlaySchool = (props: AppProps) => {
                                 {...getFieldProps('kitaName')}
                                 error={Boolean(touched.kitaName && errors.kitaName)}
                                 helperText={touched.kitaName && errors.kitaName}
-                                disabled={props.playSchoolService.hasKita}
+                                disabled={hasKita}
                             />
 
                             <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
@@ -81,7 +77,7 @@ const PlaySchool = (props: AppProps) => {
                                     {...getFieldProps('street')}
                                     error={Boolean(touched.street && errors.street)}
                                     helperText={touched.street && errors.street}
-                                    disabled={props.playSchoolService.hasKita}
+                                    disabled={hasKita}
                                 />
 
                                 <TextField
@@ -90,7 +86,7 @@ const PlaySchool = (props: AppProps) => {
                                     {...getFieldProps('houseNumber')}
                                     error={Boolean(touched.houseNumber && errors.houseNumber)}
                                     helperText={touched.houseNumber && errors.houseNumber}
-                                    disabled={props.playSchoolService.hasKita}
+                                    disabled={hasKita}
                                 />
 
                             </Stack>
@@ -102,7 +98,7 @@ const PlaySchool = (props: AppProps) => {
                                     {...getFieldProps('postcode')}
                                     error={Boolean(touched.postcode && errors.postcode)}
                                     helperText={touched.postcode && errors.postcode}
-                                    disabled={props.playSchoolService.hasKita}
+                                    disabled={hasKita}
                                 />
                                 <TextField
                                     fullWidth
@@ -110,12 +106,12 @@ const PlaySchool = (props: AppProps) => {
                                     {...getFieldProps('city')}
                                     error={Boolean(touched.city && errors.city)}
                                     helperText={touched.city && errors.city}
-                                    disabled={props.playSchoolService.hasKita}
+                                    disabled={hasKita}
                                 />
 
                             </Stack>
 
-                            {!props.playSchoolService.hasKita && <LoadingButton
+                            {!hasKita && <LoadingButton
                                 fullWidth
                                 size="large"
                                 type="submit"

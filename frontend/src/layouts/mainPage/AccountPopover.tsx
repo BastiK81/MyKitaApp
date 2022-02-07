@@ -1,5 +1,5 @@
 import {Icon} from '@iconify/react';
-import {useRef, useState} from 'react';
+import {useContext, useRef, useState} from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
@@ -10,7 +10,8 @@ import {Avatar, Box, Button, Divider, IconButton, MenuItem, Typography} from '@m
 // components
 //
 import MenuPopover from "../../components/MenuPopover";
-import {UserServiceImpl} from "../../services/UserService";
+import {UserCom} from "../../services/UserProvider";
+
 
 // ----------------------------------------------------------------------
 
@@ -34,12 +35,10 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-interface AccountPopoverProps {
-    userService: UserServiceImpl,
-}
+export default function AccountPopover() {
 
+    const {user} = useContext(UserCom)
 
-export default function AccountPopover(props: AccountPopoverProps) {
     const anchorRef = useRef(null);
     const [open, setOpen] = useState(false);
 
@@ -83,10 +82,10 @@ export default function AccountPopover(props: AccountPopoverProps) {
             >
                 <Box sx={{my: 1.5, px: 2.5}}>
                     <Typography variant="subtitle1" noWrap>
-                        {props.userService.user.firstName + ' ' + props.userService.user.lastName}
+                        {user.firstName + ' ' + user.lastName}
                     </Typography>
                     <Typography variant="body2" sx={{color: 'text.secondary'}} noWrap>
-                        {props.userService.user.email}
+                        {user.email}
                     </Typography>
                 </Box>
 
