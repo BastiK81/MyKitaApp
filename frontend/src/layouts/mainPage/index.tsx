@@ -3,8 +3,6 @@ import {Outlet} from 'react-router-dom';
 import {styled} from '@mui/material/styles';
 import MainSidebar from "./MainSidebar";
 import MainNavbar from "./MainNavbar";
-import {UserServiceImpl} from "../../services/UserService";
-import {PlaySchoolServiceImpl} from "../../services/PlaySchoolService";
 
 
 //
@@ -33,17 +31,12 @@ const MainStyle = styled('div')(({theme}) => ({
     }
 }));
 
-interface AppProps {
-    userService: UserServiceImpl,
-    playSchoolService: PlaySchoolServiceImpl
-}
-
-const MainLayout = (props: AppProps) => {
+const MainLayout = () => {
 
     return (
         <RootStyle>
-            <MainNavbar userService={props.userService}/>
-            <MainSidebar userService={props.userService} playSchoolService={props.playSchoolService}/>
+            <MainNavbar/>
+            <MainSidebar/>
 
             <MainStyle>
                 <Outlet/>

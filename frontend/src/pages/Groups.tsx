@@ -17,14 +17,15 @@ import {
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
-import {GroupServiceImpl} from "../services/GroupService";
 import * as React from "react";
-import {ChangeEvent, MouseEventHandler, useEffect, useState} from "react";
+import {ChangeEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
 import Label from "../components/Label";
 import {sentenceCase} from "change-case";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
+import {GroupCom} from "../services/GrouopProvider";
+import {PlaySchoolCom} from "../services/PlaySchoolProvider";
 
 export interface ITableHead {
     id: string,
@@ -37,15 +38,15 @@ const tableHeads: ITableHead[] = [
     {id: 'kitaName', label: 'Kita', alignRight: false}
 ];
 
-interface AppProps {
-    groupService: GroupServiceImpl
-    playSchoolId: string
-    playSchoolName: string
-}
+const Groups = () => {
 
-const Groups = (props: AppProps) => {
+    const {playSchoolItem} = useContext(PlaySchoolCom);
+    const {refreshAllGroups, groupItems, addGroup} = useContext(GroupCom);
 
-    const {groupService, playSchoolId, playSchoolName} = props
+    useEffect(() => {
+        refreshAllGroups(playSchoolItem.id)
+        // eslint-disable-next-line
+    }, []);
 
     const [group, setGroup] = useState('');
     const [page, setPage] = useState(0);
@@ -55,14 +56,9 @@ const Groups = (props: AppProps) => {
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    useEffect(() => {
-        groupService.refreshAllGroups(playSchoolId)
-    }, []);
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupItems.length) : 0;
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupService.getAllGroups().length) : 0;
-
-    const isUserNotFound = groupService.getAllGroups().length === 0;
-
+    const isUserNotFound = groupItems.length === 0;
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -72,7 +68,7 @@ const Groups = (props: AppProps) => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = groupService.getAllGroups().map((n) => n.name);
+            const newSelecteds: string[] = groupItems.map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -83,9 +79,9 @@ const Groups = (props: AppProps) => {
         setFilterName(event.target.value);
     };
 
-    const addGroup = () => {
-        const data: {} = {name: group, kitaId: playSchoolId, kitaName: playSchoolName}
-        groupService.addGroup(data)
+    const addNewGroup = () => {
+        const data: {} = {name: group, kitaId: playSchoolItem.id, kitaName: playSchoolItem.name}
+        addGroup(data)
         setGroup('')
     }
 
@@ -133,7 +129,7 @@ const Groups = (props: AppProps) => {
                         type="submit"
                         variant="contained"
                         startIcon={<Icon icon={plusFill}/>}
-                        onClick={addGroup}
+                        onClick={addNewGroup}
                     >
                         Add Group
                     </Button>
@@ -153,13 +149,13 @@ const Groups = (props: AppProps) => {
                                     order={order}
                                     orderBy={orderBy}
                                     headLabel={tableHeads}
-                                    rowCount={groupService.getAllGroups().length}
+                                    rowCount={groupItems.length}
                                     numSelected={selected.length}
                                     onRequestSort={handleRequestSort}
                                     onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
-                                    {groupService.getAllGroups()
+                                    {groupItems
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                                 const {id, name, kitaId, kitaName} = row;
@@ -217,7 +213,7 @@ const Groups = (props: AppProps) => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={groupService.getAllGroups().length}
+                        count={groupItems.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {Form, FormikProvider, useFormik} from 'formik';
 import {Icon} from '@iconify/react';
@@ -8,13 +8,11 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // material
 import {Checkbox, FormControlLabel, IconButton, InputAdornment, Link, Stack, TextField} from '@mui/material';
 import {LoadingButton} from '@mui/lab';
-import {LoginSignInServiceImpl} from "../../../services/LoginSignInService";
+import {BackendCom} from "../../../services/BackendProvider";
 
-interface AppProps {
-    login: LoginSignInServiceImpl
-}
+const LoginForm = () => {
 
-const LoginForm = (props: AppProps) => {
+    const {loginRegister} = useContext(BackendCom)
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -31,7 +29,7 @@ const LoginForm = (props: AppProps) => {
         },
         validationSchema: LoginSchema,
         onSubmit: () => {
-            props.login.loginRegister('/auth/login', {
+            loginRegister('/auth/login', {
                 email: formik.getFieldProps('email').value,
                 password: formik.getFieldProps('password').value
             })

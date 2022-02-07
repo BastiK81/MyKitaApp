@@ -7,7 +7,6 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import {LoginForm} from '../components/authentication/login';
-import {LoginSignInServiceImpl} from "../services/LoginSignInService";
 
 // ----------------------------------------------------------------------
 
@@ -36,14 +35,8 @@ const ContentStyle = styled('div')(({theme}) => ({
     padding: theme.spacing(12, 0)
 }));
 
-
-interface AppProps {
-    login: LoginSignInServiceImpl
-}
-
-export default function Login(props: AppProps) {
+export default function Login() {
     return (
-        // @ts-ignore
         <RootStyle title="Login | My Kita App">
             <AuthLayout>
                 Don’t have an account? &nbsp;
@@ -69,7 +62,7 @@ export default function Login(props: AppProps) {
                     </Stack>
                     {/*<AuthSocial />*/}
 
-                    <LoginForm login={props.login}/>
+                    <LoginForm/>
 
                     <Typography variant="body2" align="center" sx={{mt: 3}}>
                         Don’t have an account?&nbsp;
