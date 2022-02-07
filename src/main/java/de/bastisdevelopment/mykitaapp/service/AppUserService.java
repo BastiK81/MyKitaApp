@@ -43,6 +43,7 @@ public class AppUserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user already exist");
         }
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        user.initialiseVisibility();
         repository.save(user);
         logger.info(String.format("User: %s created", user.getEmail()));
         return jwtUtils.createToken(new HashMap<>(), user.getEmail());

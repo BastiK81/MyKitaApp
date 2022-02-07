@@ -15,7 +15,7 @@ export interface UserServiceImpl {
     getAllUser: () => UserItem[]
 }
 
-const UserService = (jwt: string, getKitaInformation: () => void, callBackend: (url: string, requestMethod: string, data: {}) => Promise<any>) => {
+const UserService = (jwt: string, callBackend: (url: string, requestMethod: string, data: {}) => Promise<any>) => {
 
     const [user, setUser] = useState<UserItem>({email: "", id: "", lastName: "", firstName: ""})
     const [allUser, setAllUser] = useState<UserItem[]>([])
@@ -30,7 +30,6 @@ const UserService = (jwt: string, getKitaInformation: () => void, callBackend: (
         callBackend("/api/user/getuserinformation", 'GET', {})
             .then((json: UserItem) => {
                 setUser(json)
-                getKitaInformation()
             })
     }
 

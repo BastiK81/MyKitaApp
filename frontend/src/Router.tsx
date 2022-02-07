@@ -44,7 +44,7 @@ export default function Router() {
     }
 
     const playSchoolService: PlaySchoolServiceImpl = PlaySchoolService(callBackend)
-    const userService: UserServiceImpl = UserService(jwt, playSchoolService.getKita, callBackend);
+    const userService: UserServiceImpl = UserService(jwt, callBackend);
     const loginSignInService: LoginSignInServiceImpl = LoginSignInService(setJwt, userService.refreshUser)
 
     const groupService: GroupServiceImpl = GroupService(callBackend)
