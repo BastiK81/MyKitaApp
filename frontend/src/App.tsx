@@ -7,14 +7,14 @@ import {BaseOptionChartStyle} from "./forRefactoring/components/charts/BaseOptio
 import Router from "./Router";
 
 function App() {
-  return (
-      <ThemeConfig>
-          <ScrollToTop />
-          <GlobalStyles />
-          <BaseOptionChartStyle />
-          <Router />
-      </ThemeConfig>
-  );
+    return (
+        <ThemeConfig>
+            <ScrollToTop/>
+            <GlobalStyles/>
+            <BaseOptionChartStyle/>
+            <Router/>
+        </ThemeConfig>
+    );
 }
 
 export default App;

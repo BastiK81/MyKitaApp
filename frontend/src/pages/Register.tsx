@@ -1,96 +1,96 @@
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 // material
-import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography } from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {Box, Card, Container, Link, Typography} from '@mui/material';
 // layouts
 import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
-import { RegisterForm } from '../components/authentication/register';
-import {ILoginSignInService} from "../services/LoginSignInService";
+import {RegisterForm} from '../components/authentication/register';
+import {LoginSignInServiceImpl} from "../services/LoginSignInService";
 
-const RootStyle = styled(Page)(({ theme }) => ({
-  [theme.breakpoints.up('md')]: {
-    display: 'flex'
-  }
+const RootStyle = styled(Page)(({theme}) => ({
+    [theme.breakpoints.up('md')]: {
+        display: 'flex'
+    }
 }));
 
-const SectionStyle = styled(Card)(({ theme }) => ({
-  width: '100%',
-  maxWidth: 464,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
+const SectionStyle = styled(Card)(({theme}) => ({
+    width: '100%',
+    maxWidth: 464,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    margin: theme.spacing(2, 0, 2, 2)
 }));
 
-const ContentStyle = styled('div')(({ theme }) => ({
-  maxWidth: 480,
-  margin: 'auto',
-  display: 'flex',
-  minHeight: '100vh',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  padding: theme.spacing(12, 0)
+const ContentStyle = styled('div')(({theme}) => ({
+    maxWidth: 480,
+    margin: 'auto',
+    display: 'flex',
+    minHeight: '100vh',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    padding: theme.spacing(12, 0)
 }));
 
 // ----------------------------------------------------------------------
 
-interface AppProps{
-  register: ILoginSignInService
+interface AppProps {
+    register: LoginSignInServiceImpl
 }
 
-export default function Register(props:AppProps) {
-  return (
-      // @ts-ignore
-    <RootStyle title="Register | My Kita App">
-      <AuthLayout>
-        Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-          Login
-        </Link>
-      </AuthLayout>
+export default function Register(props: AppProps) {
+    return (
+        // @ts-ignore
+        <RootStyle title="Register | My Kita App">
+            <AuthLayout>
+                Already have an account? &nbsp;
+                <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+                    Login
+                </Link>
+            </AuthLayout>
 
-        <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Erleichter dir den Tag mit der My Kita App
-          </Typography>
-          <img alt="register" src="/static/illustrations/illustration_register.png" />
-        </SectionStyle>
+            <SectionStyle>
+                <Typography variant="h3" sx={{px: 5, mt: 10, mb: 5}}>
+                    Erleichter dir den Tag mit der My Kita App
+                </Typography>
+                <img alt="register" src="/static/illustrations/illustration_register.png"/>
+            </SectionStyle>
 
-      <Container>
-        <ContentStyle>
-          <Box sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              Get started absolutely free.
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Register to My Kita App
-            </Typography>
-          </Box>
+            <Container>
+                <ContentStyle>
+                    <Box sx={{mb: 5}}>
+                        <Typography variant="h4" gutterBottom>
+                            Get started absolutely free.
+                        </Typography>
+                        <Typography sx={{color: 'text.secondary'}}>
+                            Register to My Kita App
+                        </Typography>
+                    </Box>
 
-          <RegisterForm register={props.register}/>
+                    <RegisterForm register={props.register}/>
 
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
-            </Link>
-            &nbsp;and&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
-            </Link>
-            .
-          </Typography>
+                    <Typography variant="body2" align="center" sx={{color: 'text.secondary', mt: 3}}>
+                        By registering, I agree to Minimal&nbsp;
+                        <Link underline="always" sx={{color: 'text.primary'}}>
+                            Terms of Service
+                        </Link>
+                        &nbsp;and&nbsp;
+                        <Link underline="always" sx={{color: 'text.primary'}}>
+                            Privacy Policy
+                        </Link>
+                        .
+                    </Typography>
 
-            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
-              <Link to="/login" component={RouterLink}>
-                Login
-              </Link>
-            </Typography>
-        </ContentStyle>
-      </Container>
-    </RootStyle>
-  );
+                    <Typography variant="subtitle2" sx={{mt: 3, textAlign: 'center'}}>
+                        Already have an account?&nbsp;
+                        <Link to="/login" component={RouterLink}>
+                            Login
+                        </Link>
+                    </Typography>
+                </ContentStyle>
+            </Container>
+        </RootStyle>
+    );
 }

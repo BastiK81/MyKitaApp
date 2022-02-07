@@ -1,21 +1,15 @@
 import Page from "../components/Page";
-import {
-    Box,
-    Container,
-    Stack,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Box, Container, Stack, TextField, Typography} from "@mui/material";
 import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
-import {IKitaInformationService} from "../services/KitaInformationService";
+import {PlaySchoolServiceImpl} from "../services/PlaySchoolService";
 
-interface AppProps{
-    kitaInformation: IKitaInformationService
+interface AppProps {
+    playSchoolService: PlaySchoolServiceImpl
 }
 
-const Kita = (props:AppProps) => {
+const PlaySchool = (props: AppProps) => {
 
     const RegisterSchema = Yup.object().shape({
         kitaName: Yup.string()
@@ -30,15 +24,15 @@ const Kita = (props:AppProps) => {
 
     const formik = useFormik({
         initialValues: {
-            kitaName: props.kitaInformation.name,
-            street: props.kitaInformation.street,
-            houseNumber: props.kitaInformation.houseNumber,
-            postcode: props.kitaInformation.postcode,
-            city: props.kitaInformation.city,
+            kitaName: props.playSchoolService.playSchoolItem.name,
+            street: props.playSchoolService.playSchoolItem.street,
+            houseNumber: props.playSchoolService.playSchoolItem.houseNumber,
+            postcode: props.playSchoolService.playSchoolItem.postcode,
+            city: props.playSchoolService.playSchoolItem.city,
         },
         validationSchema: RegisterSchema,
         onSubmit: () => {
-            props.kitaInformation.addKita({
+            props.playSchoolService.addKita({
                 name: formik.getFieldProps('kitaName').value,
                 street: formik.getFieldProps('street').value,
                 houseNumber: formik.getFieldProps('houseNumber').value,
@@ -48,13 +42,13 @@ const Kita = (props:AppProps) => {
         },
     });
 
-    const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+    const {errors, touched, handleSubmit, isSubmitting, getFieldProps} = formik;
 
-    return(
+    return (
         // @ts-ignore
         <Page title="Kita Übersicht">
             <Container maxWidth="xl">
-                <Box sx={{ pb: 5 }}>
+                <Box sx={{pb: 5}}>
                     <Typography variant="h4">Hier ist deine Kita Übersicht</Typography>
                 </Box>
                 <Typography variant="h6" gutterBottom>
@@ -63,44 +57,44 @@ const Kita = (props:AppProps) => {
                 <FormikProvider value={formik}>
                     <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                         <Stack spacing={3}>
+                            <TextField
+                                fullWidth
+                                label="name"
+                                {...getFieldProps('kitaName')}
+                                error={Boolean(touched.kitaName && errors.kitaName)}
+                                helperText={touched.kitaName && errors.kitaName}
+                                disabled={props.playSchoolService.hasKita}
+                            />
+
+                            <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
                                 <TextField
                                     fullWidth
-                                    label="name"
-                                    {...getFieldProps('kitaName')}
-                                    error={Boolean(touched.kitaName && errors.kitaName)}
-                                    helperText={touched.kitaName && errors.kitaName}
-                                    disabled={props.kitaInformation.hasKita}
+                                    label="Street"
+                                    {...getFieldProps('street')}
+                                    error={Boolean(touched.street && errors.street)}
+                                    helperText={touched.street && errors.street}
+                                    disabled={props.playSchoolService.hasKita}
                                 />
 
-                            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                            <TextField
-                                fullWidth
-                                label="Street"
-                                {...getFieldProps('street')}
-                                error={Boolean(touched.street && errors.street)}
-                                helperText={touched.street && errors.street}
-                                disabled={props.kitaInformation.hasKita}
-                            />
-
-                            <TextField
-                                fullWidth
-                                label="House Number"
-                                {...getFieldProps('houseNumber')}
-                                error={Boolean(touched.houseNumber && errors.houseNumber)}
-                                helperText={touched.houseNumber && errors.houseNumber}
-                                disabled={props.kitaInformation.hasKita}
-                            />
+                                <TextField
+                                    fullWidth
+                                    label="House Number"
+                                    {...getFieldProps('houseNumber')}
+                                    error={Boolean(touched.houseNumber && errors.houseNumber)}
+                                    helperText={touched.houseNumber && errors.houseNumber}
+                                    disabled={props.playSchoolService.hasKita}
+                                />
 
                             </Stack>
 
-                            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                            <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
                                 <TextField
                                     fullWidth
                                     label="Postcode"
                                     {...getFieldProps('postcode')}
                                     error={Boolean(touched.postcode && errors.postcode)}
                                     helperText={touched.postcode && errors.postcode}
-                                    disabled={props.kitaInformation.hasKita}
+                                    disabled={props.playSchoolService.hasKita}
                                 />
                                 <TextField
                                     fullWidth
@@ -108,12 +102,12 @@ const Kita = (props:AppProps) => {
                                     {...getFieldProps('city')}
                                     error={Boolean(touched.city && errors.city)}
                                     helperText={touched.city && errors.city}
-                                    disabled={props.kitaInformation.hasKita}
+                                    disabled={props.playSchoolService.hasKita}
                                 />
 
                             </Stack>
 
-                            {!props.kitaInformation.hasKita && <LoadingButton
+                            {!props.playSchoolService.hasKita && <LoadingButton
                                 fullWidth
                                 size="large"
                                 type="submit"
@@ -131,4 +125,4 @@ const Kita = (props:AppProps) => {
 
 }
 
-export default Kita
+export default PlaySchool

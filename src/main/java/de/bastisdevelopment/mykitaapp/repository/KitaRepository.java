@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface KitaRepository extends MongoRepository<KitaDBItem, String> {
 
     Optional<KitaDBItem> findByAdminId(String adminId);
+
     Optional<KitaDBItem> findByName(String name);
 
 }

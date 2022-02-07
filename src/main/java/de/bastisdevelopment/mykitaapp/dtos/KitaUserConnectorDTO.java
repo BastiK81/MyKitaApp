@@ -30,11 +30,12 @@ public class KitaUserConnectorDTO {
         this.expireDate = dbItem.getExpireDate();
     }
 
-    public KitaUserConnectorDTO(String userId, String kitaId, KitaUserRole userRole, Date expireDate) {
+    public KitaUserConnectorDTO(String userId, String kitaId, KitaUserRole userRole) {
+        super();
         this.userId = userId;
         this.kitaId = kitaId;
         this.userRole = userRole;
-        this.expireDate = expireDate;
+        this.expireDate = new Date();
     }
 
 }

@@ -1,7 +1,6 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
 import de.bastisdevelopment.mykitaapp.items.ChildDBItem;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.Date;
 import java.util.List;
@@ -9,12 +8,12 @@ import java.util.List;
 public class ChildDTO {
 
     private String id;
-    private String firstName;
-    private String lastName;
-    private Date dateOfBirth;
-    private List<String> parents;
-    private String kitaId;
-    private String groupId;
+    private final String firstName;
+    private final String lastName;
+    private final Date dateOfBirth;
+    private final List<String> parents;
+    private final String kitaId;
+    private final String groupId;
 
     public ChildDTO(ChildDBItem child) {
         super();

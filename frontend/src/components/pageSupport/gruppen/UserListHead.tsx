@@ -1,9 +1,10 @@
 // material
 import {visuallyHidden} from '@mui/utils';
 import {Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material';
-import {ITABLE_HEAD} from "../../../pages/Gruppen";
+
 import {ChangeEvent, MouseEventHandler} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
+import {ITableHead} from "../../../pages/Groups";
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +12,7 @@ interface IUserListHead {
     order: SortDirection,
     orderBy: string,
     rowCount: number,
-    headLabel: ITABLE_HEAD[],
+    headLabel: ITableHead[],
     numSelected: number,
     onRequestSort: (event: MouseEventHandler<HTMLAnchorElement>, property: string) => void,
     onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void

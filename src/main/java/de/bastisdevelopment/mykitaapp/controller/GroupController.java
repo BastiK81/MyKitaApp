@@ -12,9 +12,8 @@ import java.util.List;
 @RequestMapping("/api/group")
 public class GroupController {
 
-    private final GroupService service;
-
     private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
+    private final GroupService service;
 
     public GroupController(GroupService service) {
         this.service = service;
@@ -27,7 +26,7 @@ public class GroupController {
     }
 
     @GetMapping(value = "/getAllGroups/{kitaId}")
-    public List<GroupDTO> getAllGroups(@PathVariable String kitaId)  {
+    public List<GroupDTO> getAllGroups(@PathVariable String kitaId) {
         logger.info("Get Kita Groups with id: " + kitaId);
         return service.getAllGroups(kitaId);
     }

@@ -39,6 +39,7 @@ public class KitaController {
 
     @PostMapping(path = "addkitauserconnector")
     public void addNewKitaUserConnector(@RequestBody KitaUserConnectorDTO dto) throws Exception {
+        logger.info("Add Kita User Connection");
         connectorService.addNewKitaUserConnection(dto);
     }
 

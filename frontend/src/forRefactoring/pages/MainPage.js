@@ -1,11 +1,18 @@
 // material
-import { Box, Grid, Container, Typography } from '@mui/material';
+import {Box, Container, Grid, Typography} from '@mui/material';
 // components
 import Page from '../../components/Page';
 import {
-    AppBugReports, AppConversionRates, AppCurrentSubject, AppCurrentVisits,
-    AppItemOrders, AppNewsUpdate,
-    AppNewUsers, AppOrderTimeline, AppTasks, AppTrafficBySite,
+    AppBugReports,
+    AppConversionRates,
+    AppCurrentSubject,
+    AppCurrentVisits,
+    AppItemOrders,
+    AppNewsUpdate,
+    AppNewUsers,
+    AppOrderTimeline,
+    AppTasks,
+    AppTrafficBySite,
     AppWebsiteVisits,
     AppWeeklySales
 } from "../components/dashboard/app";
@@ -17,54 +24,54 @@ export default function MainPage() {
     return (
         <Page title="Dashboard | Minimal-UI">
             <Container maxWidth="xl">
-                <Box sx={{ pb: 5 }}>
+                <Box sx={{pb: 5}}>
                     <Typography variant="h4">Hi, Welcome back</Typography>
                 </Box>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppWeeklySales />
+                        <AppWeeklySales/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppNewUsers />
+                        <AppNewUsers/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppItemOrders />
+                        <AppItemOrders/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <AppBugReports />
+                        <AppBugReports/>
                     </Grid>
 
 
                     <Grid item xs={12} md={6} lg={8}>
-                        <AppWebsiteVisits />
+                        <AppWebsiteVisits/>
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={4}>
-                        <AppCurrentVisits />
+                        <AppCurrentVisits/>
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={8}>
-                        <AppConversionRates />
+                        <AppConversionRates/>
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={4}>
-                        <AppCurrentSubject />
+                        <AppCurrentSubject/>
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={8}>
-                        <AppNewsUpdate />
+                        <AppNewsUpdate/>
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={4}>
-                        <AppOrderTimeline />
+                        <AppOrderTimeline/>
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={4}>
-                        <AppTrafficBySite />
+                        <AppTrafficBySite/>
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={8}>
-                        <AppTasks />
+                        <AppTasks/>
                     </Grid>
 
                 </Grid>

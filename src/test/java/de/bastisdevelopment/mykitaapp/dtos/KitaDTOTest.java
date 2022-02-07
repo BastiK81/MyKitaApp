@@ -3,11 +3,11 @@ package de.bastisdevelopment.mykitaapp.dtos;
 import de.bastisdevelopment.mykitaapp.items.KitaDBItem;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class KitaDTOTest {
 
-    private KitaDBItem kitaDBItem = new KitaDBItem("12345","Nordlicht","Heuweg","2","21493","Schwarzenbek","12345");
+    private final KitaDBItem kitaDBItem = new KitaDBItem("12345", "Nordlicht", "Heuweg", "2", "21493", "Schwarzenbek", "12345");
 
     @Test
     void TestKitaDTOIdTrue() {

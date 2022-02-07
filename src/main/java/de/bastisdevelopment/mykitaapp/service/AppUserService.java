@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AppUserService {
@@ -66,11 +68,14 @@ public class AppUserService {
         return new AppUserDTO(getActualUser());
     }
 
-    public AppUserDBItem getActualUser(){
+    public AppUserDBItem getActualUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         logger.info(String.format("Get actual User %s", currentPrincipalName));
         return repository.findByEmail(currentPrincipalName).get();
     }
 
+    public List<AppUserDTO> getAllUser() {
+        return repository.findAll().stream().map(appUserDBItem -> new AppUserDTO(appUserDBItem)).collect(Collectors.toList());
+    }
 }

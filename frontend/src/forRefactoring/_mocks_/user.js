@@ -1,16 +1,15 @@
-
-import { mockImgAvatar } from '../utils/mockImages';
+import {mockImgAvatar} from '../utils/mockImages';
 
 // ----------------------------------------------------------------------
 
 const users = [...Array(24)].map((_, index) => ({
-  id: '1',
-  avatarUrl: mockImgAvatar(index + 1),
-  name: 'Sebastian',
-  company: 'EON',
-  isVerified: true,
-  status: 'active',
-  role: 'Leader'
+    id: '1',
+    avatarUrl: mockImgAvatar(index + 1),
+    name: 'Sebastian',
+    company: 'EON',
+    isVerified: true,
+    status: 'active',
+    role: 'Leader'
     // 'Hr Manager',
     // 'UI Designer',
     // 'UX Designer',

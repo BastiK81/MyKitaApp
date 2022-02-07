@@ -1,4 +1,4 @@
-import { merge } from 'lodash';
+import {merge} from 'lodash';
 import Card from './Card';
 import Lists from './Lists';
 import Paper from './Paper';
@@ -13,17 +13,17 @@ import {Theme} from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function ComponentsOverrides(theme:Theme) {
-  return merge(
-    Card(theme),
-    Lists(theme),
-    Paper(),
-    Input(theme),
-    Button(theme),
-    Tooltip(theme),
-    Backdrop(theme),
-    Typography(theme),
-    IconButton(theme),
-    Autocomplete(theme)
-  );
+export default function ComponentsOverrides(theme: Theme) {
+    return merge(
+        Card(theme),
+        Lists(theme),
+        Paper(),
+        Input(theme),
+        Button(theme),
+        Tooltip(theme),
+        Backdrop(theme),
+        Typography(theme),
+        IconButton(theme),
+        Autocomplete(theme)
+    );
 }
