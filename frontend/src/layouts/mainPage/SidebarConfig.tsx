@@ -2,7 +2,6 @@ import {Icon, IconifyIcon} from '@iconify/react';
 import peopleFill from '@iconify/icons-eva/people-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import homeFill from "@iconify/icons-eva/home-fill";
 import React from "react";
 

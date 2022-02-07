@@ -70,7 +70,6 @@ const Children = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
 
-
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupItems.length) : 0;
 
     const isUserNotFound = childItems.length === 0;

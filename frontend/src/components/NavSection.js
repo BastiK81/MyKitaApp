@@ -165,9 +165,9 @@ export default function NavSection({navConfig, ...other}) {
         <Box {...other}>
             <List disablePadding>
                 {navConfig.map((item) => {
-                        if (item.alwaysShow || hasKita) {
-                            return (<NavItem key={item.title} item={item} active={match}/>)
-                        }
+                    if (item.alwaysShow || hasKita) {
+                        return (<NavItem key={item.title} item={item} active={match}/>)
+                    }
                 })}
             </List>
         </Box>
