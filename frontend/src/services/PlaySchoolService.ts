@@ -39,9 +39,6 @@ const PlaySchoolService = (callBackend: (url: string, requestMethod: string, dat
                 setPlaySchoolItem(json)
                 setHasKita(true)
             })
-            .catch(() => {
-                navigate('/404', {replace: true});
-            });
     }
 
     const getKita = () => {
@@ -50,9 +47,6 @@ const PlaySchoolService = (callBackend: (url: string, requestMethod: string, dat
                 setPlaySchoolItem(json)
                 setHasKita(true)
             })
-            .catch(() => {
-                navigate('/404', {replace: true});
-            });
     }
 
     return {

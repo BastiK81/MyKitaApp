@@ -4,12 +4,20 @@ import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
 import {PlaySchoolServiceImpl} from "../services/PlaySchoolService";
+import {useEffect} from "react";
 
 interface AppProps {
     playSchoolService: PlaySchoolServiceImpl
 }
 
 const PlaySchool = (props: AppProps) => {
+
+    const {playSchoolService} = props
+
+    useEffect(() => {
+        playSchoolService.getKita()
+    }, []);
+
 
     const RegisterSchema = Yup.object().shape({
         kitaName: Yup.string()
@@ -24,15 +32,15 @@ const PlaySchool = (props: AppProps) => {
 
     const formik = useFormik({
         initialValues: {
-            kitaName: props.playSchoolService.playSchoolItem.name,
-            street: props.playSchoolService.playSchoolItem.street,
-            houseNumber: props.playSchoolService.playSchoolItem.houseNumber,
-            postcode: props.playSchoolService.playSchoolItem.postcode,
-            city: props.playSchoolService.playSchoolItem.city,
+            kitaName: playSchoolService.playSchoolItem.name,
+            street: playSchoolService.playSchoolItem.street,
+            houseNumber: playSchoolService.playSchoolItem.houseNumber,
+            postcode: playSchoolService.playSchoolItem.postcode,
+            city: playSchoolService.playSchoolItem.city,
         },
         validationSchema: RegisterSchema,
         onSubmit: () => {
-            props.playSchoolService.addKita({
+            playSchoolService.addKita({
                 name: formik.getFieldProps('kitaName').value,
                 street: formik.getFieldProps('street').value,
                 houseNumber: formik.getFieldProps('houseNumber').value,
