@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class KitaUserConnectorDTOTest {
 
-    private static final KitaUserConnectorDBItem dbItem = new KitaUserConnectorDBItem("12345","23654","97987564", ConnectionStatus.CONFIRMED,ConnectionStatus.REJECTED, KitaUserRole.USER, new Date(), new Date());
+    private static final KitaUserConnectorDBItem dbItem = new KitaUserConnectorDBItem("12345", "23654", "97987564", ConnectionStatus.CONFIRMED, ConnectionStatus.REJECTED, KitaUserRole.USER, new Date(), new Date());
 
     @Test
     void getId() {
@@ -22,42 +22,42 @@ class KitaUserConnectorDTOTest {
     @Test
     void getUserId() {
         KitaUserConnectorDTO dto = new KitaUserConnectorDTO(dbItem);
-        assertSame(dto.getUserId() , dbItem.getUserId());
+        assertSame(dto.getUserId(), dbItem.getUserId());
     }
 
     @Test
     void getKitaId() {
         KitaUserConnectorDTO dto = new KitaUserConnectorDTO(dbItem);
-        assertSame(dto.getKitaId() , dbItem.getKitaId());
+        assertSame(dto.getKitaId(), dbItem.getKitaId());
     }
 
     @Test
     void getUserStatus() {
         KitaUserConnectorDTO dto = new KitaUserConnectorDTO(dbItem);
-        assertSame(dto.getUserStatus() , dbItem.getUserStatus());
+        assertSame(dto.getUserStatus(), dbItem.getUserStatus());
     }
 
     @Test
     void getKitaStatus() {
         KitaUserConnectorDTO dto = new KitaUserConnectorDTO(dbItem);
-        assertSame(dto.getKitaStatus() , dbItem.getKitaStatus());
+        assertSame(dto.getKitaStatus(), dbItem.getKitaStatus());
     }
 
     @Test
     void getUserRole() {
         KitaUserConnectorDTO dto = new KitaUserConnectorDTO(dbItem);
-        assertSame(dto.getUserRole() , dbItem.getUserRole());
+        assertSame(dto.getUserRole(), dbItem.getUserRole());
     }
 
     @Test
     void getImplementationDate() {
         KitaUserConnectorDTO dto = new KitaUserConnectorDTO(dbItem);
-        assertSame(dto.getImplementationDate() , dbItem.getImplementationDate());
+        assertSame(dto.getImplementationDate(), dbItem.getImplementationDate());
     }
 
     @Test
     void getExpireDate() {
         KitaUserConnectorDTO dto = new KitaUserConnectorDTO(dbItem);
-        assertSame(dto.getExpireDate() , dbItem.getExpireDate());
+        assertSame(dto.getExpireDate(), dbItem.getExpireDate());
     }
 }

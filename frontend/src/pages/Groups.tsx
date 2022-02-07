@@ -14,7 +14,6 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {Link as RouterLink} from "react-router-dom";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
@@ -27,13 +26,13 @@ import Label from "../components/Label";
 import {sentenceCase} from "change-case";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 
-export interface ITABLE_HEAD {
+export interface ITableHead {
     id: string,
     label: string,
     alignRight: boolean
 }
 
-const TABLE_HEAD: ITABLE_HEAD[] = [
+const tableHeads: ITableHead[] = [
     {id: 'name', label: 'Name', alignRight: false},
     {id: 'kitaName', label: 'Kita', alignRight: false}
 ];
@@ -46,10 +45,7 @@ interface AppProps {
 
 const Groups = (props: AppProps) => {
 
-    useEffect(() => {
-        props.groupService.refreshAllGroups(props.playSchoolId)
-    }, []);
-
+    const {groupService, playSchoolId, playSchoolName} = props
 
     const [group, setGroup] = useState('');
     const [page, setPage] = useState(0);
@@ -59,9 +55,13 @@ const Groups = (props: AppProps) => {
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.groupService.getAllGroups().length) : 0;
+    useEffect(() => {
+        groupService.refreshAllGroups(playSchoolId)
+    }, []);
 
-    const isUserNotFound = props.groupService.getAllGroups().length === 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupService.getAllGroups().length) : 0;
+
+    const isUserNotFound = groupService.getAllGroups().length === 0;
 
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
@@ -72,7 +72,7 @@ const Groups = (props: AppProps) => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = props.groupService.getAllGroups().map((n) => n.name);
+            const newSelecteds: string[] = groupService.getAllGroups().map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -84,8 +84,8 @@ const Groups = (props: AppProps) => {
     };
 
     const addGroup = () => {
-        const data: {} = {name: group, kitaId: props.playSchoolId, kitaName: props.playSchoolName}
-        props.groupService.addGroup(data)
+        const data: {} = {name: group, kitaId: playSchoolId, kitaName: playSchoolName}
+        groupService.addGroup(data)
         setGroup('')
     }
 
@@ -152,14 +152,14 @@ const Groups = (props: AppProps) => {
                                 <UserListHead
                                     order={order}
                                     orderBy={orderBy}
-                                    headLabel={TABLE_HEAD}
-                                    rowCount={props.groupService.getAllGroups().length}
+                                    headLabel={tableHeads}
+                                    rowCount={groupService.getAllGroups().length}
                                     numSelected={selected.length}
                                     onRequestSort={handleRequestSort}
                                     onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
-                                    {props.groupService.getAllGroups()
+                                    {groupService.getAllGroups()
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                                 const {id, name, kitaId, kitaName} = row;
@@ -217,7 +217,7 @@ const Groups = (props: AppProps) => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={props.groupService.getAllGroups().length}
+                        count={groupService.getAllGroups().length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

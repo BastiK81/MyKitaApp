@@ -1,10 +1,8 @@
 package de.bastisdevelopment.mykitaapp.items;
 
 import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

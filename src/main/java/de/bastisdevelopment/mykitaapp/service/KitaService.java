@@ -25,7 +25,7 @@ public class KitaService {
         KitaDBItem kitaDBItem = repository.findByAdminId(user.getId())
                 .orElseThrow(() -> new Exception(String.format("For Admin %s no Kita was found", user.getEmail())));
         logger.info(String.format("Get Kita %s with Admin %s", kitaDBItem.getName(), user.getEmail()));
-        return  new KitaDTO(kitaDBItem);
+        return new KitaDTO(kitaDBItem);
     }
 
     public KitaDTO addKita(KitaDTO kita) {

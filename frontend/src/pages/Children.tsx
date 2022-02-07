@@ -57,10 +57,7 @@ interface AppProps {
 
 const Children = (props: AppProps) => {
 
-    useEffect(() => {
-        props.children.refreshAllChildren(props.playSchoolId)
-        props.groupService.refreshAllGroups(props.playSchoolId)
-    }, []);
+    const {children, groupService, playSchoolId, playSchoolName} = props
 
     const [showAddChild, setShowAddChild] = useState(false)
     const [page, setPage] = useState(0);
@@ -70,9 +67,15 @@ const Children = (props: AppProps) => {
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.groupService.getAllGroups().length) : 0;
+    useEffect(() => {
+        children.refreshAllChildren(props.playSchoolId)
+        groupService.refreshAllGroups(props.playSchoolId)
 
-    const isUserNotFound = props.children.getAllChildren().length === 0;
+    }, []);
+
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupService.getAllGroups().length) : 0;
+
+    const isUserNotFound = children.getAllChildren().length === 0;
 
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
@@ -83,7 +86,7 @@ const Children = (props: AppProps) => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = props.children.getAllChildren().map((n) => n.firstName);
+            const newSelecteds: string[] = children.getAllChildren().map((n) => n.firstName);
             setSelected(newSelecteds);
             return;
         }
@@ -141,17 +144,17 @@ const Children = (props: AppProps) => {
             lastName: lastName,
             dateOfBirth: dateOfBirth,
             parents: [''],
-            kitaId: props.playSchoolId,
+            kitaId: playSchoolId,
             groupId: selectedGroup
         }
-        props.children.addChild(data)
+        children.addChild(data)
     }
 
     const getGroupName = (groupId: string): string => {
         if (groupId === "") {
             return ""
         }
-        return props.groupService.getAllGroups().filter(group => group.id === groupId)[0].name
+        return groupService.getAllGroups().filter(group => group.id === groupId)[0].name
     }
 
     return (
@@ -215,7 +218,7 @@ const Children = (props: AppProps) => {
                                                 value={selectedGroup}
                                                 onChange={handleChange}
                                             >
-                                                {props.groupService.getAllGroups().map((item) => {
+                                                {groupService.getAllGroups().map((item) => {
                                                     return (
                                                         <MenuItem value={item.id}>{item.name}</MenuItem>
                                                     )
@@ -248,13 +251,13 @@ const Children = (props: AppProps) => {
                                         order={order}
                                         orderBy={orderBy}
                                         headLabel={TABLE_HEAD}
-                                        rowCount={props.groupService.getAllGroups().length}
+                                        rowCount={groupService.getAllGroups().length}
                                         numSelected={selected.length}
                                         onRequestSort={handleRequestSort}
                                         onSelectAllClick={handleSelectAllClick}
                                     />
                                     <TableBody>
-                                        {props.children.getAllChildren()
+                                        {children.getAllChildren()
                                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                             .map((row) => {
                                                     const {
@@ -285,7 +288,7 @@ const Children = (props: AppProps) => {
                                                             <TableCell align="left">{lastName}</TableCell>
                                                             <TableCell align="left">{dateOfBirth}</TableCell>
                                                             <TableCell align="left">{parents}</TableCell>
-                                                            <TableCell align="left">{props.playSchoolName}</TableCell>
+                                                            <TableCell align="left">{playSchoolName}</TableCell>
                                                             <TableCell align="left">{getGroupName(groupId)}</TableCell>
                                                             <TableCell align="right">
                                                                 <UserMoreMenu/>
@@ -315,7 +318,7 @@ const Children = (props: AppProps) => {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={props.children.getAllChildren().length}
+                            count={children.getAllChildren().length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}

@@ -14,9 +14,8 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class AppUserController {
 
-    private final AppUserService service;
-
     private static final Logger logger = LoggerFactory.getLogger(KitaController.class);
+    private final AppUserService service;
 
     public AppUserController(AppUserService service) {
         this.service = service;

@@ -72,7 +72,8 @@ export default function Router() {
                     element: <User getAllUser={userService.getAllUser()}
                                    playSchoolId={playSchoolService.playSchoolItem.id}
                                    refreshAllUser={userService.refreshAllUser}
-                                    playSchoolName={playSchoolService.playSchoolItem.name}/>
+                                   playSchoolName={playSchoolService.playSchoolItem.name}
+                                   addPlaySchoolUserConnection={userService.addPlaySchoolUserConnection}/>
                 },
                 {path: 'products', element: <Products/>},
                 {path: 'blog', element: <Blog/>}

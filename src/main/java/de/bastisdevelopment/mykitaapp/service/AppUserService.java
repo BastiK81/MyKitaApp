@@ -68,7 +68,7 @@ public class AppUserService {
         return new AppUserDTO(getActualUser());
     }
 
-    public AppUserDBItem getActualUser(){
+    public AppUserDBItem getActualUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         logger.info(String.format("Get actual User %s", currentPrincipalName));

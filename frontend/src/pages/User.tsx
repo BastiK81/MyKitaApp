@@ -3,7 +3,12 @@ import {
     Button,
     Card,
     Checkbox,
-    Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,
+    Container,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
     Stack,
     Table,
     TableBody,
@@ -20,17 +25,16 @@ import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 import {UserItem} from "../services/UserService";
-import {Link as RouterLink} from "react-router-dom";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 
-export interface ITABLE_HEAD {
+export interface ITableHead {
     id: string,
     label: string,
     alignRight: boolean
 }
 
-const TABLE_HEAD: ITABLE_HEAD[] = [
+const tableHeads: ITableHead[] = [
     {id: 'firstName', label: 'Name', alignRight: false},
     {id: 'lastName', label: 'Last Name', alignRight: false},
     {id: 'playSchool', label: 'Kita', alignRight: false},
@@ -39,29 +43,45 @@ const TABLE_HEAD: ITABLE_HEAD[] = [
 ];
 
 interface UserProps {
+    addPlaySchoolUserConnection: (playSchoolId:string, userRole:string) => void,
     refreshAllUser: () => void,
     getAllUser: UserItem[],
     playSchoolId: string,
     playSchoolName: string
 }
 
+interface UserRole {
+    id: string,
+    role: string
+}
+
+const userRoles: UserRole[] = [
+    {id: '1', role: 'ADMIN'},
+    {id: '2', role: 'USER'},
+    {id: '3', role: 'EDUCATOR'},
+    {id: '4', role: 'PARENT'},
+    {id: '5', role: 'NONE'}
+]
+
 const User = (props: UserProps) => {
 
-    useEffect(() => {
-        props.refreshAllUser()
-    }, []);
+    const {addPlaySchoolUserConnection, refreshAllUser, getAllUser, playSchoolId, playSchoolName} = props;
 
+    const [selectedUserRole, setSelectedUserRole] = React.useState('');
+    const [selectedPlaySchool, setSelectedPlaySchool] = useState('')
     const [page, setPage] = useState(0);
     const [order, setOrder] = useState<SortDirection>('asc');
     const [selected, setSelected] = useState<string[]>([]);
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [selectedGroup, setSelectedGroup] = React.useState('');
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.getAllUser.length) : 0;
+    useEffect(() => {
+        refreshAllUser()
+    }, []);
 
-    const isUserNotFound = props.getAllUser.length === 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - getAllUser.length) : 0;
+    const isUserNotFound = getAllUser.length === 0;
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -71,7 +91,7 @@ const User = (props: UserProps) => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = props.getAllUser.map((n) => n.firstName);
+            const newSelecteds: string[] = getAllUser.map((n) => n.firstName);
             setSelected(newSelecteds);
             return;
         }
@@ -82,8 +102,12 @@ const User = (props: UserProps) => {
         setFilterName(event.target.value);
     };
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setSelectedGroup(event.target.value as string);
+    const handleChangePlaySchool = (event: SelectChangeEvent) => {
+        setSelectedPlaySchool(event.target.value);
+    };
+
+    const handleChangeUserRole = (event: SelectChangeEvent) => {
+        setSelectedUserRole(event.target.value);
     };
 
     const handleClick = (event: ChangeEvent<HTMLInputElement>, name: string) => {
@@ -114,7 +138,7 @@ const User = (props: UserProps) => {
     };
 
     const addConnection = () => {
-
+        addPlaySchoolUserConnection(playSchoolId, selectedUserRole)
     }
 
     return (
@@ -137,14 +161,14 @@ const User = (props: UserProps) => {
                                 <UserListHead
                                     order={order}
                                     orderBy={orderBy}
-                                    headLabel={TABLE_HEAD}
-                                    rowCount={props.getAllUser.length}
+                                    headLabel={tableHeads}
+                                    rowCount={getAllUser.length}
                                     numSelected={selected.length}
                                     onRequestSort={handleRequestSort}
                                     onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
-                                    {props.getAllUser
+                                    {getAllUser
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                                 const {id, firstName, lastName} = row;
@@ -166,19 +190,40 @@ const User = (props: UserProps) => {
                                                         </TableCell>
                                                         <TableCell align="left">{firstName}</TableCell>
                                                         <TableCell align="left">{lastName}</TableCell>
-                                                        <TableCell align="left"><FormControl>
-                                                            <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-helper-label"
-                                                                id="demo-simple-select-helper"
-                                                                label="Age"
-                                                                value={selectedGroup}
-                                                                onChange={handleChange}
-                                                            >
-                                                                        <MenuItem value={props.playSchoolId}>{props.playSchoolName}</MenuItem>
-                                                            </Select>
-                                                        </FormControl></TableCell>
-                                                        <TableCell align="left">{'Rolle'}</TableCell>
+                                                        <TableCell align="left">
+                                                            <FormControl>
+                                                                <InputLabel id="playSchoolPicker-label">Kita</InputLabel>
+                                                                <Select
+                                                                    labelId="playSchoolPicker-label"
+                                                                    id="playSchoolPicker"
+                                                                    label="Kita"
+                                                                    value={selectedPlaySchool}
+                                                                    onChange={handleChangePlaySchool}
+                                                                >
+                                                                    <MenuItem
+                                                                        value={playSchoolId}>{playSchoolName}</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </TableCell>
+                                                        <TableCell align="left">
+                                                            <FormControl>
+                                                                <InputLabel id="rolePicker-label">Role</InputLabel>
+                                                                <Select
+                                                                    labelId="rolePicker-label"
+                                                                    id="rolePicker"
+                                                                    label="Role"
+                                                                    value={selectedUserRole}
+                                                                    onChange={handleChangeUserRole}
+                                                                >
+                                                                    {userRoles.map((role) => {
+                                                                        return (
+                                                                            <MenuItem id={role.id}
+                                                                                      value={role.role}>{role.role}</MenuItem>
+                                                                        )
+                                                                    })}
+                                                                </Select>
+                                                            </FormControl>
+                                                        </TableCell>
                                                         <TableCell align="left">
                                                             <Button
                                                                 type="submit"
@@ -217,7 +262,7 @@ const User = (props: UserProps) => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={props.getAllUser.length}
+                        count={getAllUser.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

@@ -11,6 +11,7 @@ export interface UserServiceImpl {
     user: UserItem,
     refreshUser: () => void,
     refreshAllUser: () => void,
+    addPlaySchoolUserConnection: (playSchoolId:string, userRole:string) => void,
     getAllUser: () => UserItem[]
 }
 
@@ -18,6 +19,7 @@ const UserService = (jwt: string, getKitaInformation: () => void, callBackend: (
 
     const [user, setUser] = useState<UserItem>({email: "", id: "", lastName: "", firstName: ""})
     const [allUser, setAllUser] = useState<UserItem[]>([])
+
 
     const refreshAllUser = () => {
         callBackend("/api/user/getalluser", 'GET', {})
@@ -32,10 +34,20 @@ const UserService = (jwt: string, getKitaInformation: () => void, callBackend: (
             })
     }
 
+    const addPlaySchoolUserConnection = (playSchoolId:string, userRole:string) => {
+        const data = {
+            userId: user.id,
+            kitaId: playSchoolId,
+            userRole: userRole,
+        }
+        callBackend("/api/kita/addkitauserconnector", 'POST', data)
+    }
+
     return {
         user,
         refreshUser,
         refreshAllUser,
+        addPlaySchoolUserConnection,
         getAllUser: () => allUser
     }
 }
