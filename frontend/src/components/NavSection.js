@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Icon} from '@iconify/react';
 import {matchPath, NavLink as RouterLink, useLocation} from 'react-router-dom';
@@ -7,6 +7,7 @@ import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
 import {alpha, styled, useTheme} from '@mui/material/styles';
 import {Box, Collapse, List, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
+import {PlaySchoolCom} from "../services/PlaySchoolProvider";
 
 // ----------------------------------------------------------------------
 
@@ -154,15 +155,20 @@ NavSection.propTypes = {
 };
 
 export default function NavSection({navConfig, ...other}) {
+
+    const {hasKita} = useContext(PlaySchoolCom);
+
     const {pathname} = useLocation();
     const match = (path) => (path ? !!matchPath({path, end: false}, pathname) : false);
 
     return (
         <Box {...other}>
             <List disablePadding>
-                {navConfig.map((item) => (
-                    <NavItem key={item.title} item={item} active={match}/>
-                ))}
+                {navConfig.map((item) => {
+                        if (item.alwaysShow || hasKita) {
+                            return (<NavItem key={item.title} item={item} active={match}/>)
+                        }
+                })}
             </List>
         </Box>
     );

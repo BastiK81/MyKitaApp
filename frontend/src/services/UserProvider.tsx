@@ -1,5 +1,6 @@
 import React, {createContext, ReactElement, useContext, useState} from "react";
 import {BackendCom} from "./BackendProvider";
+import {useNavigate} from "react-router-dom";
 
 export interface IUserProvider {
     user: UserItem,
@@ -28,6 +29,8 @@ export const UserCom = createContext<IUserProvider>({
 
 const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
 
+    const navigate = useNavigate();
+
     const {callBackend} = useContext(BackendCom)
 
     const [user, setUser] = useState<UserItem>({email: "", id: "", lastName: "", firstName: ""})
@@ -50,6 +53,9 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
         callBackend("/api/user/getuserinformation", 'GET', {})
             .then((json: UserItem) => {
                 resetUser(json)
+            })
+            .catch(() => {
+                navigate('/404', {replace: true});
             })
     }
 
