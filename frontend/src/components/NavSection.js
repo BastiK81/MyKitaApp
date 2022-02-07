@@ -168,6 +168,7 @@ export default function NavSection({navConfig, ...other}) {
                     if (item.alwaysShow || hasKita) {
                         return (<NavItem key={item.title} item={item} active={match}/>)
                     }
+                    return <></>
                 })}
             </List>
         </Box>
