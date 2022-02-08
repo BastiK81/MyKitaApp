@@ -64,8 +64,12 @@ const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) =>
     const refreshPlaySchool = () => {
         callBackend('/api/kita/getkita', 'GET', {})
             .then((json: PlaySchoolItem) => {
-                setPlaySchoolItem(json)
                 setHasKita(true)
+                setPlaySchoolItem(json)
+            })
+            .catch(() => {
+                setHasKita(false)
+                setPlaySchoolItem({city: "", houseNumber: "", id: "", name: "", postcode: "", street: ""})
             })
     }
 

@@ -8,8 +8,8 @@ const Welcome = () => {
     const {refreshUser} = useContext(UserCom)
 
     useEffect(() => {
-        refreshPlaySchool()
         refreshUser()
+        refreshPlaySchool()
         // eslint-disable-next-line
     }, [])
 

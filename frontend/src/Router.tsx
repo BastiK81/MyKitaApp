@@ -19,7 +19,7 @@ export default function Router() {
             path: '/main',
             element: <MainLayout/>,
             children: [
-                {path: 'welcome', element: <Welcome />},
+                {path: 'welcome', element: <Welcome/>},
                 {path: 'playSchool', element: <PlaySchool/>},
                 {path: 'groups', element: <Groups/>},
                 {path: 'children', element: <Children/>},

@@ -64,7 +64,6 @@ const MainSidebar = () => {
                         </AccountStyle>
                     </Link>
                 </Box>
-                {/*TODO: Kita Ausblenden bei keine Kita*/}
                 <NavSection navConfig={sidebarConfig}/>
             </Scrollbar>
         </RootStyle>

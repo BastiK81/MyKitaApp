@@ -2,7 +2,6 @@ import {Icon, IconifyIcon} from '@iconify/react';
 import peopleFill from '@iconify/icons-eva/people-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
-import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import homeFill from "@iconify/icons-eva/home-fill";
 import React from "react";
 
@@ -13,44 +12,46 @@ const getIcon = (name: IconifyIcon) => <Icon icon={name} width={22} height={22}/
 export interface ISidebarConfig {
     title: string
     path: string,
-    icon: JSX.Element
+    icon: JSX.Element,
+    alwaysShow: boolean
 }
 
 const sidebarConfig: ISidebarConfig[] = [
     {
         title: 'Kita',
         path: '/main/playSchool',
-        icon: getIcon(homeFill)
+        icon: getIcon(homeFill),
+        alwaysShow: false
     },
     {
         title: 'Gruppen',
         path: '/main/groups',
-        icon: getIcon(peopleFill)
+        icon: getIcon(peopleFill),
+        alwaysShow: false
     },
     {
         title: 'Kinder',
         path: '/main/children',
-        icon: getIcon(peopleFill)
+        icon: getIcon(peopleFill),
+        alwaysShow: false
     },
     {
         title: 'user',
         path: '/main/user',
-        icon: getIcon(peopleFill)
+        icon: getIcon(peopleFill),
+        alwaysShow: false
     },
     {
         title: 'login',
         path: '/login',
-        icon: getIcon(lockFill)
+        icon: getIcon(lockFill),
+        alwaysShow: true
     },
     {
         title: 'register',
         path: '/register',
-        icon: getIcon(personAddFill)
-    },
-    {
-        title: 'Not found',
-        path: '/404',
-        icon: getIcon(alertTriangleFill)
+        icon: getIcon(personAddFill),
+        alwaysShow: true
     }
 ];
 
