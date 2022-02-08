@@ -9,6 +9,7 @@ export interface IConnectorProvider {
     getAllAccepted: (playSchoolId: string) => void,
     getAllInProgress: (playSchoolId: string) => void,
     getAllPending: (playSchoolId: string) => void,
+    addUserConnection: (userId: string, playSchoolId: string, userRole: string) => void,
 }
 
 export interface ConnectorItem {
@@ -19,7 +20,7 @@ export interface ConnectorItem {
     kitaStatus: string,
     userRole: string,
     implementationDate: Date,
-    expireDate: Date,
+    expireDate: Date
 }
 
 export const ConnectorCom = createContext<IConnectorProvider>({
@@ -36,7 +37,10 @@ export const ConnectorCom = createContext<IConnectorProvider>({
     },
     getAllPending: () => {
         throw new Error("Users not set")
-    }
+    },
+    addUserConnection: () => {
+        throw new Error("Users not set")
+    },
 })
 
 const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => {
@@ -55,29 +59,37 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const refreshUsers = (playSchoolId: string) => {
-        callBackend("/api/playSchoolUserConnection/getAllConnectableUser/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllConnectableUser/" + playSchoolId, 'GET', {})
             .then((json: UserItem[]) => resetUsers(json))
     }
 
     const getAllAccepted = (playSchoolId: string) => {
-        callBackend("/api/playSchoolUserConnection/getAllAccepted/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllAccepted/" + playSchoolId, 'GET', {})
             .then((json: ConnectorItem[]) => resetConnectors(json))
     }
 
     const getAllInProgress = (playSchoolId: string) => {
-        callBackend("/api/playSchoolUserConnection/getAllInProgress/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllInProgress/" + playSchoolId, 'GET', {})
             .then((json: ConnectorItem[]) => resetConnectors(json))
     }
 
     const getAllPending = (playSchoolId: string) => {
-        callBackend("/api/playSchoolUserConnection/getAllPending/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllPending/" + playSchoolId, 'GET', {})
             .then((json: ConnectorItem[]) => resetConnectors(json))
     }
 
+    const addUserConnection = (userId: string, playSchoolId: string, userRole: string) => {
+        const data = {
+            userId: userId,
+            kitaId: playSchoolId,
+            userRole: userRole,
+        }
+        callBackend("/api/userConnection/add", 'POST', data)
+    }
 
     return (
         <ConnectorCom.Provider
-            value={{connector: connector, users: users, refreshUsers, getAllAccepted, getAllInProgress, getAllPending}}>
+            value={{connector: connector, users: users, refreshUsers, getAllAccepted, getAllInProgress, getAllPending, addUserConnection: addUserConnection}}>
             {children}
         </ConnectorCom.Provider>
     )

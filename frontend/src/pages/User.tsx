@@ -57,11 +57,48 @@ const userRoles: UserRole[] = [
     {id: '5', role: 'NONE'}
 ]
 
-function applySortFilter(array:UserItem[], query:string) {
-    if (query) {
-        return filter(array, (_user) => _user.lastName.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+// function applySortFilter(array:UserItem[], query:string) {
+//     if (query) {
+//         return filter(array, (_user) => _user.lastName.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+//     }
+//     return array;
+// }
+
+// @ts-ignore
+function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+        return -1;
     }
-    return array;
+    if (b[orderBy] > a[orderBy]) {
+        return 1;
+    }
+    return 0;
+}
+
+// @ts-ignore
+function getComparator(order, orderBy) {
+    return order === 'desc'
+        // @ts-ignore
+        ? (a, b) => descendingComparator(a, b, orderBy)
+        // @ts-ignore
+        : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+// @ts-ignore
+function applySortFilter(array, comparator, query) {
+    // @ts-ignore
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    // @ts-ignore
+    stabilizedThis.sort((a, b) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
+    });
+    if (query) {
+        return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    }
+    // @ts-ignore
+    return stabilizedThis.map((el) => el[0]);
 }
 
 const User = () => {
@@ -83,7 +120,7 @@ const User = () => {
         // eslint-disable-next-line
     }, []);
 
-    const filteredUsers = applySortFilter(allUser, filterName);
+    const filteredUsers = applySortFilter(allUser, getComparator(order, orderBy), filterName);
     const isUserNotFound = filteredUsers.length === 0;
 
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allUser.length) : 0;
@@ -175,6 +212,7 @@ const User = () => {
                                 <TableBody>
                                     {filteredUsers
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        // @ts-ignore
                                         .map((row) => {
                                                 const {id, firstName, lastName} = row;
                                                 const isItemSelected = selected.indexOf(firstName) !== -1;

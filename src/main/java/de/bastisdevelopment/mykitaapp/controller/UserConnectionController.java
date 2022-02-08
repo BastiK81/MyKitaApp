@@ -2,7 +2,6 @@ package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
-import de.bastisdevelopment.mykitaapp.service.AppUserService;
 import de.bastisdevelopment.mykitaapp.service.KitaUserConnectorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/playSchoolUserConnection")
-public class PlaySchoolUserConnectionController {
+@RequestMapping("/api/userConnection")
+public class UserConnectionController {
 
     private final KitaUserConnectorService connectorService;
 
-    private static final Logger logger = LoggerFactory.getLogger(PlaySchoolUserConnectionController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserConnectionController.class);
 
-    public PlaySchoolUserConnectionController(KitaUserConnectorService connectorService) {
+    public UserConnectionController(KitaUserConnectorService connectorService) {
         this.connectorService = connectorService;
     }
 

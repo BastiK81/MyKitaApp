@@ -19,7 +19,11 @@ public class KitaUserConnectorDTO {
     private Date implementationDate;
     private Date expireDate;
 
+    public KitaUserConnectorDTO() {
+    }
+
     public KitaUserConnectorDTO(KitaUserConnectorDBItem dbItem) {
+        super();
         this.id = dbItem.getId();
         this.userId = dbItem.getUserId();
         this.kitaId = dbItem.getKitaId();

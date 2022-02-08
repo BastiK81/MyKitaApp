@@ -11,6 +11,7 @@ import Groups from "./pages/Groups";
 import Children from "./pages/Children";
 import User from "./pages/User";
 import Welcome from "./pages/Welcome";
+import UserConnections from "./pages/UserConnections";
 
 export default function Router() {
 
@@ -23,7 +24,7 @@ export default function Router() {
                 {path: 'playSchool', element: <PlaySchool/>},
                 {path: 'groups', element: <Groups/>},
                 {path: 'children', element: <Children/>},
-                {path: 'user', element: <User/>},
+                {path: 'user', element: <UserConnections/>},
             ]
         },
         {
