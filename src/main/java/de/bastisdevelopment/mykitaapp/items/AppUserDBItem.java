@@ -1,6 +1,7 @@
 package de.bastisdevelopment.mykitaapp.items;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
+import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -26,10 +27,16 @@ public class AppUserDBItem implements UserDetails {
     private String lastName;
     private String firstName;
     private List<UserVisibility> visibility;
+    private List<UserRole> userRoles;
 
     public void initialiseVisibility() {
         this.visibility = new ArrayList<>();
         this.visibility.add(UserVisibility.INVISIBLE);
+    }
+
+    public void initialiseUserRole() {
+        this.userRoles = new ArrayList<>();
+        this.userRoles.add(UserRole.NONE);
     }
 
     @Override

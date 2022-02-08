@@ -2,16 +2,14 @@ package de.bastisdevelopment.mykitaapp.items;
 
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
-import de.bastisdevelopment.mykitaapp.utils.KitaUserRole;
+import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import org.junit.jupiter.api.Test;
-
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 class KitaUserConnectorDBItemTest {
 
-    private static final KitaUserConnectorDTO dto = new KitaUserConnectorDTO("12345", "56789", KitaUserRole.USER);
+    private static final KitaUserConnectorDTO dto = new KitaUserConnectorDTO("12345", "56789", UserRole.USER);
 
     @Test
     void getKitaId() {

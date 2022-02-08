@@ -2,7 +2,7 @@ package de.bastisdevelopment.mykitaapp.dtos;
 
 import de.bastisdevelopment.mykitaapp.items.KitaUserConnectorDBItem;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
-import de.bastisdevelopment.mykitaapp.utils.KitaUserRole;
+import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 class KitaUserConnectorDTOTest {
 
-    private static final KitaUserConnectorDBItem dbItem = new KitaUserConnectorDBItem("12345", "23654", "97987564", ConnectionStatus.CONFIRMED, ConnectionStatus.REJECTED, KitaUserRole.USER, new Date(), new Date());
+    private static final KitaUserConnectorDBItem dbItem = new KitaUserConnectorDBItem("12345", "23654", "97987564", ConnectionStatus.CONFIRMED, ConnectionStatus.REJECTED, UserRole.USER, new Date(), new Date());
 
     @Test
     void getId() {

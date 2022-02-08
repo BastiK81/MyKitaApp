@@ -2,7 +2,7 @@ package de.bastisdevelopment.mykitaapp.items;
 
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
-import de.bastisdevelopment.mykitaapp.utils.KitaUserRole;
+import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -22,11 +22,11 @@ public class KitaUserConnectorDBItem {
     private String kitaId;
     private ConnectionStatus userStatus;
     private ConnectionStatus kitaStatus;
-    private KitaUserRole userRole;
+    private UserRole userRole;
     private Date implementationDate;
     private Date expireDate;
 
-    public KitaUserConnectorDBItem(String id, String userId, String kitaId, ConnectionStatus userStatus, ConnectionStatus kitaStatus, KitaUserRole userRole, Date implementationDate, Date expireDate) {
+    public KitaUserConnectorDBItem(String id, String userId, String kitaId, ConnectionStatus userStatus, ConnectionStatus kitaStatus, UserRole userRole, Date implementationDate, Date expireDate) {
         super();
         this.id = id;
         this.userId = userId;

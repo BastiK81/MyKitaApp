@@ -1,6 +1,6 @@
 package de.bastisdevelopment.mykitaapp.utils;
 
-public enum KitaUserRole {
+public enum UserRole {
 
     ADMIN, USER, EDUCATOR, PARENT, NONE
 

@@ -2,7 +2,7 @@ package de.bastisdevelopment.mykitaapp.dtos;
 
 import de.bastisdevelopment.mykitaapp.items.KitaUserConnectorDBItem;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
-import de.bastisdevelopment.mykitaapp.utils.KitaUserRole;
+import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,7 +15,7 @@ public class KitaUserConnectorDTO {
     private String kitaId;
     private ConnectionStatus userStatus;
     private ConnectionStatus kitaStatus;
-    private KitaUserRole userRole;
+    private UserRole userRole;
     private Date implementationDate;
     private Date expireDate;
 
@@ -30,7 +30,7 @@ public class KitaUserConnectorDTO {
         this.expireDate = dbItem.getExpireDate();
     }
 
-    public KitaUserConnectorDTO(String userId, String kitaId, KitaUserRole userRole) {
+    public KitaUserConnectorDTO(String userId, String kitaId, UserRole userRole) {
         super();
         this.userId = userId;
         this.kitaId = kitaId;

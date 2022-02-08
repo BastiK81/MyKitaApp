@@ -71,7 +71,7 @@ const User = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     useEffect(() => {
-        refreshAllUser()
+        refreshAllUser('PLAYSCHOOLADMIN')
         // eslint-disable-next-line
     }, []);
 
