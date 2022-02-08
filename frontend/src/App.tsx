@@ -10,8 +10,10 @@ import UserProvider from "./services/UserProvider";
 import PlaySchoolProvider from "./services/PlaySchoolProvider";
 import ChildrenProvider from "./services/psChildProvider";
 import GroupProvider from "./services/GrouopProvider";
+import ConnectorProvider from "./services/ConnectorProvider";
 
 function App() {
+
     return (
         <ThemeConfig>
             <ScrollToTop/>
@@ -22,7 +24,9 @@ function App() {
                     <PlaySchoolProvider>
                         <GroupProvider>
                             <ChildrenProvider>
-                                <Router/>
+                                <ConnectorProvider>
+                                    <Router/>
+                                </ConnectorProvider>
                             </ChildrenProvider>
                         </GroupProvider>
                     </PlaySchoolProvider>
