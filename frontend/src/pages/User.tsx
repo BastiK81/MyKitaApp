@@ -26,8 +26,9 @@ import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserCom} from "../services/UserProvider";
+import {UserCom, UserItem} from "../services/UserProvider";
 import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import {filter} from "lodash";
 
 export interface ITableHead {
     id: string,
@@ -56,6 +57,13 @@ const userRoles: UserRole[] = [
     {id: '5', role: 'NONE'}
 ]
 
+function applySortFilter(array:UserItem[], query:string) {
+    if (query) {
+        return filter(array, (_user) => _user.lastName.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    }
+    return array;
+}
+
 const User = () => {
 
     const {refreshAllUser, allUser, user} = useContext(UserCom);
@@ -75,8 +83,10 @@ const User = () => {
         // eslint-disable-next-line
     }, []);
 
+    const filteredUsers = applySortFilter(allUser, filterName);
+    const isUserNotFound = filteredUsers.length === 0;
+
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allUser.length) : 0;
-    const isUserNotFound = allUser.length === 0;
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -163,7 +173,7 @@ const User = () => {
                                     onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
-                                    {allUser
+                                    {filteredUsers
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                                 const {id, firstName, lastName} = row;
