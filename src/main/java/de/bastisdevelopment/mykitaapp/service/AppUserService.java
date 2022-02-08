@@ -3,6 +3,7 @@ package de.bastisdevelopment.mykitaapp.service;
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.repository.AppUserRepository;
+import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +44,7 @@ public class AppUserService {
         }
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.initialiseVisibility();
+        user.initialiseUserRole();
         repository.save(user);
         logger.info(String.format("User: %s created", user.getEmail()));
         return jwtUtils.createToken(new HashMap<>(), user.getEmail());
@@ -76,7 +77,12 @@ public class AppUserService {
         return repository.findByEmail(currentPrincipalName).get();
     }
 
-    public List<AppUserDTO> getAllUser() {
-        return repository.findAll().stream().map(appUserDBItem -> new AppUserDTO(appUserDBItem)).collect(Collectors.toList());
+    public List<AppUserDTO> getAllUser(Collection<UserVisibility> allowedVisibility) {
+        return  repository.findAll().stream().
+                filter(appUserDBItem -> appUserDBItem.getVisibility().stream()
+                        .filter(userVisibility -> !allowedVisibility.contains(userVisibility))
+                        .toList().isEmpty()).toList()
+                        .stream().map(AppUserDTO::new).toList();
+
     }
 }
