@@ -2,7 +2,6 @@ package de.bastisdevelopment.mykitaapp.service;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
-import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.items.KitaUserConnectorDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaUserConnectorRepository;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;

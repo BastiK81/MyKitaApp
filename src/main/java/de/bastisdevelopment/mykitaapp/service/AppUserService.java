@@ -17,8 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class AppUserService {
@@ -78,11 +79,11 @@ public class AppUserService {
     }
 
     public List<AppUserDTO> getAllUser(Collection<UserVisibility> allowedVisibility) {
-        return  repository.findAll().stream().
+        return repository.findAll().stream().
                 filter(appUserDBItem -> appUserDBItem.getVisibility().stream()
                         .filter(userVisibility -> !allowedVisibility.contains(userVisibility))
                         .toList().isEmpty()).toList()
-                        .stream().map(AppUserDTO::new).toList();
+                .stream().map(AppUserDTO::new).toList();
 
     }
 }

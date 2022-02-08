@@ -7,13 +7,13 @@ import java.util.List;
 
 public class ChildDTO {
 
-    private String id;
     private final String firstName;
     private final String lastName;
     private final Date dateOfBirth;
     private final List<String> parents;
     private final String kitaId;
     private final String groupId;
+    private String id;
 
     public ChildDTO(ChildDBItem child) {
         super();

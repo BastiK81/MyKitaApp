@@ -9,7 +9,6 @@ import PlaySchool from "./pages/PlaySchool";
 import Groups from "./pages/Groups";
 
 import Children from "./pages/Children";
-import User from "./pages/User";
 import Welcome from "./pages/Welcome";
 import UserConnections from "./pages/UserConnections";
 

@@ -89,7 +89,15 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
 
     return (
         <ConnectorCom.Provider
-            value={{connector: connector, users: users, refreshUsers, getAllAccepted, getAllInProgress, getAllPending, addUserConnection: addUserConnection}}>
+            value={{
+                connector: connector,
+                users: users,
+                refreshUsers,
+                getAllAccepted,
+                getAllInProgress,
+                getAllPending,
+                addUserConnection: addUserConnection
+            }}>
             {children}
         </ConnectorCom.Provider>
     )

@@ -13,9 +13,8 @@ import java.util.List;
 @RequestMapping("/api/userConnection")
 public class UserConnectionController {
 
-    private final KitaUserConnectorService connectorService;
-
     private static final Logger logger = LoggerFactory.getLogger(UserConnectionController.class);
+    private final KitaUserConnectorService connectorService;
 
     public UserConnectionController(KitaUserConnectorService connectorService) {
         this.connectorService = connectorService;

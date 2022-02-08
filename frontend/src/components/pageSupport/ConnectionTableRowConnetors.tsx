@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ChangeEvent, useContext} from "react";
+import {ChangeEvent, useContext, useState} from "react";
 import {
     Button,
     Checkbox,
@@ -18,8 +18,19 @@ import {ConnectorCom} from "../../services/ConnectorProvider";
 import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
 import {userRoles} from "../../pages/UserConnections";
 
+interface ConnectionTableRow {
+    id: string,
+    userId: string,
+    kitaId: string,
+    userStatus: string,
+    kitaStatus: string,
+    userRole: string,
+    implementationDate: Date,
+    expireDate: Date,
+}
+
 interface UserConnectionTableBodyProps {
-    row: { id: string, firstName: string, lastName: string },
+    row: ConnectionTableRow,
     selected: string[],
     handleClick: (event: ChangeEvent<HTMLInputElement>, name: string) => void
 }
@@ -29,12 +40,14 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
     const {playSchoolItem} = useContext(PlaySchoolCom);
     const {addUserConnection} = useContext(ConnectorCom);
 
-    const [selectedUserRole, setSelectedUserRole] = React.useState('');
-
     const {row, selected, handleClick} = props
 
-    const {id, firstName, lastName} = row;
-    const isItemSelected = selected.indexOf(firstName) !== -1;
+    const {id, userId, kitaId, userStatus, kitaStatus, userRole, implementationDate, expireDate} = row;
+
+    const [selectedUserRole, setSelectedUserRole] = React.useState(userRole);
+    const [hasChanges, setHasChanges] = useState(false);
+
+    const isItemSelected = selected.indexOf(id) !== -1;
 
     const addConnection = () => {
         addUserConnection(row.id, playSchoolItem.id, selectedUserRole)
@@ -42,6 +55,7 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
 
     const handleChangeUserRole = (event: SelectChangeEvent) => {
         setSelectedUserRole(event.target.value);
+        setHasChanges(event.target.value !== userRole)
     }
 
     return (
@@ -57,13 +71,13 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
             <TableCell padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
-                    onChange={(event) => handleClick(event, firstName)}
+                    onChange={(event) => handleClick(event, id)}
                 />
             </TableCell>
-            <TableCell align="left">{firstName}</TableCell>
-            <TableCell align="left">{lastName}</TableCell>
-            <TableCell align="left">
-            </TableCell>
+            <TableCell align="left">{userId}</TableCell>
+            <TableCell align="left">{kitaId}</TableCell>
+            <TableCell align="left">{userStatus}</TableCell>
+            <TableCell align="left">{kitaStatus}</TableCell>
             <TableCell align="left">
                 <FormControl>
                     <InputLabel id="rolePicker-label">Role</InputLabel>
@@ -83,16 +97,18 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
                     </Select>
                 </FormControl>
             </TableCell>
-            <TableCell align="left">
+            <TableCell align="left">{implementationDate}</TableCell>
+            <TableCell align="left">{expireDate}</TableCell>
+            {hasChanges && <TableCell align="left">
                 <Button
                     type="submit"
                     variant="contained"
                     startIcon={<Icon icon={plusFill}/>}
                     onClick={addConnection}
                 >
-                    Connect User
+                    Change Connection
                 </Button>
-            </TableCell>
+            </TableCell>}
             <TableCell align="right">
                 <UserMoreMenu/>
             </TableCell>

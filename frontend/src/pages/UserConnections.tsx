@@ -1,5 +1,5 @@
 import Page from "../components/Page";
-import {Card, Container, Stack, Table, TableBody, TableContainer, Typography} from "@mui/material";
+import {Card, Container, Stack, Table, TableBody, TableContainer, TablePagination, Typography} from "@mui/material";
 import * as React from "react";
 import {ChangeEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
 import {UserListHead, UserListToolbar} from "../components/pageSupport/gruppen";
@@ -9,6 +9,7 @@ import ConnectionTableRowUser from "../components/pageSupport/ConnectionTableRow
 import {ToggleButton, ToggleButtonGroup} from "@mui/lab";
 import {ConnectorCom} from "../services/ConnectorProvider";
 import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import ConnectionTableRowConnectors from "../components/pageSupport/ConnectionTableRowConnetors";
 
 export interface UserRole {
     id: string,
@@ -38,11 +39,13 @@ const tableHeadsUser: ITableHead[] = [
 ];
 
 const tableHeadsConnector: ITableHead[] = [
-    {id: 'firstName', label: 'Name', alignRight: false},
-    {id: 'lastName', label: 'Last Name', alignRight: false},
-    {id: 'playSchool', label: 'Kita', alignRight: false},
-    {id: 'role', label: 'Rolle', alignRight: false},
-    {id: 'add', label: 'Add User', alignRight: false}
+    {id: 'userId', label: 'userId', alignRight: false},
+    {id: 'kitaId', label: 'kitaId', alignRight: false},
+    {id: 'userStatus', label: 'userStatus', alignRight: false},
+    {id: 'kitaStatus', label: 'kitaStatus', alignRight: false},
+    {id: 'userRole', label: 'userRole', alignRight: false},
+    {id: 'implementationDate', label: 'implementationDate', alignRight: false},
+    {id: 'expireDate', label: 'expireDate', alignRight: false}
 ];
 
 
@@ -73,6 +76,7 @@ const UserConnections = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [itemCount, setItemCount] = useState(0);
 
     const handleFilterByName = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setFilterName(event.target.value);
@@ -98,22 +102,24 @@ const UserConnections = () => {
         newAlignment: string,
     ) => {
         setAlignment(newAlignment);
-        if (newAlignment==='Add New') {
+        if (newAlignment === 'Add New') {
             setTableHeads(tableHeadsUser);
             setTitle('Available User')
             refreshUsers(playSchoolItem.id)
+            setItemCount(users.length)
         } else {
             setTableHeads(tableHeadsConnector)
             setTitle(newAlignment + ' Connections')
-            if (newAlignment==='Confirmed') {
+            if (newAlignment === 'Confirmed') {
                 getAllAccepted(playSchoolItem.id)
             }
-            if (newAlignment==='Pending') {
+            if (newAlignment === 'Pending') {
                 getAllPending(playSchoolItem.id)
             }
-            if (newAlignment==='In Progress') {
+            if (newAlignment === 'In Progress') {
                 getAllInProgress(playSchoolItem.id)
             }
+            setItemCount(connector.length)
         }
     };
 
@@ -133,6 +139,15 @@ const UserConnections = () => {
             );
         }
         setSelected(newSelected);
+    };
+
+    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
     };
 
     return (
@@ -173,25 +188,39 @@ const UserConnections = () => {
                                     onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
-
-
-                                    {alignment==='Add New' &&
-                                        users
-                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            // @ts-ignore
-                                            .map((row) => {
-                                                return (
-                                                    <ConnectionTableRowUser row={row} selected={selected}
-                                                                            handleClick={handleClick}/>
-                                                )
-                                            })
+                                    {alignment === 'Add New' &&
+                                    users
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map((row) => {
+                                            return (
+                                                <ConnectionTableRowUser row={row} selected={selected}
+                                                                        handleClick={handleClick}/>
+                                            )
+                                        })
                                     }
-
+                                    {alignment !== 'Add New' &&
+                                    connector
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map((row) => {
+                                            return (
+                                                <ConnectionTableRowConnectors row={row} selected={selected}
+                                                                              handleClick={handleClick}/>
+                                            )
+                                        })
+                                    }
                                 </TableBody>
-
                             </Table>
                         </TableContainer>
                     </Scrollbar>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={itemCount}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
                 </Card>
             </Container>
         </Page>

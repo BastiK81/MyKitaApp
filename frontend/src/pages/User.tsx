@@ -26,7 +26,7 @@ import Scrollbar from "../components/Scrollbar";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserCom, UserItem} from "../services/UserProvider";
+import {UserCom} from "../services/UserProvider";
 import {PlaySchoolCom} from "../services/PlaySchoolProvider";
 import {filter} from "lodash";
 
