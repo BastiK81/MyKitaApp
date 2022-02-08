@@ -1,14 +1,10 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
-import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
 import de.bastisdevelopment.mykitaapp.service.KitaService;
-import de.bastisdevelopment.mykitaapp.service.KitaUserConnectorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -18,11 +14,10 @@ public class KitaController {
     private static final Logger logger = LoggerFactory.getLogger(KitaController.class);
 
     private final KitaService kitaService;
-    private final KitaUserConnectorService connectorService;
 
-    public KitaController(KitaService kitaService, KitaUserConnectorService connectorService) {
+
+    public KitaController(KitaService kitaService) {
         this.kitaService = kitaService;
-        this.connectorService = connectorService;
     }
 
     @GetMapping(path = "/getkita")
@@ -37,14 +32,4 @@ public class KitaController {
         return kitaService.addKita(kita);
     }
 
-    @PostMapping(path = "addkitauserconnector")
-    public void addNewKitaUserConnector(@RequestBody KitaUserConnectorDTO dto) throws Exception {
-        logger.info("Add Kita User Connection");
-        connectorService.addNewKitaUserConnection(dto);
-    }
-
-    @GetMapping(path = "getallkitauserconnections/{kitaId}")
-    public List<KitaUserConnectorDTO> getAllKitaUserConnections(@PathVariable String kitaId) {
-        return connectorService.getAllKitaUserConnections(kitaId);
-    }
 }
