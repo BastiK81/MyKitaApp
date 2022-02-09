@@ -1,8 +1,9 @@
-import React, {createContext, ReactElement, useContext, useState} from "react";
+import React, {createContext, Dispatch, ReactElement, useContext, useState} from "react";
 import {BackendCom} from "./BackendProvider";
 
 export interface IPlaySchoolProvider {
     kitaVisibility: KitaVisibility,
+    setKitaVisibility: Dispatch<React.SetStateAction<KitaVisibility>>,
     hasKita: boolean,
     refreshPlaySchool: () => void,
     playSchoolItem: PlaySchoolItem
@@ -28,6 +29,9 @@ interface PlaySchoolItem {
 
 export const PlaySchoolCom = createContext<IPlaySchoolProvider>({
     kitaVisibility: {},
+    setKitaVisibility: () => {
+        throw new Error("User not set")
+    },
     playSchoolItem: {
         city: "",
         houseNumber: "",
@@ -111,7 +115,7 @@ const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) =>
 
     return (
         <PlaySchoolCom.Provider
-            value={{hasKita, kitaVisibility, addNewPlaySchool, playSchoolItem, refreshPlaySchool, addPlaySchoolUserConnection, getVisibility}}>
+            value={{hasKita, kitaVisibility, setKitaVisibility, addNewPlaySchool, playSchoolItem, refreshPlaySchool, addPlaySchoolUserConnection, getVisibility}}>
             {children}
         </PlaySchoolCom.Provider>
     )

@@ -6,22 +6,21 @@ import {KitaVisibility, PlaySchoolCom, KitaVisibilityEnums} from "../../services
 
 const PlaySchoolVisibilitySettings = () => {
 
-    const {playSchoolItem, getVisibility, kitaVisibility} = useContext(PlaySchoolCom);
+    const {playSchoolItem, getVisibility, kitaVisibility, setKitaVisibility} = useContext(PlaySchoolCom);
 
     useEffect(() => {
         getVisibility(playSchoolItem.id)
-        setChecked(kitaVisibility)
+        console.log(kitaVisibility)
         // eslint-disable-next-line
     }, []);
 
-    const [checked, setChecked] = useState<KitaVisibility>({});
-
-    const handleToggle = (value: KitaVisibilityEnums) => () => {
-        console.log(checked)
-        const newChecked = {...checked};
+    const handleChange = (value: KitaVisibilityEnums) => () => {
+        const newChecked = {...kitaVisibility};
         newChecked[value]=!newChecked[value]
-        setChecked(newChecked);
+        setKitaVisibility(newChecked);
+        console.log(kitaVisibility)
     };
+
 
     return (
         <Stack spacing={3}>
@@ -37,8 +36,8 @@ const PlaySchoolVisibilitySettings = () => {
                     <ListItemText id="switch-list-label-playSchool" primary="Kita"/>
                     <Switch
                         edge="end"
-                        onChange={() => handleToggle('KITA')}
-                        checked={checked['KITA']}
+                        onChange={handleChange('KITA')}
+                        checked={kitaVisibility['KITA']}
                         inputProps={{
                             'aria-labelledby': 'switch-list-label-playSchool',
                         }}
@@ -51,8 +50,8 @@ const PlaySchoolVisibilitySettings = () => {
                     <ListItemText id="switch-list-label-public" primary="Public"/>
                     <Switch
                         edge="end"
-                        onChange={() => handleToggle('PUBLIC')}
-                        checked={checked['PUBLIC']}
+                        onChange={handleChange('PUBLIC')}
+                        checked={kitaVisibility['PUBLIC']}
                         inputProps={{
                             'aria-labelledby': 'switch-list-label-public',
                         }}
