@@ -1,6 +1,7 @@
 package de.bastisdevelopment.mykitaapp.items;
 
 import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
+import de.bastisdevelopment.mykitaapp.utils.PlaySchoolVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,6 +28,7 @@ public class KitaDBItem {
     private String city;
     private String adminId;
     private List<String> memberIds;
+    private List<PlaySchoolVisibility> visibility;
 
     public KitaDBItem(KitaDTO kitaDTO) {
         super();
@@ -44,5 +47,29 @@ public class KitaDBItem {
         this.postcode = postcode;
         this.city = city;
         this.adminId = adminId;
+    }
+
+    public void addMember(String userId) {
+        this.memberIds.add(userId);
+    }
+
+    public void removeMember(String userId) {
+        this.memberIds.remove(userId);
+    }
+
+    public void addVisibility(PlaySchoolVisibility visibility) {
+        this.visibility.add(visibility);
+    }
+
+    public void removeVisibility(PlaySchoolVisibility visibility) {
+        this.visibility.remove(visibility);
+    }
+
+    public void changeVisibility(PlaySchoolVisibility visibility) {
+        if (this.visibility.contains(visibility)) {
+            this.visibility.remove(visibility);
+        } else {
+            this.visibility.add(visibility);
+        }
     }
 }

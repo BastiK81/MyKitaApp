@@ -4,7 +4,7 @@ import LogoOnlyLayout from "./layouts/LogoOnlyLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from './pages/Page404';
-import PlaySchool from "./pages/PlaySchool";
+import PlaySchool from "./pages/playSchool/PlaySchool";
 
 import Groups from "./pages/Groups";
 

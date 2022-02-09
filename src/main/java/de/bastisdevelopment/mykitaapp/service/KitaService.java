@@ -4,41 +4,81 @@ import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.items.KitaDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaRepository;
+import de.bastisdevelopment.mykitaapp.utils.PlaySchoolVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class KitaService {
 
     private static final Logger logger = LoggerFactory.getLogger(KitaService.class);
-    private final KitaRepository repository;
-    private final AppUserService service;
+    private final KitaRepository kitaRepository;
+    private final AppUserService userService;
 
     public KitaService(KitaRepository repository, AppUserService service) {
-        this.repository = repository;
-        this.service = service;
+        this.kitaRepository = repository;
+        this.userService = service;
     }
 
     public KitaDTO getKitaByAdmin() throws Exception {
-        AppUserDBItem user = service.getActualUser();
-        KitaDBItem kitaDBItem = repository.findByAdminId(user.getId())
+        AppUserDBItem user = userService.getActualUser();
+        KitaDBItem kitaDBItem = kitaRepository.findByAdminId(user.getId())
                 .orElseThrow(() -> new Exception(String.format("For Admin %s no Kita was found", user.getEmail())));
         logger.info(String.format("Get Kita %s with Admin %s", kitaDBItem.getName(), user.getEmail()));
         return new KitaDTO(kitaDBItem);
     }
 
     public KitaDTO addKita(KitaDTO kita) {
-        KitaDBItem kitaDBItem = new KitaDBItem(kita);
-        kitaDBItem.setAdminId(service.getActualUser().getId());
-        if (repository.findByName(kita.getName()).isPresent()) {
+        KitaDBItem kitaDBItem = initialiseKitaDBItem(kita);
+        if (kitaRepository.findByName(kita.getName()).isPresent()) {
             throw new IllegalStateException(String.format("Kita %s already exist", kita.getName()));
         }
-        if (repository.findByAdminId(kitaDBItem.getAdminId()).isPresent()) {
-            throw new IllegalStateException(String.format("User %s already is Kita Admin", service.getActualUser().getEmail()));
+        if (kitaRepository.findByAdminId(kitaDBItem.getAdminId()).isPresent()) {
+            throw new IllegalStateException(String.format("User %s already is Kita Admin", userService.getActualUser().getEmail()));
         }
-        kitaDBItem = repository.save(kitaDBItem);
-        logger.info("Kita %s added", kitaDBItem.getName());
+        kitaDBItem = kitaRepository.save(kitaDBItem);
+        logger.info("Kita added");
         return new KitaDTO(kitaDBItem);
+    }
+
+    private KitaDBItem initialiseKitaDBItem(KitaDTO kitaDTO) {
+        KitaDBItem kitaDBItem = new KitaDBItem(kitaDTO);
+        this.initialiseVisibility(kitaDBItem);
+        this.initialiseUser(kitaDBItem);
+        return kitaDBItem;
+    }
+
+    private void initialiseVisibility(KitaDBItem kitaDBItem) {
+        kitaDBItem.setVisibility(new ArrayList<>());
+        kitaDBItem.addVisibility(PlaySchoolVisibility.PRIVATE);
+    }
+
+    private void initialiseUser(KitaDBItem kitaDBItem) {
+        String userId = userService.getActualUser().getId();
+        kitaDBItem.setAdminId(userId);
+        kitaDBItem.setMemberIds(new ArrayList<>());
+        kitaDBItem.addMember(userId);
+    }
+
+    public List<PlaySchoolVisibility> getVisibility(String kitaId) throws Exception {
+        KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
+                .orElseThrow(() -> new Exception("Kita not Found"));
+        if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
+            return kitaDBItem.getVisibility();
+        }
+        throw new IllegalStateException("No permissions to get Kita visibility");
+    }
+
+    public void changeVisibility(String kitaId, PlaySchoolVisibility visibility) throws Exception {
+        KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
+                .orElseThrow(() -> new Exception("Kita not Found"));
+        if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
+            kitaDBItem.changeVisibility(visibility);
+        }
+        throw new IllegalStateException("No permissions to get Kita visibility");
     }
 }

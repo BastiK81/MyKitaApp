@@ -1,10 +1,11 @@
-import Page from "../components/Page";
+import Page from "../../components/Page";
 import {Box, Container, Stack, TextField, Typography} from "@mui/material";
 import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
 import {useContext, useEffect} from "react";
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
+import PlaySchoolVisibilitySettings from "./PlaySchoolVisibilitySettings";
 
 const PlaySchool = () => {
 
@@ -121,6 +122,9 @@ const PlaySchool = () => {
                                 Create Kita
                             </LoadingButton>}
                         </Stack>
+
+                        <PlaySchoolVisibilitySettings/>
+
                     </Form>
                 </FormikProvider>
             </Container>
