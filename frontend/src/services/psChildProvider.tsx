@@ -36,12 +36,18 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
     const addNewChild = (data: {}) => {
         callBackend('/api/child/addNewChild', 'POST', data)
             .then((json: ChildItem[]) => setChildItems(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
 
     const refreshChildren = (playSchoolId: string) => {
         callBackend('/api/child/getAllChildren/' + playSchoolId, 'GET', {})
             .then((json: ChildItem[]) => setChildItems(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     return (

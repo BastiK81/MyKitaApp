@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class KitaService {
@@ -47,14 +48,9 @@ public class KitaService {
 
     private KitaDBItem initialiseKitaDBItem(KitaDTO kitaDTO) {
         KitaDBItem kitaDBItem = new KitaDBItem(kitaDTO);
-        this.initialiseVisibility(kitaDBItem);
+        kitaDBItem.initialiseVisibility();
         this.initialiseUser(kitaDBItem);
         return kitaDBItem;
-    }
-
-    private void initialiseVisibility(KitaDBItem kitaDBItem) {
-        kitaDBItem.setVisibility(new ArrayList<>());
-        kitaDBItem.addVisibility(PlaySchoolVisibility.PRIVATE);
     }
 
     private void initialiseUser(KitaDBItem kitaDBItem) {
@@ -64,7 +60,7 @@ public class KitaService {
         kitaDBItem.addMember(userId);
     }
 
-    public List<PlaySchoolVisibility> getVisibility(String kitaId) throws Exception {
+    public Map<String, Boolean> getVisibility(String kitaId) throws Exception {
         KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
                 .orElseThrow(() -> new Exception("Kita not Found"));
         if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
@@ -73,11 +69,13 @@ public class KitaService {
         throw new IllegalStateException("No permissions to get Kita visibility");
     }
 
-    public void changeVisibility(String kitaId, PlaySchoolVisibility visibility) throws Exception {
+    public void changeVisibility(String kitaId, Map<String, Boolean> visibility) throws Exception {
         KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
                 .orElseThrow(() -> new Exception("Kita not Found"));
         if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
             kitaDBItem.changeVisibility(visibility);
+            kitaRepository.save(kitaDBItem);
+            return;
         }
         throw new IllegalStateException("No permissions to get Kita visibility");
     }

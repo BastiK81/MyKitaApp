@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -28,7 +30,7 @@ public class KitaDBItem {
     private String city;
     private String adminId;
     private List<String> memberIds;
-    private List<PlaySchoolVisibility> visibility;
+    private Map<String, Boolean> visibility;
 
     public KitaDBItem(KitaDTO kitaDTO) {
         super();
@@ -57,19 +59,14 @@ public class KitaDBItem {
         this.memberIds.remove(userId);
     }
 
-    public void addVisibility(PlaySchoolVisibility visibility) {
-        this.visibility.add(visibility);
+    public void initialiseVisibility() {
+        this.visibility = new HashMap<>();
+        this.visibility.put(PlaySchoolVisibility.PRIVATE.toString(), true);
+        this.visibility.put(PlaySchoolVisibility.KITA.toString(), false);
+        this.visibility.put(PlaySchoolVisibility.PUBLIC.toString(), false);
     }
 
-    public void removeVisibility(PlaySchoolVisibility visibility) {
-        this.visibility.remove(visibility);
-    }
-
-    public void changeVisibility(PlaySchoolVisibility visibility) {
-        if (this.visibility.contains(visibility)) {
-            this.visibility.remove(visibility);
-        } else {
-            this.visibility.add(visibility);
-        }
+    public void changeVisibility(Map<String, Boolean> visibility) {
+        this.visibility = visibility;
     }
 }

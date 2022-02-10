@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -36,13 +37,13 @@ public class PlaySchoolController {
     }
 
     @GetMapping(path = "/getVisibility/{kitaId}")
-    public List<PlaySchoolVisibility> getVisibility(@PathVariable String kitaId) throws Exception {
+    public Map<String, Boolean> getVisibility(@PathVariable String kitaId) throws Exception {
         logger.info("Try to get Kita visibility");
         return kitaService.getVisibility(kitaId);
     }
 
     @PostMapping(path = "/changeVisibility/{kitaId}")
-    public void changeVisibility(@PathVariable String kitaId, @RequestBody PlaySchoolVisibility visibility) throws Exception {
+    public void changeVisibility(@PathVariable String kitaId, @RequestBody Map<String, Boolean> visibility) throws Exception {
         logger.info("Change Kita visibility");
         kitaService.changeVisibility(kitaId, visibility);
     }

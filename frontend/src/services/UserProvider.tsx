@@ -47,6 +47,9 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
     const refreshAllUser = (visibility: string) => {
         callBackend("/api/user/getalluser/" + visibility, 'GET', {})
             .then((json: UserItem[]) => resetAllUser(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     const refreshUser = () => {
@@ -54,7 +57,8 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
             .then((json: UserItem) => {
                 resetUser(json)
             })
-            .catch(() => {
+            .catch((error) => {
+                console.error('Error:', error);
                 navigate('/404', {replace: true});
             })
     }
