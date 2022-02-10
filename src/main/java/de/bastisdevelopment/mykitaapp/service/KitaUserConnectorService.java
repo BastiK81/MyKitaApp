@@ -44,9 +44,10 @@ public class KitaUserConnectorService {
 
 
     public List<KitaUserConnectorDTO> getAllPending(String playSchoolId) {
-        return repository.findByKitaId(playSchoolId).stream()
-                .filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN))
-                .map(KitaUserConnectorDTO::new).toList();
+        List<KitaUserConnectorDBItem> dbItems = repository.findByKitaId(playSchoolId);
+        List<KitaUserConnectorDBItem> filtered = dbItems.stream().filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN)).toList();
+        List<KitaUserConnectorDTO> dtos = filtered.stream().map(dbItem -> new KitaUserConnectorDTO(dbItem)).toList();
+        return dtos;
     }
 
     public List<AppUserDTO> getAllConnectableUser(String playSchoolId) {
@@ -55,10 +56,7 @@ public class KitaUserConnectorService {
         allowedVisibility.add(UserVisibility.VISIBLE);
         allowedVisibility.add(UserVisibility.PLAYSCHOOLADMIN);
         allowedVisibility.add(UserVisibility.PLAYSCHOOL);
-        return userService.getAllUser(allowedVisibility).stream()
-                .filter(appUserDTO -> connections.stream()
-                        .filter(dbItem -> !dbItem.getUserId().equals(playSchoolId)).toList().isEmpty())
-                .toList();
-
+        return userService.getAllUser(allowedVisibility).stream().filter(appUserDTO -> connections.stream()
+                .filter(kitaUserConnectorDTO -> kitaUserConnectorDTO.getUserId().equals(appUserDTO.getId())).toList().isEmpty()).toList();
     }
 }

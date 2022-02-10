@@ -5,7 +5,6 @@ import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
 import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -16,15 +15,17 @@ public class KitaUserConnectorDBItem {
 
     @Id
     private String id;
-    @Indexed
     private String userId;
-    @Indexed
     private String kitaId;
     private ConnectionStatus userStatus;
     private ConnectionStatus kitaStatus;
     private UserRole userRole;
     private Date implementationDate;
     private Date expireDate;
+
+    public KitaUserConnectorDBItem() {
+
+    }
 
     public KitaUserConnectorDBItem(String id, String userId, String kitaId, ConnectionStatus userStatus, ConnectionStatus kitaStatus, UserRole userRole, Date implementationDate, Date expireDate) {
         super();

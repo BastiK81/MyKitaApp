@@ -1,6 +1,5 @@
 package de.bastisdevelopment.mykitaapp.items;
 
-import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
 import lombok.Data;
@@ -8,7 +7,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
