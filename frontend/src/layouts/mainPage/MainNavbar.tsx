@@ -1,6 +1,7 @@
 import {alpha, styled} from "@mui/material/styles";
 import {AppBar, Box, Stack, Toolbar} from "@mui/material";
 import AccountPopover from "./AccountPopover";
+import NotificationsPopover from "./NotificationPopover";
 
 const DRAWER_WIDTH = 280;
 const APPBAR_MOBILE = 64;
@@ -33,6 +34,7 @@ const MainNavbar = () => {
                 <Box sx={{flexGrow: 1}}/>
 
                 <Stack direction="row" alignItems="center" spacing={{xs: 0.5, sm: 1.5}}>
+                    <NotificationsPopover/>
                     <AccountPopover/>
                 </Stack>
             </ToolbarStyle>

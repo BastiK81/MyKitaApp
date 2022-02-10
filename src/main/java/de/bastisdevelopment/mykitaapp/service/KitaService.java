@@ -4,13 +4,11 @@ import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.items.KitaDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaRepository;
-import de.bastisdevelopment.mykitaapp.utils.PlaySchoolVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Service

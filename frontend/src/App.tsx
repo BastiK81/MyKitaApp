@@ -11,6 +11,7 @@ import PlaySchoolProvider from "./services/PlaySchoolProvider";
 import ChildrenProvider from "./services/psChildProvider";
 import GroupProvider from "./services/GrouopProvider";
 import ConnectorProvider from "./services/ConnectorProvider";
+import NotificationProfider, {NotificationCom} from "./services/NotificationProfider";
 
 function App() {
 
@@ -25,7 +26,9 @@ function App() {
                         <GroupProvider>
                             <ChildrenProvider>
                                 <ConnectorProvider>
-                                    <Router/>
+                                    <NotificationProfider>
+                                        <Router/>
+                                    </NotificationProfider>
                                 </ConnectorProvider>
                             </ChildrenProvider>
                         </GroupProvider>
