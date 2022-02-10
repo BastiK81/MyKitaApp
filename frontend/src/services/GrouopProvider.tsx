@@ -33,11 +33,17 @@ const GroupProvider = ({children}: { children: ReactElement<any, any> }) => {
     const addGroup = (data: {}) => {
         callBackend('/api/group/addnewgroup', 'POST', data)
             .then((json: GroupItem[]) => setGroupItems(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     const refreshAllGroups = (playSchoolId: string) => {
         callBackend('/api/group/getAllGroups/' + playSchoolId, 'GET', {})
             .then((json: GroupItem[]) => setGroupItems(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     return (

@@ -1,12 +1,22 @@
-import React, {createContext, ReactElement, useContext, useState} from "react";
+import React, {createContext, Dispatch, ReactElement, useContext, useState} from "react";
 import {BackendCom} from "./BackendProvider";
 
 export interface IPlaySchoolProvider {
+    kitaVisibility: KitaVisibility,
+    setKitaVisibility: Dispatch<React.SetStateAction<KitaVisibility>>,
     hasKita: boolean,
     refreshPlaySchool: () => void,
     playSchoolItem: PlaySchoolItem
     addNewPlaySchool: (data: {}) => void,
     addPlaySchoolUserConnection: (userId: string, playSchoolId: string, userRole: string) => void,
+    getVisibility: (kitaId: string) => void,
+    changeVisibility: (kitaId: string, data: KitaVisibility) => void,
+}
+
+export type KitaVisibilityEnums = 'PUBLIC' | 'KITA' | 'PRIVATE'
+
+export interface KitaVisibility {
+    [key: string]: boolean
 }
 
 interface PlaySchoolItem {
@@ -19,13 +29,17 @@ interface PlaySchoolItem {
 }
 
 export const PlaySchoolCom = createContext<IPlaySchoolProvider>({
+    kitaVisibility: {PRIVATE: true, KITA: false, PUBLIC: false},
+    setKitaVisibility: () => {
+        throw new Error("User not set")
+    },
     playSchoolItem: {
         city: "",
         houseNumber: "",
         name: "",
         id: "",
         postcode: "",
-        street: ""
+        street: "",
     },
     refreshPlaySchool: () => {
         throw new Error("User not set")
@@ -37,12 +51,19 @@ export const PlaySchoolCom = createContext<IPlaySchoolProvider>({
     addPlaySchoolUserConnection: () => {
         throw new Error("Users not set")
     },
+    getVisibility: () => {
+        throw new Error("Kita not set")
+    },
+    changeVisibility: () => {
+        throw new Error("Kita not set")
+    },
 })
 
 const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     const {callBackend} = useContext(BackendCom)
 
+    const [kitaVisibility, setKitaVisibility] = useState<KitaVisibility>({PRIVATE: true, KITA: false, PUBLIC: false});
     const [hasKita, setHasKita] = useState(false)
     const [playSchoolItem, setPlaySchoolItem] = useState<PlaySchoolItem>({
         city: "",
@@ -50,7 +71,7 @@ const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) =>
         name: "",
         id: "",
         postcode: "",
-        street: ""
+        street: "",
     })
 
     const addNewPlaySchool = (data: {}) => {
@@ -59,6 +80,9 @@ const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) =>
                 setPlaySchoolItem(json)
                 setHasKita(true)
             })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     const refreshPlaySchool = () => {
@@ -67,9 +91,10 @@ const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) =>
                 setHasKita(true)
                 setPlaySchoolItem(json)
             })
-            .catch(() => {
+            .catch((error) => {
                 setHasKita(false)
                 setPlaySchoolItem({city: "", houseNumber: "", id: "", name: "", postcode: "", street: ""})
+                console.error('Error:', error);
             })
     }
 
@@ -80,11 +105,39 @@ const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) =>
             userRole: userRole,
         }
         callBackend("/api/kita/addkitauserconnector", 'POST', data)
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    const getVisibility = (kitaId: string) => {
+        callBackend("/api/kita/getVisibility/" + kitaId, 'GET', {})
+            .then((json) => setKitaVisibility(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    const changeVisibility = (kitaId: string, data: KitaVisibility) => {
+        callBackend("/api/kita/changeVisibility/" + kitaId, 'POST', data)
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     return (
         <PlaySchoolCom.Provider
-            value={{hasKita, addNewPlaySchool, playSchoolItem, refreshPlaySchool, addPlaySchoolUserConnection}}>
+            value={{
+                hasKita,
+                kitaVisibility,
+                setKitaVisibility,
+                addNewPlaySchool,
+                playSchoolItem,
+                refreshPlaySchool,
+                addPlaySchoolUserConnection,
+                getVisibility,
+                changeVisibility
+            }}>
             {children}
         </PlaySchoolCom.Provider>
     )
