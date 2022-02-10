@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -24,12 +25,11 @@ public class AppUserDBItem implements UserDetails {
     private String password;
     private String lastName;
     private String firstName;
-    private List<UserVisibility> visibility;
+    private UserVisibility visibility;
     private List<UserRole> userRoles;
 
     public void initialiseVisibility() {
-        this.visibility = new ArrayList<>();
-        this.visibility.add(UserVisibility.INVISIBLE);
+        this.visibility = UserVisibility.INVISIBLE;
     }
 
     public void initialiseUserRole() {

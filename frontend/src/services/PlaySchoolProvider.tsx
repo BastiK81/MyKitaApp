@@ -13,8 +13,6 @@ export interface IPlaySchoolProvider {
     changeVisibility: (kitaId: string, data: KitaVisibility) => void,
 }
 
-export type KitaVisibilityEnums = 'PUBLIC' | 'KITA' | 'PRIVATE'
-
 export interface KitaVisibility {
     [key: string]: boolean
 }

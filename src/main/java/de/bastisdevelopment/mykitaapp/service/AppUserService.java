@@ -20,33 +20,34 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AppUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
-    private final AppUserRepository repository;
+    private final AppUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JWTUtils jwtUtils;
 
-    public AppUserService(AppUserRepository repository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTUtils jwtUtils) {
-        this.repository = repository;
+    public AppUserService(AppUserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTUtils jwtUtils) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
     }
 
     public String signIn(AppUserDBItem user) {
-        if (repository.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             logger.warn(String.format("User with email: %s already exist", user.getEmail()));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user already exist");
         }
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.initialiseVisibility();
         user.initialiseUserRole();
-        repository.save(user);
+        userRepository.save(user);
         logger.info(String.format("User: %s created", user.getEmail()));
         return jwtUtils.createToken(new HashMap<>(), user.getEmail());
     }
@@ -63,7 +64,7 @@ public class AppUserService {
     }
 
     public AppUserDBItem getUserByEmail(String userEmail) {
-        return repository.findByEmail(userEmail)
+        return userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + userEmail + " not found!"));
     }
 
@@ -75,15 +76,24 @@ public class AppUserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         logger.info(String.format("Get actual User %s", currentPrincipalName));
-        return repository.findByEmail(currentPrincipalName).get();
+        return userRepository.findByEmail(currentPrincipalName)
+                .orElseThrow(() -> new UsernameNotFoundException("User " + currentPrincipalName + " not found!"));
     }
 
     public List<AppUserDTO> getAllUser(Collection<UserVisibility> allowedVisibility) {
-        return repository.findAll().stream().
-                filter(appUserDBItem -> appUserDBItem.getVisibility().stream()
-                        .filter(userVisibility -> !allowedVisibility.contains(userVisibility))
-                        .toList().isEmpty()).toList()
+        return userRepository.findAll().stream().
+                filter(appUserDBItem -> allowedVisibility.contains(appUserDBItem.getVisibility())).toList()
                 .stream().map(AppUserDTO::new).toList();
 
+    }
+
+    public UserVisibility getUSerVisibility() {
+        return this.getActualUser().getVisibility();
+    }
+
+    public void setUserVisibility(UserVisibility visibility) {
+        AppUserDBItem userDBItem = getActualUser();
+        userDBItem.setVisibility(visibility);
+        userRepository.save(userDBItem);
     }
 }

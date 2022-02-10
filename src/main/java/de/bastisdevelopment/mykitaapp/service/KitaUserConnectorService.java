@@ -56,6 +56,7 @@ public class KitaUserConnectorService {
         allowedVisibility.add(UserVisibility.VISIBLE);
         allowedVisibility.add(UserVisibility.PLAYSCHOOLADMIN);
         allowedVisibility.add(UserVisibility.PLAYSCHOOL);
+        allowedVisibility.add(UserVisibility.GROUP);
         return userService.getAllUser(allowedVisibility).stream().filter(appUserDTO -> connections.stream()
                 .filter(kitaUserConnectorDTO -> kitaUserConnectorDTO.getUserId().equals(appUserDTO.getId())).toList().isEmpty()).toList();
     }
