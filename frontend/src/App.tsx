@@ -11,7 +11,7 @@ import PlaySchoolProvider from "./services/PlaySchoolProvider";
 import ChildrenProvider from "./services/psChildProvider";
 import GroupProvider from "./services/GrouopProvider";
 import ConnectorProvider from "./services/ConnectorProvider";
-import NotificationProfider, {NotificationCom} from "./services/NotificationProfider";
+import NotificationProfider from "./services/NotificationProfider";
 
 function App() {
 

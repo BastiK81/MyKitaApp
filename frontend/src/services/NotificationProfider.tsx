@@ -1,6 +1,5 @@
 import React, {createContext, ReactElement, useContext, useState} from "react";
 import {INotifications} from "../layouts/mainPage/NotificationPopover";
-import {GroupItem} from "./GrouopProvider";
 import {BackendCom} from "./BackendProvider";
 
 export interface INotificationContext{
