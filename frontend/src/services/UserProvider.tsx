@@ -4,9 +4,37 @@ import {useNavigate} from "react-router-dom";
 
 export interface IUserProvider {
     user: UserItem,
+    visibility: string,
+    getVisibility: () => void,
     refreshUser: () => void,
     allUser: UserItem[]
     refreshAllUser: (visibility: string) => void,
+    setUserVisibility: (visibility: string) => void,
+}
+
+export const UserCom = createContext<IUserProvider>({
+    user: {email: "", id: "", lastName: "", firstName: ""},
+    visibility: '',
+    refreshUser: () => {
+        throw new Error("User not set")
+    },
+    getVisibility: () => {
+        throw new Error("User not set")
+    },
+    allUser: [],
+    refreshAllUser: () => {
+        throw new Error("Users not set")
+    },
+    setUserVisibility: () => {
+        throw new Error("Users not set")
+    },
+})
+
+export type UserVisibility = 'INVISIBLE' | 'VISIBLE' | 'PLAYSCHOOL' | 'GROUP' | 'PLAYSCHOOLADMIN'
+export const userVisibility: UserVisibility[] = ['INVISIBLE', 'VISIBLE', 'PLAYSCHOOL', 'GROUP', 'PLAYSCHOOLADMIN']
+
+export interface UserVisibilityMap {
+    [key: string]: boolean
 }
 
 export interface UserItem {
@@ -16,17 +44,6 @@ export interface UserItem {
     email: string,
 }
 
-export const UserCom = createContext<IUserProvider>({
-    user: {email: "", id: "", lastName: "", firstName: ""},
-    refreshUser: () => {
-        throw new Error("User not set")
-    },
-    allUser: [],
-    refreshAllUser: () => {
-        throw new Error("Users not set")
-    }
-})
-
 const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     const navigate = useNavigate();
@@ -35,6 +52,7 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     const [user, setUser] = useState<UserItem>({email: "", id: "", lastName: "", firstName: ""})
     const [allUser, setAllUser] = useState<UserItem[]>([])
+    const [visibility, setVisibility] = useState('');
 
     const resetUser = (user: UserItem) => {
         setUser(user)
@@ -63,8 +81,25 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
             })
     }
 
+    const getVisibility = () => {
+        callBackend("/api/user/getUserVisibility", 'GET', {})
+            .then((json: string) => setVisibility(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            })
+    }
+
+    const setUserVisibility = (visibility: string) => {
+        setVisibility(visibility)
+        callBackend("/api/user/setUserVisibility", 'POST', visibility)
+            .catch((error) => {
+                console.error('Error:', error);
+            })
+    }
+
     return (
-        <UserCom.Provider value={{user, refreshUser, allUser, refreshAllUser}}>
+        <UserCom.Provider
+            value={{visibility, user, refreshUser, allUser, refreshAllUser, getVisibility, setUserVisibility}}>
             {children}
         </UserCom.Provider>
     )

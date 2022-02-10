@@ -5,14 +5,12 @@ import de.bastisdevelopment.mykitaapp.service.AppUserService;
 import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -37,6 +35,17 @@ public class AppUserController {
         allowedVisibility.add(UserVisibility.valueOf("VISIBLE"));
         allowedVisibility.add(UserVisibility.valueOf(visibility));
         return service.getAllUser(allowedVisibility);
+    }
+
+    @GetMapping(path = "/getUserVisibility")
+    public UserVisibility getUserVisibility() {
+        logger.info("Get Visibility");
+        return service.getUSerVisibility();
+    }
+
+    @PostMapping(path = "/setUserVisibility")
+    public void setUserVisibility(@RequestBody UserVisibility visibility){
+        service.setUserVisibility(visibility);
     }
 
 }

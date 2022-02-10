@@ -1,15 +1,14 @@
-import Page from "../components/Page";
-import {Card, Container, Stack, Table, TableBody, TableContainer, TablePagination, Typography} from "@mui/material";
+import Page from "../../components/Page";
+import {Card, Container, Stack, Table, TableBody, TableContainer, TablePagination, Typography, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import * as React from "react";
 import {ChangeEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
-import {UserListHead, UserListToolbar} from "../components/pageSupport/gruppen";
-import Scrollbar from "../components/Scrollbar";
+import {UserListHead, UserListToolbar} from "../../components/pageSupport/gruppen";
+import Scrollbar from "../../components/Scrollbar";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
-import ConnectionTableRowUser from "../components/pageSupport/ConnectionTableRowUser";
-import {ToggleButton, ToggleButtonGroup} from "@mui/lab";
-import {ConnectorCom} from "../services/ConnectorProvider";
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
-import ConnectionTableRowConnectors from "../components/pageSupport/ConnectionTableRowConnetors";
+import ConnectionTableRowUser from "./ConnectionTableRowUser";
+import {ConnectorCom} from "../../services/ConnectorProvider";
+import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
+import ConnectionTableRowConnectors from "./ConnectionTableRowConnetors";
 
 export interface UserRole {
     id: string,
