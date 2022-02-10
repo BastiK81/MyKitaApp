@@ -2,6 +2,7 @@ package de.bastisdevelopment.mykitaapp.service;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
+import de.bastisdevelopment.mykitaapp.dtos.UserNotificationDTO;
 import de.bastisdevelopment.mykitaapp.items.KitaUserConnectorDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaUserConnectorRepository;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
@@ -46,8 +47,7 @@ public class KitaUserConnectorService {
     public List<KitaUserConnectorDTO> getAllPending(String playSchoolId) {
         List<KitaUserConnectorDBItem> dbItems = repository.findByKitaId(playSchoolId);
         List<KitaUserConnectorDBItem> filtered = dbItems.stream().filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN)).toList();
-        List<KitaUserConnectorDTO> dtos = filtered.stream().map(dbItem -> new KitaUserConnectorDTO(dbItem)).toList();
-        return dtos;
+        return filtered.stream().map(KitaUserConnectorDTO::new).toList();
     }
 
     public List<AppUserDTO> getAllConnectableUser(String playSchoolId) {
@@ -59,5 +59,11 @@ public class KitaUserConnectorService {
         allowedVisibility.add(UserVisibility.GROUP);
         return userService.getAllUser(allowedVisibility).stream().filter(appUserDTO -> connections.stream()
                 .filter(kitaUserConnectorDTO -> kitaUserConnectorDTO.getUserId().equals(appUserDTO.getId())).toList().isEmpty()).toList();
+    }
+
+    public List<UserNotificationDTO> getAllOpenUserConnections(String id) {
+        return repository.findByUserId(id).stream()
+                .filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN)).toList()
+                .stream().map(UserNotificationDTO::new).toList();
     }
 }

@@ -14,4 +14,5 @@ public interface KitaUserConnectorRepository extends MongoRepository<KitaUserCon
 
     List<KitaUserConnectorDBItem> findByKitaId(String kitaId);
 
+    List<KitaUserConnectorDBItem> findByUserId(String id);
 }
