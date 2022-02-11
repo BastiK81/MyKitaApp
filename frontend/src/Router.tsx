@@ -12,7 +12,7 @@ import Children from "./pages/Children";
 import Welcome from "./pages/Welcome";
 import KitaUserConnections from "./pages/userConnections/KitaUserConnections";
 import UserSettings from "./pages/userSettings/UserSettings";
-import UserKitaConnections from "./pages/UserKitaConnections";
+import UserKitaConnections from "./pages/userConnections/UserKitaConnections";
 
 export default function Router() {
 

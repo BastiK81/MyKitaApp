@@ -12,6 +12,9 @@ export interface IConnectorProvider {
     getAllAccepted: (playSchoolId: string) => void,
     getAllInProgress: (playSchoolId: string) => void,
     getAllPending: (playSchoolId: string) => void,
+    getAllAcceptedUser: () => void,
+    getAllInProgressUser: () => void,
+    getAllPendingUser: () => void,
     addUserConnection: (userId: string, playSchoolId: string, userRole: string) => void,
 }
 
@@ -36,6 +39,9 @@ export const ConnectorCom = createContext<IConnectorProvider>({
     getAllInProgress: () => {},
     getAllPending: () => {},
     addUserConnection: () => {},
+    getAllAcceptedUser: () => {},
+    getAllInProgressUser: () => {},
+    getAllPendingUser: () => {},
 })
 
 const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => {
@@ -78,8 +84,32 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
             });
     }
 
+    const getAllAcceptedUser = () => {
+        callBackend("/api/userConnection/getAllAcceptedUser/", 'GET', {})
+            .then((json: ConnectorItem[]) => setConnector(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    const getAllInProgressUser = () => {
+        callBackend("/api/userConnection/getAllInProgressUser/", 'GET', {})
+            .then((json: ConnectorItem[]) => setConnector(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    const getAllPendingUser = () => {
+        callBackend("/api/userConnection/getAllPendingUser/", 'GET', {})
+            .then((json: ConnectorItem[]) => setConnector(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
     const getAllKitas = () => {
-        callBackend("/api/kita/getAllKitas/PUBLIC", 'GET', {})
+        callBackend("/api/userConnection/getAllKitas", 'GET', {})
             .then((json: PlaySchoolItem[]) => setKitas(json))
     }
 
@@ -106,7 +136,10 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
                 getAllAccepted,
                 getAllInProgress,
                 getAllPending,
-                addUserConnection: addUserConnection
+                getAllAcceptedUser,
+                getAllInProgressUser,
+                getAllPendingUser,
+                addUserConnection,
             }}>
             {children}
         </ConnectorCom.Provider>

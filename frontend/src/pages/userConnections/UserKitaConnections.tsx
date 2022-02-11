@@ -12,32 +12,28 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import {ChangeEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
-import {ConnectorCom} from "../services/ConnectorProvider";
+import {ConnectorCom} from "../../services/ConnectorProvider";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
-import Page from "../components/Page";
-import Scrollbar from "../components/Scrollbar";
-import {UserListHead, UserListToolbar} from "../components/pageSupport/gruppen";
-import ConnectionTableRowUser from "./userConnections/ConnectionTableRowUser";
-import ConnectionTableRowConnetors from "./userConnections/ConnectionTableRowConnetors";
-import {ITableHead, tableHeadsConnector, tableHeadsUser} from "./userConnections/KitaUserConnections";
+import Page from "../../components/Page";
+import Scrollbar from "../../components/Scrollbar";
+import {UserListHead, UserListToolbar} from "../../components/pageSupport/gruppen";
+import ConnectionTableRowConnetors from "./ConnectionTableRowConnetors";
+import {ITableHead, tableHeadsConnector, tableHeadsKita} from "./KitaUserConnections";
+import ConnectionTableRowKita from "./ConnectionTableRowKita";
 
 const UserKitaConnections = () => {
 
-    const {playSchoolItem} = useContext(PlaySchoolCom);
     const {
-        users,
         connector,
         kitas,
         getAllKitas,
-        refreshUsers,
-        getAllInProgress,
-        getAllAccepted,
-        getAllPending,
+        getAllInProgressUser,
+        getAllAcceptedUser,
+        getAllPendingUser,
     } = useContext(ConnectorCom);
 
     useEffect(() => {
-        getAllAccepted(playSchoolItem.id)
+        getAllKitas()
         // eslint-disable-next-line
     }, []);
 
@@ -65,7 +61,7 @@ const UserKitaConnections = () => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = users.map((n) => n.firstName);
+            const newSelecteds: string[] = kitas.map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -78,21 +74,21 @@ const UserKitaConnections = () => {
     ) => {
         setAlignment(newAlignment);
         if (newAlignment === 'Add New') {
-            setTableHeads(tableHeadsUser);
+            setTableHeads(tableHeadsKita);
             setTitle('Available User')
-            refreshUsers(playSchoolItem.id)
-            setItemCount(users.length)
+            getAllKitas()
+            setItemCount(kitas.length)
         } else {
             setTableHeads(tableHeadsConnector)
             setTitle(newAlignment + ' Connections')
             if (newAlignment === 'Confirmed') {
-                getAllAccepted(playSchoolItem.id)
+                getAllAcceptedUser()
             }
             if (newAlignment === 'Pending') {
-                getAllPending(playSchoolItem.id)
+                getAllPendingUser()
             }
             if (newAlignment === 'In Progress') {
-                getAllInProgress(playSchoolItem.id)
+                getAllInProgressUser()
             }
             setItemCount(connector.length)
         }
@@ -157,18 +153,18 @@ const UserKitaConnections = () => {
                                     order={order}
                                     orderBy={orderBy}
                                     headLabel={tableHeads}
-                                    rowCount={users.length}
+                                    rowCount={kitas.length}
                                     numSelected={selected.length}
                                     onRequestSort={handleRequestSort}
                                     onSelectAllClick={handleSelectAllClick}
                                 />
                                 <TableBody>
                                     {alignment === 'Add New' &&
-                                    users
+                                    kitas
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                             return (
-                                                <ConnectionTableRowUser row={row} selected={selected}
+                                                <ConnectionTableRowKita row={row} selected={selected}
                                                                         handleClick={handleClick}/>
                                             )
                                         })
@@ -178,8 +174,8 @@ const UserKitaConnections = () => {
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                             return (
-                                                <ConnectionTableRowConnetors row={row} selected={selected}
-                                                                              handleClick={handleClick}/>
+                                                <ConnectionTableRowConnetors title={title} roleSwitch={false} row={row} selected={selected}
+                                                                             handleClick={handleClick}/>
                                             )
                                         })
                                     }

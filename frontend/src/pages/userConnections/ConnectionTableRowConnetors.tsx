@@ -30,6 +30,8 @@ interface ConnectionTableRow {
 }
 
 interface UserConnectionTableBodyProps {
+    title: string,
+    roleSwitch: boolean,
     row: ConnectionTableRow,
     selected: string[],
     handleClick: (event: ChangeEvent<HTMLInputElement>, name: string) => void
@@ -40,7 +42,7 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
     const {playSchoolItem} = useContext(PlaySchoolCom);
     const {addUserConnection} = useContext(ConnectorCom);
 
-    const {row, selected, handleClick} = props
+    const {row, selected, handleClick, roleSwitch, title} = props
 
     const {id, userId, kitaId, userStatus, kitaStatus, userRole, implementationDate, expireDate} = row;
 
@@ -56,6 +58,10 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
     const handleChangeUserRole = (event: SelectChangeEvent) => {
         setSelectedUserRole(event.target.value);
         setHasChanges(event.target.value !== userRole)
+    }
+    
+    const confirmConnection = () => {
+      
     }
 
     return (
@@ -79,6 +85,7 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
             <TableCell align="left">{userStatus}</TableCell>
             <TableCell align="left">{kitaStatus}</TableCell>
             <TableCell align="left">
+                {roleSwitch &&
                 <FormControl>
                     <InputLabel id="rolePicker-label">Role</InputLabel>
                     <Select
@@ -96,7 +103,10 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
                             )
                         })}
                     </Select>
-                </FormControl>
+                </FormControl>}
+                {
+                    !roleSwitch &&  <TableCell align="left">{userRole}</TableCell>
+                }
             </TableCell>
             <TableCell align="left">{implementationDate}</TableCell>
             <TableCell align="left">{expireDate}</TableCell>
@@ -108,6 +118,16 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
                     onClick={addConnection}
                 >
                     Change Connection
+                </Button>
+            </TableCell>}
+            {title === 'In Progress' && <TableCell align="left">
+                 <Button
+                    type="submit"
+                    variant="contained"
+                    startIcon={<Icon icon={plusFill}/>}
+                    onClick={confirmConnection}
+                >
+                    Confirm
                 </Button>
             </TableCell>}
             <TableCell align="right">

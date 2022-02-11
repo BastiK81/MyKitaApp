@@ -1,11 +1,14 @@
 package de.bastisdevelopment.mykitaapp.service;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
+import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
 import de.bastisdevelopment.mykitaapp.dtos.UserNotificationDTO;
+import de.bastisdevelopment.mykitaapp.items.KitaDBItem;
 import de.bastisdevelopment.mykitaapp.items.KitaUserConnectorDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaUserConnectorRepository;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
+import de.bastisdevelopment.mykitaapp.utils.PlaySchoolVisibility;
 import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +19,12 @@ import java.util.List;
 @Service
 public class KitaUserConnectorService {
 
+    private final KitaService kitaService;
     private final AppUserService userService;
     private final KitaUserConnectorRepository repository;
 
-    public KitaUserConnectorService(AppUserService userService, KitaUserConnectorRepository repository) {
+    public KitaUserConnectorService(KitaService kitaService, AppUserService userService, KitaUserConnectorRepository repository) {
+        this.kitaService = kitaService;
         this.userService = userService;
         this.repository = repository;
     }
@@ -45,9 +50,9 @@ public class KitaUserConnectorService {
 
 
     public List<KitaUserConnectorDTO> getAllPending(String playSchoolId) {
-        List<KitaUserConnectorDBItem> dbItems = repository.findByKitaId(playSchoolId);
-        List<KitaUserConnectorDBItem> filtered = dbItems.stream().filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN)).toList();
-        return filtered.stream().map(KitaUserConnectorDTO::new).toList();
+        return repository.findByKitaId(playSchoolId).stream()
+                .filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN)).toList().stream()
+                .map(KitaUserConnectorDTO::new).toList();
     }
 
     public List<AppUserDTO> getAllConnectableUser(String playSchoolId) {
@@ -65,5 +70,32 @@ public class KitaUserConnectorService {
         return repository.findByUserId(id).stream()
                 .filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN)).toList()
                 .stream().map(UserNotificationDTO::new).toList();
+    }
+
+    public List<KitaUserConnectorDTO> getAllAcceptedUser() {
+        return repository.findByUserId(userService.getActualUser().getId()).stream()
+                .filter(dbItem -> dbItem.getKitaStatus().equals(ConnectionStatus.CONFIRMED) && dbItem.getUserStatus().equals(ConnectionStatus.CONFIRMED))
+                .map(KitaUserConnectorDTO::new).toList();
+    }
+
+    public List<KitaUserConnectorDTO> getAllInProgressUser() {
+        return repository.findByUserId(userService.getActualUser().getId()).stream()
+                .filter(dbItem -> dbItem.getUserStatus().equals(ConnectionStatus.OPEN))
+                .map(KitaUserConnectorDTO::new).toList();
+    }
+
+    public List<KitaUserConnectorDTO> getAllPendingUser() {
+        return repository.findByUserId(userService.getActualUser().getId()).stream()
+                .filter(dbItem -> dbItem.getKitaStatus().equals(ConnectionStatus.OPEN))
+                .map(KitaUserConnectorDTO::new).toList();
+    }
+
+
+    public List<KitaDTO> getAllKitas() {
+        List<KitaUserConnectorDBItem> connections = repository.findByUserId(userService.getActualUser().getId()).stream().toList();
+        return kitaService.getAllKitas(PlaySchoolVisibility.PUBLIC).stream()
+                .filter(kitaDTO ->  connections.stream()
+                        .filter(dbItem -> dbItem.getKitaId().equals(kitaDTO.getId())).toList().isEmpty()).toList();
+
     }
 }

@@ -29,6 +29,14 @@ export interface ITableHead {
     alignRight: boolean
 }
 
+export const tableHeadsKita: ITableHead[] = [
+    {id: 'firstName', label: 'Name', alignRight: false},
+    {id: 'lastName', label: 'Last Name', alignRight: false},
+    {id: 'playSchool', label: 'Kita', alignRight: false},
+    {id: 'role', label: 'Rolle', alignRight: false},
+    {id: 'add', label: 'Add User', alignRight: false}
+];
+
 export const tableHeadsUser: ITableHead[] = [
     {id: 'firstName', label: 'Name', alignRight: false},
     {id: 'lastName', label: 'Last Name', alignRight: false},
@@ -46,7 +54,6 @@ export const tableHeadsConnector: ITableHead[] = [
     {id: 'implementationDate', label: 'implementationDate', alignRight: false},
     {id: 'expireDate', label: 'expireDate', alignRight: false}
 ];
-
 
 const KitaUserConnections = () => {
 
@@ -202,7 +209,7 @@ const KitaUserConnections = () => {
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map((row) => {
                                             return (
-                                                <ConnectionTableRowConnectors row={row} selected={selected}
+                                                <ConnectionTableRowConnectors title={title} roleSwitch={true} row={row} selected={selected}
                                                                               handleClick={handleClick}/>
                                             )
                                         })

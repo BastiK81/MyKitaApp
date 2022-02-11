@@ -1,6 +1,7 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
+import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
 import de.bastisdevelopment.mykitaapp.service.KitaUserConnectorService;
 import org.slf4j.Logger;
@@ -39,6 +40,26 @@ public class UserConnectionController {
     @GetMapping(path = "getAllPending/{playSchoolId}")
     public List<KitaUserConnectorDTO> getAllPending(@PathVariable String playSchoolId) {
         return connectorService.getAllPending(playSchoolId);
+    }
+
+    @GetMapping(path = "getAllAcceptedUser")
+    public List<KitaUserConnectorDTO> getAllAcceptedUser() {
+        return connectorService.getAllAcceptedUser();
+    }
+
+    @GetMapping(path = "getAllInProgressUser")
+    public List<KitaUserConnectorDTO> getAllInProgressUser() {
+        return connectorService.getAllInProgressUser();
+    }
+
+    @GetMapping(path = "getAllPendingUser")
+    public List<KitaUserConnectorDTO> getAllPendingUser() {
+        return connectorService.getAllPendingUser();
+    }
+
+    @GetMapping(path = "getAllKitas")
+    public List<KitaDTO> getAllKitas() {
+        return connectorService.getAllKitas();
     }
 
     @GetMapping(path = "getAllConnectableUser/{playSchoolId}")
