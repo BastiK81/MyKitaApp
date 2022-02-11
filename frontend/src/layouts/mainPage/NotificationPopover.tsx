@@ -38,7 +38,7 @@ export interface INotifications{
         avatar: JSX.Element,
         type:string,
         createdAt: Date,
-        isUnRead: true,
+        unRead: boolean,
 }
 
 
@@ -104,7 +104,7 @@ function NotificationItem(props:NotificationItemProps) {
                 py: 1.5,
                 px: 2.5,
                 mt: '1px',
-                ...(notification.isUnRead && {
+                ...(notification.unRead && {
                     bgcolor: 'action.selected'
                 })
             }}
@@ -145,7 +145,7 @@ export default function NotificationsPopover() {
     const anchorRef = useRef(null);
     const [open, setOpen] = useState(false);
 
-    const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
+    const totalUnRead = notifications.filter((item) => item.unRead === true).length;
 
     const handleOpen = () => {
         setOpen(true);

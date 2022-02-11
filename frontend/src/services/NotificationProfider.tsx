@@ -32,7 +32,12 @@ const NotificationProfider = ({children}: { children: ReactElement<any, any> }) 
 
     const getUserNotifications = () => {
         callBackend('/api/userNotification', 'GET', {})
-            .then((json: INotifications[]) => setNotifications(json))
+            .then((json: INotifications[]) => {
+                setNotifications(json)
+                json.map(value => {
+                    console.log(value)
+                })
+            })
     }
 
     return(<NotificationCom.Provider value={{
