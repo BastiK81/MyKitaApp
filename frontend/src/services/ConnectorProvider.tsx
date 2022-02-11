@@ -1,10 +1,13 @@
 import React, {createContext, ReactElement, useContext, useState} from "react";
 import {BackendCom} from "./BackendProvider";
 import {UserItem} from "./UserProvider";
+import {PlaySchoolItem} from "./PlaySchoolProvider";
 
 export interface IConnectorProvider {
     connector: ConnectorItem[],
     users: UserItem[],
+    kitas: PlaySchoolItem[],
+    getAllKitas: () => void,
     refreshUsers: (playSchoolId: string) => void,
     getAllAccepted: (playSchoolId: string) => void,
     getAllInProgress: (playSchoolId: string) => void,
@@ -26,21 +29,13 @@ export interface ConnectorItem {
 export const ConnectorCom = createContext<IConnectorProvider>({
     connector: [],
     users: [],
-    refreshUsers: () => {
-        throw new Error("Users not set")
-    },
-    getAllAccepted: () => {
-        throw new Error("Users not set")
-    },
-    getAllInProgress: () => {
-        throw new Error("Users not set")
-    },
-    getAllPending: () => {
-        throw new Error("Users not set")
-    },
-    addUserConnection: () => {
-        throw new Error("Users not set")
-    },
+    kitas: [],
+    getAllKitas: () => {},
+    refreshUsers: () => {},
+    getAllAccepted: () => {},
+    getAllInProgress: () => {},
+    getAllPending: () => {},
+    addUserConnection: () => {},
 })
 
 const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => {
@@ -49,18 +44,11 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
 
     const [connector, setConnector] = useState<ConnectorItem[]>([])
     const [users, setUsers] = useState<UserItem[]>([])
-
-    const resetConnectors = (connectors: ConnectorItem[]) => {
-        setConnector(connectors)
-    }
-
-    const resetUsers = (users: UserItem[]) => {
-        setUsers(users)
-    }
+    const [kitas, setKitas] = useState<PlaySchoolItem[]>([]);
 
     const refreshUsers = (playSchoolId: string) => {
         callBackend("/api/userConnection/getAllConnectableUser/" + playSchoolId, 'GET', {})
-            .then((json: UserItem[]) => resetUsers(json))
+            .then((json: UserItem[]) => setUsers(json))
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -68,7 +56,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
 
     const getAllAccepted = (playSchoolId: string) => {
         callBackend("/api/userConnection/getAllAccepted/" + playSchoolId, 'GET', {})
-            .then((json: ConnectorItem[]) => resetConnectors(json))
+            .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -76,7 +64,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
 
     const getAllInProgress = (playSchoolId: string) => {
         callBackend("/api/userConnection/getAllInProgress/" + playSchoolId, 'GET', {})
-            .then((json: ConnectorItem[]) => resetConnectors(json))
+            .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -84,10 +72,15 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
 
     const getAllPending = (playSchoolId: string) => {
         callBackend("/api/userConnection/getAllPending/" + playSchoolId, 'GET', {})
-            .then((json: ConnectorItem[]) => resetConnectors(json))
+            .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
             });
+    }
+
+    const getAllKitas = () => {
+        callBackend("/api/kita/getAllKitas/PUBLIC", 'GET', {})
+            .then((json: PlaySchoolItem[]) => setKitas(json))
     }
 
     const addUserConnection = (userId: string, playSchoolId: string, userRole: string) => {
@@ -105,8 +98,10 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     return (
         <ConnectorCom.Provider
             value={{
-                connector: connector,
-                users: users,
+                connector,
+                users,
+                kitas,
+                getAllKitas,
                 refreshUsers,
                 getAllAccepted,
                 getAllInProgress,

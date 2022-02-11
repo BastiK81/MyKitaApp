@@ -29,7 +29,7 @@ export interface ITableHead {
     alignRight: boolean
 }
 
-const tableHeadsUser: ITableHead[] = [
+export const tableHeadsUser: ITableHead[] = [
     {id: 'firstName', label: 'Name', alignRight: false},
     {id: 'lastName', label: 'Last Name', alignRight: false},
     {id: 'playSchool', label: 'Kita', alignRight: false},
@@ -37,7 +37,7 @@ const tableHeadsUser: ITableHead[] = [
     {id: 'add', label: 'Add User', alignRight: false}
 ];
 
-const tableHeadsConnector: ITableHead[] = [
+export const tableHeadsConnector: ITableHead[] = [
     {id: 'userId', label: 'userId', alignRight: false},
     {id: 'kitaId', label: 'kitaId', alignRight: false},
     {id: 'userStatus', label: 'userStatus', alignRight: false},
@@ -48,7 +48,7 @@ const tableHeadsConnector: ITableHead[] = [
 ];
 
 
-const UserConnections = () => {
+const KitaUserConnections = () => {
 
     const {playSchoolItem} = useContext(PlaySchoolCom);
     const {
@@ -227,4 +227,4 @@ const UserConnections = () => {
 
 }
 
-export default UserConnections
+export default KitaUserConnections

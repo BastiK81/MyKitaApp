@@ -29,7 +29,7 @@ public class KitaDBItem {
     private String city;
     private String adminId;
     private List<String> memberIds;
-    private Map<String, Boolean> visibility;
+    private PlaySchoolVisibility visibility;
 
     public KitaDBItem(KitaDTO kitaDTO) {
         super();
@@ -59,13 +59,6 @@ public class KitaDBItem {
     }
 
     public void initialiseVisibility() {
-        this.visibility = new HashMap<>();
-        this.visibility.put(PlaySchoolVisibility.PRIVATE.toString(), true);
-        this.visibility.put(PlaySchoolVisibility.KITA.toString(), false);
-        this.visibility.put(PlaySchoolVisibility.PUBLIC.toString(), false);
-    }
-
-    public void changeVisibility(Map<String, Boolean> visibility) {
-        this.visibility = visibility;
+        this.visibility = PlaySchoolVisibility.PRIVATE;
     }
 }

@@ -36,10 +36,16 @@ const sidebarConfig: ISidebarConfig[] = [
         alwaysShow: false
     },
     {
-        title: 'user',
-        path: '/main/user',
+        title: 'Kita User Connection',
+        path: '/main/kitausercon',
         icon: getIcon(peopleFill),
         alwaysShow: false
+    },
+    {
+        title: 'User Kita Connection',
+        path: '/main/userkitacon',
+        icon: getIcon(peopleFill),
+        alwaysShow: true
     },
     {
         title: 'login',

@@ -3,11 +3,11 @@
 App für die Kommunikation zwischen Kita, Erziehern und Eltern.
 
 ##Must have
-- User-Anmeldung
-- Kita erstellen
-- Gruppen erstellen
-- Erzieher einladen und zuordnen
-- Kinder anlegen und Gruppen zuordnen
+- User-Anmeldung |done|
+- Kita erstellen |done|
+- Gruppen erstellen |done|
+- Erzieher einladen und zuordnen 
+- Kinder anlegen und Gruppen zuordnen |done|
 - Eltern mit Kindern verlinken
 - Allgemeine Infos
 - Gruppen Infos

@@ -16,7 +16,7 @@ import plusFill from "@iconify/icons-eva/plus-fill";
 import {UserMoreMenu} from "../../components/pageSupport/gruppen";
 import {ConnectorCom} from "../../services/ConnectorProvider";
 import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
-import {userRoles} from "./UserConnections";
+import {userRoles} from "./KitaUserConnections";
 
 interface UserConnectionTableBodyProps {
     row: { id: string, firstName: string, lastName: string },

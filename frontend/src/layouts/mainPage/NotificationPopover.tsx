@@ -97,7 +97,7 @@ function NotificationItem(props:NotificationItemProps) {
 
     return (
         <ListItemButton
-            to="#"
+            to='/main/userkitacon'
             disableGutters
             component={RouterLink}
             sx={{

@@ -4,11 +4,13 @@ import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.items.KitaDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaRepository;
+import de.bastisdevelopment.mykitaapp.utils.PlaySchoolVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -58,7 +60,7 @@ public class KitaService {
         kitaDBItem.addMember(userId);
     }
 
-    public Map<String, Boolean> getVisibility(String kitaId) throws Exception {
+    public PlaySchoolVisibility getVisibility(String kitaId) throws Exception {
         KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
                 .orElseThrow(() -> new Exception("Kita not Found"));
         if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
@@ -67,14 +69,18 @@ public class KitaService {
         throw new IllegalStateException("No permissions to get Kita visibility");
     }
 
-    public void changeVisibility(String kitaId, Map<String, Boolean> visibility) throws Exception {
+    public void changeVisibility(String kitaId, PlaySchoolVisibility visibility) throws Exception {
         KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
                 .orElseThrow(() -> new Exception("Kita not Found"));
         if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
-            kitaDBItem.changeVisibility(visibility);
+            kitaDBItem.setVisibility(visibility);
             kitaRepository.save(kitaDBItem);
             return;
         }
         throw new IllegalStateException("No permissions to get Kita visibility");
+    }
+
+    public List<KitaDTO> getAllKitas(PlaySchoolVisibility visibility) {
+        return kitaRepository.findAll().stream().filter(kitaDBItem -> kitaDBItem.getVisibility() == (visibility)).toList().stream().map(KitaDTO::new).toList();
     }
 }
