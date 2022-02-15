@@ -1,5 +1,6 @@
 import * as React from "react";
-import {ChangeEvent, useContext, useState} from "react";
+import {useContext, useState} from "react";
+import {ConnectorCom, ConnectorItem} from "../../../services/ConnectorProvider";
 import {
     Button,
     Checkbox,
@@ -13,36 +14,25 @@ import {
 } from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserMoreMenu} from "../../components/pageSupport/gruppen";
-import {ConnectorCom} from "../../services/ConnectorProvider";
-import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
-import {userRoles} from "./KitaUserConnections";
+import {UserMoreMenu} from "../../../components/pageSupport/gruppen";
+import {userRoles} from "../../../services/UserProvider";
 
-interface ConnectionTableRow {
-    id: string,
-    userId: string,
-    kitaId: string,
-    userStatus: string,
-    kitaStatus: string,
-    userRole: string,
-    implementationDate: Date,
-    expireDate: Date,
+interface IUserConnectionTableRow {
+    row: ConnectorItem
 }
 
-interface UserConnectionTableBodyProps {
-    title: string,
-    roleSwitch: boolean,
-    row: ConnectionTableRow,
-    selected: string[],
-    handleClick: (event: ChangeEvent<HTMLInputElement>, name: string) => void
-}
+const UserConnectionTableRow = (props: IUserConnectionTableRow) => {
 
-const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
+    const {
+        confirmConnection,
+        changeConnection,
+        alignment,
+        selected,
+        handleClickSelect,
+        pageSelection
+    } = useContext(ConnectorCom);
 
-    const {playSchoolItem} = useContext(PlaySchoolCom);
-    const {addUserConnection} = useContext(ConnectorCom);
-
-    const {row, selected, handleClick, roleSwitch, title} = props
+    const {row} = props
 
     const {id, userId, kitaId, userStatus, kitaStatus, userRole, implementationDate, expireDate} = row;
 
@@ -51,17 +41,17 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
 
     const isItemSelected = selected.indexOf(id) !== -1;
 
-    const addConnection = () => {
-        addUserConnection(row.id, playSchoolItem.id, selectedUserRole)
+    const handleChangeConnection = () => {
+        changeConnection(id, selectedUserRole)
     }
 
     const handleChangeUserRole = (event: SelectChangeEvent) => {
         setSelectedUserRole(event.target.value);
         setHasChanges(event.target.value !== userRole)
     }
-    
-    const confirmConnection = () => {
-      
+
+    const handleConfirmConnection = () => {
+        confirmConnection(id)
     }
 
     return (
@@ -77,7 +67,7 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
             <TableCell padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
-                    onChange={(event) => handleClick(event, id)}
+                    onChange={(event) => handleClickSelect(event, id)}
                 />
             </TableCell>
             <TableCell align="left">{userId}</TableCell>
@@ -85,7 +75,7 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
             <TableCell align="left">{userStatus}</TableCell>
             <TableCell align="left">{kitaStatus}</TableCell>
             <TableCell align="left">
-                {roleSwitch &&
+                {(alignment === 'In Progress' && pageSelection === 'Kita') &&
                 <FormControl>
                     <InputLabel id="rolePicker-label">Role</InputLabel>
                     <Select
@@ -97,15 +87,15 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
                     >
                         {userRoles.map((role) => {
                             return (
-                                <MenuItem key={role.id+'UserRole'}
-                                    id={role.id}
+                                <MenuItem key={role.id + 'UserRole'}
+                                          id={role.id}
                                           value={role.role}>{role.role}</MenuItem>
                             )
                         })}
                     </Select>
                 </FormControl>}
                 {
-                    !roleSwitch &&  <TableCell align="left">{userRole}</TableCell>
+                    pageSelection === 'User' && <TableCell align="left">{userRole}</TableCell>
                 }
             </TableCell>
             <TableCell align="left">{implementationDate}</TableCell>
@@ -115,17 +105,17 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
                     type="submit"
                     variant="contained"
                     startIcon={<Icon icon={plusFill}/>}
-                    onClick={addConnection}
+                    onClick={handleChangeConnection}
                 >
                     Change Connection
                 </Button>
             </TableCell>}
-            {title === 'In Progress' && <TableCell align="left">
-                 <Button
+            {alignment === 'In Progress' && <TableCell align="left">
+                <Button
                     type="submit"
                     variant="contained"
                     startIcon={<Icon icon={plusFill}/>}
-                    onClick={confirmConnection}
+                    onClick={handleConfirmConnection}
                 >
                     Confirm
                 </Button>
@@ -137,4 +127,4 @@ const ConnectionTableRowUser = (props: UserConnectionTableBodyProps) => {
     )
 }
 
-export default ConnectionTableRowUser
+export default UserConnectionTableRow

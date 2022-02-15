@@ -24,7 +24,8 @@ export interface PlaySchoolItem {
 
 export const PlaySchoolCom = createContext<IPlaySchoolProvider>({
     kitaVisibility: '',
-    setKitaVisibility: () => {},
+    setKitaVisibility: () => {
+    },
     playSchoolItem: {
         city: "",
         houseNumber: "",
@@ -33,12 +34,17 @@ export const PlaySchoolCom = createContext<IPlaySchoolProvider>({
         postcode: "",
         street: "",
     },
-    refreshPlaySchool: () => {},
+    refreshPlaySchool: () => {
+    },
     hasKita: false,
-    addNewPlaySchool: () => {},
-    addPlaySchoolUserConnection: () => {},
-    getVisibility: () => {},
-    changeVisibility: () => {},
+    addNewPlaySchool: () => {
+    },
+    addPlaySchoolUserConnection: () => {
+    },
+    getVisibility: () => {
+    },
+    changeVisibility: () => {
+    },
 })
 
 const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) => {
@@ -103,7 +109,7 @@ const PlaySchoolProvider = ({children}: { children: ReactElement<any, any> }) =>
             });
     }
 
-    const changeVisibility = (kitaId: string, data:string) => {
+    const changeVisibility = (kitaId: string, data: string) => {
         callBackend("/api/kita/changeVisibility/" + kitaId, 'POST', data)
             .catch((error) => {
                 console.error('Error:', error);

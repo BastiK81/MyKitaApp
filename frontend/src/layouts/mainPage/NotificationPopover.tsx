@@ -1,28 +1,28 @@
 import PropTypes from 'prop-types';
-import { noCase } from 'change-case';
+import {noCase} from 'change-case';
 import {useContext, useEffect, useRef, useState} from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import {formatDistanceToNow } from 'date-fns';
-import { Icon } from '@iconify/react';
+import {Link as RouterLink} from 'react-router-dom';
+import {formatDistanceToNow} from 'date-fns';
+import {Icon} from '@iconify/react';
 import bellFill from '@iconify/icons-eva/bell-fill';
 import clockFill from '@iconify/icons-eva/clock-fill';
 import doneAllFill from '@iconify/icons-eva/done-all-fill';
 // material
-import { alpha } from '@mui/material/styles';
+import {alpha} from '@mui/material/styles';
 import {
-    Box,
-    List,
-    Badge,
-    Button,
     Avatar,
-    Tooltip,
+    Badge,
+    Box,
+    Button,
     Divider,
     IconButton,
-    Typography,
+    List,
+    ListItemAvatar,
+    ListItemButton,
     ListItemText,
     ListSubheader,
-    ListItemAvatar,
-    ListItemButton
+    Tooltip,
+    Typography
 } from '@mui/material';
 // components
 import Scrollbar from '../../components/Scrollbar';
@@ -31,22 +31,22 @@ import {NotificationCom} from "../../services/NotificationProfider";
 
 // ----------------------------------------------------------------------
 
-export interface INotifications{
-        id: string
-        title: string,
-        description: string,
-        avatar: JSX.Element,
-        type:string,
-        createdAt: Date,
-        unRead: boolean,
+export interface INotifications {
+    id: string
+    title: string,
+    description: string,
+    avatar: JSX.Element,
+    type: string,
+    createdAt: Date,
+    unRead: boolean,
 }
 
 
-function renderContent(notification:INotifications) {
+function renderContent(notification: INotifications) {
     const title = (
         <Typography variant="subtitle2">
             {notification.title}
-            <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography component="span" variant="body2" sx={{color: 'text.secondary'}}>
                 &nbsp; {noCase(notification.description)}
             </Typography>
         </Typography>
@@ -54,46 +54,46 @@ function renderContent(notification:INotifications) {
 
     if (notification.type === 'order_placed') {
         return {
-            avatar: <img alt={notification.title} src="/static/icons/ic_notification_package.svg" />,
+            avatar: <img alt={notification.title} src="/static/icons/ic_notification_package.svg"/>,
             title
         };
     }
     if (notification.type === 'order_shipped') {
         return {
-            avatar: <img alt={notification.title} src="/static/icons/ic_notification_shipping.svg" />,
+            avatar: <img alt={notification.title} src="/static/icons/ic_notification_shipping.svg"/>,
             title
         };
     }
     if (notification.type === 'mail') {
         return {
-            avatar: <img alt={notification.title} src="/static/icons/ic_notification_mail.svg" />,
+            avatar: <img alt={notification.title} src="/static/icons/ic_notification_mail.svg"/>,
             title
         };
     }
     if (notification.type === 'chat_message') {
         return {
-            avatar: <img alt={notification.title} src="/static/icons/ic_notification_chat.svg" />,
+            avatar: <img alt={notification.title} src="/static/icons/ic_notification_chat.svg"/>,
             title
         };
     }
     return {
-        avatar: <img alt={notification.title} src={''} />,
+        avatar: <img alt={notification.title} src={''}/>,
         title
     };
 }
 
-interface NotificationItemProps{
-    notification:INotifications
+interface NotificationItemProps {
+    notification: INotifications
 }
 
 NotificationItem.propTypes = {
     notification: PropTypes.object.isRequired
 };
 
-function NotificationItem(props:NotificationItemProps) {
+function NotificationItem(props: NotificationItemProps) {
 
     const {notification} = props
-    const { avatar, title } = renderContent(notification);
+    const {avatar, title} = renderContent(notification);
 
     return (
         <ListItemButton
@@ -110,7 +110,7 @@ function NotificationItem(props:NotificationItemProps) {
             }}
         >
             <ListItemAvatar>
-                <Avatar sx={{ bgcolor: 'background.neutral' }}>{avatar}</Avatar>
+                <Avatar sx={{bgcolor: 'background.neutral'}}>{avatar}</Avatar>
             </ListItemAvatar>
             <ListItemText
                 primary={title}
@@ -124,7 +124,7 @@ function NotificationItem(props:NotificationItemProps) {
                             color: 'text.disabled'
                         }}
                     >
-                        <Box component={Icon} icon={clockFill} sx={{ mr: 0.5, width: 16, height: 16 }} />
+                        <Box component={Icon} icon={clockFill} sx={{mr: 0.5, width: 16, height: 16}}/>
                         {formatDistanceToNow(new Date(notification.createdAt))}
                     </Typography>
                 }
@@ -169,7 +169,7 @@ export default function NotificationsPopover() {
                 }}
             >
                 <Badge badgeContent={totalUnRead} color="error">
-                    <Icon icon={bellFill} width={20} height={20} />
+                    <Icon icon={bellFill} width={20} height={20}/>
                 </Badge>
             </IconButton>
 
@@ -177,12 +177,12 @@ export default function NotificationsPopover() {
                 open={open}
                 onClose={handleClose}
                 anchorEl={anchorRef.current}
-                sx={{ width: 360 }}
+                sx={{width: 360}}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
-                    <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{display: 'flex', alignItems: 'center', py: 2, px: 2.5}}>
+                    <Box sx={{flexGrow: 1}}>
                         <Typography variant="subtitle1">Notifications</Typography>
-                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        <Typography variant="body2" sx={{color: 'text.secondary'}}>
                             You have {totalUnRead} unread messages
                         </Typography>
                     </Box>
@@ -190,45 +190,45 @@ export default function NotificationsPopover() {
                     {totalUnRead > 0 && (
                         <Tooltip title=" Mark all as read">
                             <IconButton color="primary" onClick={markAllAsRead}>
-                                <Icon icon={doneAllFill} width={20} height={20} />
+                                <Icon icon={doneAllFill} width={20} height={20}/>
                             </IconButton>
                         </Tooltip>
                     )}
                 </Box>
 
-                <Divider />
+                <Divider/>
 
-                <Scrollbar sx={{ height: { xs: 340, sm: 'auto' } }}>
+                <Scrollbar sx={{height: {xs: 340, sm: 'auto'}}}>
                     <List
                         disablePadding
                         subheader={
-                            <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
+                            <ListSubheader disableSticky sx={{py: 1, px: 2.5, typography: 'overline'}}>
                                 New
                             </ListSubheader>
                         }
                     >
                         {notifications.slice(0, 2).map((notification) => (
-                            <NotificationItem key={notification.id} notification={notification} />
+                            <NotificationItem key={notification.id} notification={notification}/>
                         ))}
                     </List>
 
                     <List
                         disablePadding
                         subheader={
-                            <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
+                            <ListSubheader disableSticky sx={{py: 1, px: 2.5, typography: 'overline'}}>
                                 Before that
                             </ListSubheader>
                         }
                     >
                         {notifications.slice(2, 5).map((notification) => (
-                            <NotificationItem key={notification.id} notification={notification} />
+                            <NotificationItem key={notification.id} notification={notification}/>
                         ))}
                     </List>
                 </Scrollbar>
 
-                <Divider />
+                <Divider/>
 
-                <Box sx={{ p: 1 }}>
+                <Box sx={{p: 1}}>
                     <Button fullWidth disableRipple component={RouterLink} to="#">
                         View All
                     </Button>

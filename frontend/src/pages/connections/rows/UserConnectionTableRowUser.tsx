@@ -1,44 +1,30 @@
 import * as React from "react";
-import {ChangeEvent, useContext, useState} from "react";
-import {
-    Button,
-    Checkbox,
-    TableCell,
-    TableRow
-} from "@mui/material";
+import {useContext} from "react";
+import {PlaySchoolItem} from "../../../services/PlaySchoolProvider";
+import {ConnectorCom} from "../../../services/ConnectorProvider";
+import {Button, Checkbox, TableCell, TableRow} from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserMoreMenu} from "../../components/pageSupport/gruppen";
-import {ConnectorCom} from "../../services/ConnectorProvider";
-import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
-import {ITableHead, userRoles} from "./KitaUserConnections";
+import {UserMoreMenu} from "../../../components/pageSupport/gruppen";
+import {UserCom} from "../../../services/UserProvider";
 
-interface UserConnectionTableBodyProps {
-    row: { id: string,
-        name: string,
-        street: string,
-        houseNumber: string,
-        postcode: string,
-        city: string,
-    },
-    selected: string[],
-    handleClick: (event: ChangeEvent<HTMLInputElement>, name: string) => void
+interface IUserConnectionTableRowUser {
+    row: PlaySchoolItem
 }
 
-const ConnectionTableRowKita = (props: UserConnectionTableBodyProps) => {
+const UserConnectionTableRowUser = (props: IUserConnectionTableRowUser) => {
 
-    const {playSchoolItem} = useContext(PlaySchoolCom);
-    const {addUserConnection} = useContext(ConnectorCom);
+    const {user} = useContext(UserCom);
+    const {addUserConnection, selected, handleClickSelect} = useContext(ConnectorCom);
 
-    const [selectedUserRole, setSelectedUserRole] = useState('');
-
-    const {row, selected, handleClick} = props
+    const {row} = props
 
     const {id, name, city} = row;
+
     const isItemSelected = selected.indexOf(name) !== -1;
 
     const addConnection = () => {
-        addUserConnection(row.id, playSchoolItem.id, selectedUserRole)
+        addUserConnection(user.id, id)
     }
 
     return (
@@ -54,7 +40,7 @@ const ConnectionTableRowKita = (props: UserConnectionTableBodyProps) => {
             <TableCell padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
-                    onChange={(event) => handleClick(event, name)}
+                    onChange={(event) => handleClickSelect(event, name)}
                 />
             </TableCell>
             <TableCell align="left">{name}</TableCell>
@@ -78,6 +64,8 @@ const ConnectionTableRowKita = (props: UserConnectionTableBodyProps) => {
             </TableCell>
         </TableRow>
     )
+
+
 }
 
-export default ConnectionTableRowKita
+export default UserConnectionTableRowUser

@@ -22,13 +22,11 @@ public class ChildController {
 
     @PostMapping(path = "/addNewChild")
     public List<ChildDTO> addNewChild(@RequestBody ChildDTO child) throws Exception {
-        logger.info("Add new Child");
         return service.addNewChild(child);
     }
 
     @GetMapping(path = "/getAllChildren/{kitaId}")
     public List<ChildDTO> getAllChilds(@PathVariable String kitaId) {
-        logger.info("get all chillds");
         return service.getAllChilds(kitaId);
     }
 }

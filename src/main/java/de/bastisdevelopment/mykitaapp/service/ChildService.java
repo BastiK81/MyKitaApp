@@ -30,7 +30,7 @@ public class ChildService {
     }
 
     public List<ChildDTO> getAllChilds(String kitaId) {
-        return repository.findByKitaId(kitaId).stream().map(values -> new ChildDTO(values)).collect(Collectors.toList());
+        return repository.findByKitaId(kitaId).stream().map(ChildDTO::new).toList();
     }
 
 }

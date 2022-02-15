@@ -36,14 +36,14 @@ const sidebarConfig: ISidebarConfig[] = [
         alwaysShow: false
     },
     {
-        title: 'Kita User Connection',
-        path: '/main/kitausercon',
+        title: 'Kita Connections',
+        path: '/main/kitaConnection',
         icon: getIcon(peopleFill),
         alwaysShow: false
     },
     {
-        title: 'User Kita Connection',
-        path: '/main/userkitacon',
+        title: 'User Connections',
+        path: '/main/userConnection',
         icon: getIcon(peopleFill),
         alwaysShow: true
     },

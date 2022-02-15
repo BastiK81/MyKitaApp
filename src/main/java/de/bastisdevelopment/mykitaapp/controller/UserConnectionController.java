@@ -4,6 +4,7 @@ import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
 import de.bastisdevelopment.mykitaapp.service.KitaUserConnectorService;
+import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,16 @@ public class UserConnectionController {
         this.connectorService = connectorService;
     }
 
-    @PostMapping(path = "add")
-    public void addNew(@RequestBody KitaUserConnectorDTO dto) throws Exception {
+    @PostMapping(path = "addKitaSide")
+    public void addNewKitaSide(@RequestBody KitaUserConnectorDTO dto) throws Exception {
         logger.info("Add Kita User Connection");
-        connectorService.addNew(dto);
+        connectorService.addNewKitaSide(dto);
+    }
+
+    @PostMapping(path = "addUserSide")
+    public void addNewUserSide(@RequestBody KitaUserConnectorDTO dto) throws Exception {
+        logger.info("Add Kita User Connection");
+        connectorService.addNewUserSide(dto);
     }
 
     @GetMapping(path = "getAllAccepted/{playSchoolId}")
@@ -65,6 +72,16 @@ public class UserConnectionController {
     @GetMapping(path = "getAllConnectableUser/{playSchoolId}")
     public List<AppUserDTO> getAllConnectableUser(@PathVariable String playSchoolId) {
         return connectorService.getAllConnectableUser(playSchoolId);
+    }
+
+    @PostMapping(path = "change/{id}/{role}" )
+    public void changeConnection(@PathVariable String id, @PathVariable String role) throws Exception {
+        connectorService.changeConnection(id, UserRole.valueOf(role));
+    }
+
+    @PostMapping(path = "confirm/{id}" )
+    public void confirmConnection(@PathVariable String id) throws Exception {
+        connectorService.confirmConnection(id);
     }
 
 }

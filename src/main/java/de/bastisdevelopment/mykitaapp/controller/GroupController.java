@@ -21,13 +21,11 @@ public class GroupController {
 
     @PostMapping(path = "/addnewgroup")
     public List<GroupDTO> addNewGroup(@RequestBody GroupDTO groupDTO) throws Exception {
-        logger.info("Try to add Group " + groupDTO.getName());
         return service.addNewGroup(groupDTO);
     }
 
     @GetMapping(value = "/getAllGroups/{kitaId}")
     public List<GroupDTO> getAllGroups(@PathVariable String kitaId) {
-        logger.info("Get Kita Groups with id: " + kitaId);
         return service.getAllGroups(kitaId);
     }
 

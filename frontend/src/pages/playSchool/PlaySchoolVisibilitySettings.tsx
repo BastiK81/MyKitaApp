@@ -23,7 +23,7 @@ const PlaySchoolVisibilitySettings = () => {
             visibility = 'KITA'
         }
         if (newValue === 100) {
-            visibility =  'PUBLIC'
+            visibility = 'PUBLIC'
         }
         setKitaVisibility(visibility)
         changeVisibility(playSchoolItem.id, visibility)
