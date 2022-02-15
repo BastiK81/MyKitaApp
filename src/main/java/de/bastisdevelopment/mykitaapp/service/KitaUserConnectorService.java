@@ -122,4 +122,8 @@ public class KitaUserConnectorService {
         item.setUserStatus(ConnectionStatus.CONFIRMED);
         repository.save(item);
     }
+
+    public void deleteConnection(String id) {
+        repository.deleteById(id);
+    }
 }

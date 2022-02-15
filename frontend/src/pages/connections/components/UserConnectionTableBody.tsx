@@ -22,7 +22,6 @@ const UserConnectionTableBody = () => {
                 users
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                        console.log('Add New || User')
                         return (
                             <UserConnectionTableRowKita row={row}/>
                         )
@@ -32,7 +31,6 @@ const UserConnectionTableBody = () => {
                 kitas
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                        console.log('Add New || Kita')
                         return (
                             <UserConnectionTableRowUser row={row}/>
                         )
@@ -42,7 +40,6 @@ const UserConnectionTableBody = () => {
                 connector
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                        console.log('Connector')
                         return (
                             <UserConnectionTableRow row={row}/>
                         )

@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserMoreMenu} from "../../../components/pageSupport/gruppen";
 import {userRoles} from "../../../services/UserProvider";
+import RowMenu from "./RowMenu";
 
 interface IUserConnectionTableRow {
     row: ConnectorItem
@@ -121,7 +121,7 @@ const UserConnectionTableRow = (props: IUserConnectionTableRow) => {
                 </Button>
             </TableCell>}
             <TableCell align="right">
-                <UserMoreMenu/>
+                <RowMenu connectionId={id}/>
             </TableCell>
         </TableRow>
     )

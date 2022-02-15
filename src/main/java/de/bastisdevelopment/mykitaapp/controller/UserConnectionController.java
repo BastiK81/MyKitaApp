@@ -84,4 +84,9 @@ public class UserConnectionController {
         connectorService.confirmConnection(id);
     }
 
+    @PostMapping(path = "delete/{id}" )
+    public void deleteConnection(@PathVariable String id) {
+        connectorService.deleteConnection(id);
+    }
+
 }

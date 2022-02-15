@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserMoreMenu} from "../../../components/pageSupport/gruppen";
 import {UserItem, userRoles} from "../../../services/UserProvider";
 
 interface IUserConnectionTableRowKita {
@@ -90,9 +89,6 @@ const UserConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
                 >
                     Connect User
                 </Button>
-            </TableCell>
-            <TableCell align="right">
-                <UserMoreMenu/>
             </TableCell>
         </TableRow>
     )

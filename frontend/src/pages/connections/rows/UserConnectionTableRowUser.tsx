@@ -5,7 +5,6 @@ import {ConnectorCom} from "../../../services/ConnectorProvider";
 import {Button, Checkbox, TableCell, TableRow} from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserMoreMenu} from "../../../components/pageSupport/gruppen";
 import {UserCom} from "../../../services/UserProvider";
 
 interface IUserConnectionTableRowUser {
@@ -58,9 +57,6 @@ const UserConnectionTableRowUser = (props: IUserConnectionTableRowUser) => {
                 >
                     Connect User
                 </Button>
-            </TableCell>
-            <TableCell align="right">
-                <UserMoreMenu/>
             </TableCell>
         </TableRow>
     )

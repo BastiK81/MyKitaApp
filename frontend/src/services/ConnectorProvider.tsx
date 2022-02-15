@@ -26,6 +26,7 @@ export interface IConnectorProvider {
     addKitaConnection: (userId: string, playSchoolId: string, userRole: string) => void,
     changeConnection: (id: string, userRole: string) => void,
     confirmConnection: (id: string) => void,
+    deleteConnection: (id: string) => void,
 
 
     filterName: string,
@@ -78,6 +79,7 @@ export const ConnectorCom = createContext<IConnectorProvider>({
     },
     confirmConnection: () => {
     },
+    deleteConnection: () => {},
     filterName: '',
     alignment: '',
     title: '',
@@ -211,6 +213,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
             .catch((error) => {
                 console.error('Error:', error);
             });
+        showSelection(alignment, pageSelection)
     }
 
     const addKitaConnection = (userId: string, playSchoolId: string, userRole: string) => {
@@ -223,6 +226,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
             .catch((error) => {
                 console.error('Error:', error);
             });
+        showSelection(alignment, pageSelection)
     }
 
     const changeConnection = (id: string, userRole: string) => {
@@ -230,6 +234,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
             .catch((error) => {
                 console.error('Error:', error);
             });
+        showSelection(alignment, pageSelection)
     }
 
     const confirmConnection = (id: string) => {
@@ -237,6 +242,15 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
             .catch((error) => {
                 console.error('Error:', error);
             });
+        showSelection(alignment, pageSelection)
+    }
+
+    const deleteConnection = (id:string) => {
+        callBackend("/api/userConnection/delete/" + id, 'POST', {})
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        showSelection(alignment, pageSelection)
     }
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
@@ -358,6 +372,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
                 addKitaConnection,
                 changeConnection,
                 confirmConnection,
+                deleteConnection,
 
                 filterName,
                 alignment,
