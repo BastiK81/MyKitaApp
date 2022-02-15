@@ -32,7 +32,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {DatePicker} from "@mui/lab";
 import {ChildCom} from "../services/psChildProvider";
 import {GroupCom} from "../services/GrouopProvider";
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import {KitaCom} from "../services/KitaProvider";
 
 export interface ITABLE_HEAD {
     id: string,
@@ -52,12 +52,12 @@ const TABLE_HEAD: ITABLE_HEAD[] = [
 const Children = () => {
 
     const {refreshChildren, childItems, addNewChild} = useContext(ChildCom);
-    const {playSchoolItem} = useContext(PlaySchoolCom);
+    const {kitaItem} = useContext(KitaCom);
     const {refreshAllGroups, groupItems} = useContext(GroupCom);
 
     useEffect(() => {
-        refreshChildren(playSchoolItem.id)
-        refreshAllGroups(playSchoolItem.id)
+        refreshChildren(kitaItem.id)
+        refreshAllGroups(kitaItem.id)
         // eslint-disable-next-line
     }, []);
 
@@ -141,7 +141,7 @@ const Children = () => {
             lastName: lastName,
             dateOfBirth: dateOfBirth,
             parents: [''],
-            kitaId: playSchoolItem.id,
+            kitaId: kitaItem.id,
             groupId: selectedGroup
         }
         addNewChild(data)
@@ -285,7 +285,7 @@ const Children = () => {
                                                             <TableCell align="left">{lastName}</TableCell>
                                                             <TableCell align="left">{dateOfBirth}</TableCell>
                                                             <TableCell align="left">{parents}</TableCell>
-                                                            <TableCell align="left">{playSchoolItem.name}</TableCell>
+                                                            <TableCell align="left">{kitaItem.name}</TableCell>
                                                             <TableCell align="left">{getGroupName(groupId)}</TableCell>
                                                             <TableCell align="right">
                                                                 <UserMoreMenu/>

@@ -1,13 +1,13 @@
 import Scrollbar from "../../../components/Scrollbar";
 import {Card, Table, TableContainer, TablePagination} from "@mui/material";
-import UserConnectionTableHead from "./UserConnectionTableHead";
-import UserConnectionTableBody from "./UserConnectionTableBody";
+import ConnectionTableHead from "./ConnectionTableHead";
+import ConnectionTableBody from "./ConnectionTableBody";
 import * as React from "react";
 import {useContext} from "react";
-import UserConnectionToolbar from "./UserConnectionToolbar";
+import ConnectionToolbar from "./ConnectionToolbar";
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 
-const UserConnectionTable = () => {
+const ConnectionTable = () => {
 
     const {
         page,
@@ -18,12 +18,12 @@ const UserConnectionTable = () => {
     } = useContext(ConnectorCom);
     return (
         <Card>
-            <UserConnectionToolbar/>
+            <ConnectionToolbar/>
             <Scrollbar>
                 <TableContainer sx={{minWidth: 1000}}>
                     <Table>
-                        <UserConnectionTableHead/>
-                        <UserConnectionTableBody/>
+                        <ConnectionTableHead/>
+                        <ConnectionTableBody/>
                     </Table>
                 </TableContainer>
             </Scrollbar>
@@ -40,4 +40,4 @@ const UserConnectionTable = () => {
     )
 }
 
-export default UserConnectionTable
+export default ConnectionTable

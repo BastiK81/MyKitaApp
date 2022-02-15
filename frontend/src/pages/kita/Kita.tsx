@@ -4,15 +4,15 @@ import * as Yup from "yup";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
 import {useContext, useEffect} from "react";
-import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
-import PlaySchoolVisibilitySettings from "./PlaySchoolVisibilitySettings";
+import {KitaCom} from "../../services/KitaProvider";
+import KitaVisibilitySettings from "./KitaVisibilitySettings";
 
-const PlaySchool = () => {
+const Kita = () => {
 
-    const {refreshPlaySchool, playSchoolItem, hasKita, addNewPlaySchool} = useContext(PlaySchoolCom)
+    const {refreshKita, kitaItem, hasKita, addNewKita} = useContext(KitaCom)
 
     useEffect(() => {
-        refreshPlaySchool()
+        refreshKita()
         // eslint-disable-next-line
     }, []);
 
@@ -30,15 +30,15 @@ const PlaySchool = () => {
 
     const formik = useFormik({
         initialValues: {
-            kitaName: playSchoolItem.name,
-            street: playSchoolItem.street,
-            houseNumber: playSchoolItem.houseNumber,
-            postcode: playSchoolItem.postcode,
-            city: playSchoolItem.city,
+            kitaName: kitaItem.name,
+            street: kitaItem.street,
+            houseNumber: kitaItem.houseNumber,
+            postcode: kitaItem.postcode,
+            city: kitaItem.city,
         },
         validationSchema: RegisterSchema,
         onSubmit: () => {
-            addNewPlaySchool({
+            addNewKita({
                 name: formik.getFieldProps('kitaName').value,
                 street: formik.getFieldProps('street').value,
                 houseNumber: formik.getFieldProps('houseNumber').value,
@@ -123,7 +123,7 @@ const PlaySchool = () => {
                             </LoadingButton>}
                         </Stack>
 
-                        {hasKita && <PlaySchoolVisibilitySettings/>}
+                        {hasKita && <KitaVisibilitySettings/>}
 
                     </Form>
                 </FormikProvider>
@@ -133,4 +133,4 @@ const PlaySchool = () => {
 
 }
 
-export default PlaySchool
+export default Kita

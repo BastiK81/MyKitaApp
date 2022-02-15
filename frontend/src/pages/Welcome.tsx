@@ -1,21 +1,21 @@
 import {useContext, useEffect} from "react";
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import {KitaCom} from "../services/KitaProvider";
 import {UserCom} from "../services/UserProvider";
 
 const Welcome = () => {
 
-    const {refreshPlaySchool, playSchoolItem} = useContext(PlaySchoolCom);
+    const {refreshKita, kitaItem} = useContext(KitaCom);
     const {refreshUser} = useContext(UserCom)
 
     useEffect(() => {
         refreshUser()
-        refreshPlaySchool()
+        refreshKita()
         // eslint-disable-next-line
     }, [])
 
     return (
         <>
-            {playSchoolItem.name}
+            {kitaItem.name}
         </>
     )
 }

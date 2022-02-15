@@ -8,15 +8,16 @@ import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem} from '@mui/material';
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 
-interface RowMenuProps{
+interface RowMenuProps {
     connectionId: string
 }
-const  RowMenu = (props:RowMenuProps) => {
+
+const RowMenu = (props: RowMenuProps) => {
 
     const {deleteConnection} = useContext(ConnectorCom);
     const ref = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
-    
+
     const handleCLickTrash = () => {
         deleteConnection(props.connectionId)
     }
@@ -37,7 +38,7 @@ const  RowMenu = (props:RowMenuProps) => {
                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                 transformOrigin={{vertical: 'top', horizontal: 'right'}}
             >
-                <MenuItem 
+                <MenuItem
                     sx={{color: 'text.secondary'}}
                     onClick={handleCLickTrash}>
                     <ListItemIcon>

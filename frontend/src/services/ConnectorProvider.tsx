@@ -1,19 +1,19 @@
 import React, {ChangeEvent, createContext, MouseEventHandler, ReactElement, useContext, useState} from "react";
 import {BackendCom} from "./BackendProvider";
 import {UserItem} from "./UserProvider";
-import {PlaySchoolCom, PlaySchoolItem} from "./PlaySchoolProvider";
+import {KitaCom, KitaItem} from "./KitaProvider";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import {
     ITableHead,
     tableHeadsConnector,
     tableHeadsKita,
     tableHeadsUser
-} from "../pages/connections/components/UserConnectionSettings";
+} from "../pages/connections/components/ConnectionSettings";
 
 export interface IConnectorProvider {
     connector: ConnectorItem[],
     users: UserItem[],
-    kitas: PlaySchoolItem[],
+    kitas: KitaItem[],
     getAllKitas: () => void,
     refreshUsers: (playSchoolId: string) => void,
     getAllAccepted: (playSchoolId: string) => void,
@@ -124,11 +124,11 @@ export interface ConnectorItem {
 const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     const {callBackend} = useContext(BackendCom)
-    const {playSchoolItem} = useContext(PlaySchoolCom);
+    const {kitaItem} = useContext(KitaCom);
 
     const [connector, setConnector] = useState<ConnectorItem[]>([])
     const [users, setUsers] = useState<UserItem[]>([])
-    const [kitas, setKitas] = useState<PlaySchoolItem[]>([]);
+    const [kitas, setKitas] = useState<KitaItem[]>([]);
 
     const [pageSelection, setPageSelection] = useState('');
     const [filterName, setFilterName] = useState('');
@@ -200,7 +200,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
 
     const getAllKitas = () => {
         callBackend("/api/userConnection/getAllKitas", 'GET', {})
-            .then((json: PlaySchoolItem[]) => setKitas(json))
+            .then((json: KitaItem[]) => setKitas(json))
     }
 
     const addUserConnection = (userId: string, playSchoolId: string) => {
@@ -321,7 +321,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
                 setTitle('Available Kitas')
                 setItemCount(kitas.length)
             } else {
-                refreshUsers(playSchoolItem.id)
+                refreshUsers(kitaItem.id)
                 setTableHeads(tableHeadsUser);
                 setTitle('Available User')
                 setItemCount(users.length)
@@ -339,13 +339,13 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
                 }
             } else {
                 if (newAlignment === 'Confirmed') {
-                    getAllAccepted(playSchoolItem.id)
+                    getAllAccepted(kitaItem.id)
                 }
                 if (newAlignment === 'Pending') {
-                    getAllPending(playSchoolItem.id)
+                    getAllPending(kitaItem.id)
                 }
                 if (newAlignment === 'In Progress') {
-                    getAllInProgress(playSchoolItem.id)
+                    getAllInProgress(kitaItem.id)
                 }
             }
             setTitle('All Connections ' + newAlignment)

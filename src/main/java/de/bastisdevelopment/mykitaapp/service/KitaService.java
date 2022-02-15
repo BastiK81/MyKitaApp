@@ -4,14 +4,13 @@ import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.items.KitaDBItem;
 import de.bastisdevelopment.mykitaapp.repository.KitaRepository;
-import de.bastisdevelopment.mykitaapp.utils.PlaySchoolVisibility;
+import de.bastisdevelopment.mykitaapp.utils.KitaVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class KitaService {
@@ -60,7 +59,7 @@ public class KitaService {
         kitaDBItem.addMember(userId);
     }
 
-    public PlaySchoolVisibility getVisibility(String kitaId) throws Exception {
+    public KitaVisibility getVisibility(String kitaId) throws Exception {
         KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
                 .orElseThrow(() -> new Exception("Kita not Found"));
         if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
@@ -69,7 +68,7 @@ public class KitaService {
         throw new IllegalStateException("No permissions to get Kita visibility");
     }
 
-    public void changeVisibility(String kitaId, PlaySchoolVisibility visibility) throws Exception {
+    public void changeVisibility(String kitaId, KitaVisibility visibility) throws Exception {
         KitaDBItem kitaDBItem = kitaRepository.findById(kitaId)
                 .orElseThrow(() -> new Exception("Kita not Found"));
         if (userService.getActualUser().getId().equalsIgnoreCase(kitaDBItem.getAdminId())) {
@@ -80,7 +79,7 @@ public class KitaService {
         throw new IllegalStateException("No permissions to get Kita visibility");
     }
 
-    public List<KitaDTO> getAllKitas(PlaySchoolVisibility visibility) {
-        return kitaRepository.findAll().stream().filter(kitaDBItem -> kitaDBItem.getVisibility() == (visibility)).toList().stream().map(KitaDTO::new).toList();
+    public List<KitaDTO> getAllKitas(KitaVisibility visibility) {
+        return kitaRepository.findByVisibility(visibility).stream().map(KitaDTO::new).toList();
     }
 }

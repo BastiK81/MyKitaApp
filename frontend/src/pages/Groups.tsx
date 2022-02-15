@@ -25,7 +25,7 @@ import Label from "../components/Label";
 import {sentenceCase} from "change-case";
 import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 import {GroupCom} from "../services/GrouopProvider";
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import {KitaCom} from "../services/KitaProvider";
 
 export interface ITableHead {
     id: string,
@@ -40,11 +40,11 @@ const tableHeads: ITableHead[] = [
 
 const Groups = () => {
 
-    const {playSchoolItem} = useContext(PlaySchoolCom);
+    const {kitaItem} = useContext(KitaCom);
     const {refreshAllGroups, groupItems, addGroup} = useContext(GroupCom);
 
     useEffect(() => {
-        refreshAllGroups(playSchoolItem.id)
+        refreshAllGroups(kitaItem.id)
         // eslint-disable-next-line
     }, []);
 
@@ -80,7 +80,7 @@ const Groups = () => {
     };
 
     const addNewGroup = () => {
-        const data: {} = {name: group, kitaId: playSchoolItem.id, kitaName: playSchoolItem.name}
+        const data: {} = {name: group, kitaId: kitaItem.id, kitaName: kitaItem.name}
         addGroup(data)
         setGroup('')
     }

@@ -1,6 +1,6 @@
 package de.bastisdevelopment.mykitaapp.items;
 
-import de.bastisdevelopment.mykitaapp.dtos.KitaUserConnectorDTO;
+import de.bastisdevelopment.mykitaapp.dtos.ConnectionDTO;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
 import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @Document("kitaUserConnection")
-public class KitaUserConnectorDBItem {
+public class ConnectionDBItem {
 
     @Id
     private String id;
@@ -23,11 +23,11 @@ public class KitaUserConnectorDBItem {
     private Date implementationDate;
     private Date expireDate;
 
-    public KitaUserConnectorDBItem() {
+    public ConnectionDBItem() {
 
     }
 
-    public KitaUserConnectorDBItem(String id, String userId, String kitaId, ConnectionStatus userStatus, ConnectionStatus kitaStatus, UserRole userRole, Date implementationDate, Date expireDate) {
+    public ConnectionDBItem(String id, String userId, String kitaId, ConnectionStatus userStatus, ConnectionStatus kitaStatus, UserRole userRole, Date implementationDate, Date expireDate) {
         super();
         this.id = id;
         this.userId = userId;
@@ -39,7 +39,7 @@ public class KitaUserConnectorDBItem {
         this.expireDate = expireDate;
     }
 
-    public KitaUserConnectorDBItem(KitaUserConnectorDTO dto) {
+    public ConnectionDBItem(ConnectionDTO dto) {
         super();
         this.userId = dto.getUserId();
         this.kitaId = dto.getKitaId();

@@ -21,7 +21,7 @@ interface IUserConnectionTableRow {
     row: ConnectorItem
 }
 
-const UserConnectionTableRow = (props: IUserConnectionTableRow) => {
+const ConnectionTableRow = (props: IUserConnectionTableRow) => {
 
     const {
         confirmConnection,
@@ -127,4 +127,4 @@ const UserConnectionTableRow = (props: IUserConnectionTableRow) => {
     )
 }
 
-export default UserConnectionTableRow
+export default ConnectionTableRow

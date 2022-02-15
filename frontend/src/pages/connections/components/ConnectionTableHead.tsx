@@ -4,7 +4,7 @@ import {Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mu
 import {MouseEventHandler, useContext} from "react";
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 
-const UserConnectionTableHead = () => {
+const ConnectionTableHead = () => {
 
     const {
         selected,
@@ -57,4 +57,4 @@ const UserConnectionTableHead = () => {
     );
 }
 
-export default UserConnectionTableHead
+export default ConnectionTableHead

@@ -1,6 +1,6 @@
 package de.bastisdevelopment.mykitaapp.utils;
 
-public enum PlaySchoolVisibility {
+public enum KitaVisibility {
 
     PUBLIC, KITA, PRIVATE
 

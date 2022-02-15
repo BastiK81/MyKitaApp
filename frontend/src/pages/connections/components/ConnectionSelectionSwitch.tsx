@@ -3,7 +3,7 @@ import * as React from "react";
 import {useContext} from "react";
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 
-const UserConnectionSelectionSwitch = () => {
+const ConnectionSelectionSwitch = () => {
 
     const {alignment, showSelection, pageSelection} = useContext(ConnectorCom);
 
@@ -29,4 +29,4 @@ const UserConnectionSelectionSwitch = () => {
 
 }
 
-export default UserConnectionSelectionSwitch
+export default ConnectionSelectionSwitch

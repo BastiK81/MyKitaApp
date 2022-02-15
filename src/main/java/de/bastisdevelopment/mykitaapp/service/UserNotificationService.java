@@ -10,9 +10,9 @@ import java.util.List;
 public class UserNotificationService {
 
     private final AppUserService userService;
-    private final KitaUserConnectorService connectorService;
+    private final ConnectionService connectorService;
 
-    public UserNotificationService(AppUserService userService, KitaUserConnectorService connectorService) {
+    public UserNotificationService(AppUserService userService, ConnectionService connectorService) {
         this.userService = userService;
         this.connectorService = connectorService;
     }

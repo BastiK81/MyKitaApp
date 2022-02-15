@@ -5,7 +5,7 @@ interface IUserConnectionTitle {
     title: string
 }
 
-const UserConnectionTitle = (props: IUserConnectionTitle) => {
+const ConnectionTitle = (props: IUserConnectionTitle) => {
 
     const {title} = props
 
@@ -18,4 +18,4 @@ const UserConnectionTitle = (props: IUserConnectionTitle) => {
     )
 }
 
-export default UserConnectionTitle
+export default ConnectionTitle

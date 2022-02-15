@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useContext} from "react";
-import UserConnectionTableRowKita from "../rows/UserConnectionTableRowKita";
-import UserConnectionTableRow from "../rows/UserConnectionTableRow";
-import UserConnectionTableRowUser from "../rows/UserConnectionTableRowUser";
+import ConnectionTableRowKita from "../rows/ConnectionTableRowKita";
+import ConnectionTableRow from "../rows/ConnectionTableRow";
+import ConnectionTableRowUser from "../rows/ConnectionTableRowUser";
 import {TableBody} from "@mui/material";
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 
-const UserConnectionTableBody = () => {
+const ConnectionTableBody = () => {
 
     const {
         users,
@@ -23,7 +23,7 @@ const UserConnectionTableBody = () => {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                         return (
-                            <UserConnectionTableRowKita row={row}/>
+                            <ConnectionTableRowKita row={row}/>
                         )
                     })
             }
@@ -32,7 +32,7 @@ const UserConnectionTableBody = () => {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                         return (
-                            <UserConnectionTableRowUser row={row}/>
+                            <ConnectionTableRowUser row={row}/>
                         )
                     })
             }
@@ -41,7 +41,7 @@ const UserConnectionTableBody = () => {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                         return (
-                            <UserConnectionTableRow row={row}/>
+                            <ConnectionTableRow row={row}/>
                         )
                     })
             }
@@ -49,4 +49,4 @@ const UserConnectionTableBody = () => {
     )
 }
 
-export default UserConnectionTableBody
+export default ConnectionTableBody
