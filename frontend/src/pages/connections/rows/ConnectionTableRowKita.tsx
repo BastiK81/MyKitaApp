@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useContext, useState} from "react";
-import {PlaySchoolCom} from "../../../services/PlaySchoolProvider";
+import {KitaCom} from "../../../services/KitaProvider";
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 import {
     Button,
@@ -15,16 +15,15 @@ import {
 } from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserMoreMenu} from "../../../components/pageSupport/gruppen";
 import {UserItem, userRoles} from "../../../services/UserProvider";
 
 interface IUserConnectionTableRowKita {
     row: UserItem
 }
 
-const UserConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
+const ConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
 
-    const {playSchoolItem} = useContext(PlaySchoolCom);
+    const {kitaItem} = useContext(KitaCom);
     const {addKitaConnection, selected, handleClickSelect} = useContext(ConnectorCom);
 
     const {row} = props
@@ -35,7 +34,7 @@ const UserConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
     const isItemSelected = selected.indexOf(firstName) !== -1;
 
     const addConnection = () => {
-        addKitaConnection(id, playSchoolItem.id, selectedUserRole)
+        addKitaConnection(id, kitaItem.id, selectedUserRole)
     }
 
     const handleChangeUserRole = (event: SelectChangeEvent) => {
@@ -91,13 +90,10 @@ const UserConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
                     Connect User
                 </Button>
             </TableCell>
-            <TableCell align="right">
-                <UserMoreMenu/>
-            </TableCell>
         </TableRow>
     )
 
 
 }
 
-export default UserConnectionTableRowKita
+export default ConnectionTableRowKita

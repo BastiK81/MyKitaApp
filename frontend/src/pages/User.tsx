@@ -27,7 +27,7 @@ import SearchNotFound from "../forRefactoring/components/SearchNotFound";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import {UserCom} from "../services/UserProvider";
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import {KitaCom} from "../services/KitaProvider";
 import {filter} from "lodash";
 
 export interface ITableHead {
@@ -104,7 +104,7 @@ function applySortFilter(array, comparator, query) {
 const User = () => {
 
     const {refreshAllUser, allUser, user} = useContext(UserCom);
-    const {playSchoolItem, addPlaySchoolUserConnection} = useContext(PlaySchoolCom);
+    const {kitaItem, addKitaUserConnection} = useContext(KitaCom);
 
     const [selectedUserRole, setSelectedUserRole] = React.useState('');
     const [selectedPlaySchool, setSelectedPlaySchool] = useState('')
@@ -180,7 +180,7 @@ const User = () => {
     };
 
     const addConnection = () => {
-        addPlaySchoolUserConnection(user.id, playSchoolItem.id, selectedUserRole)
+        addKitaUserConnection(user.id, kitaItem.id, selectedUserRole)
     }
 
     return (
@@ -244,7 +244,7 @@ const User = () => {
                                                                     onChange={handleChangePlaySchool}
                                                                 >
                                                                     <MenuItem
-                                                                        value={playSchoolItem.id}>{playSchoolItem.name}</MenuItem>
+                                                                        value={kitaItem.id}>{kitaItem.name}</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </TableCell>

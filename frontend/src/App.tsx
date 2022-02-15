@@ -7,7 +7,7 @@ import {BaseOptionChartStyle} from "./forRefactoring/components/charts/BaseOptio
 import Router from "./Router";
 import BackendProvider from "./services/BackendProvider";
 import UserProvider from "./services/UserProvider";
-import PlaySchoolProvider from "./services/PlaySchoolProvider";
+import KitaProvider from "./services/KitaProvider";
 import ChildrenProvider from "./services/psChildProvider";
 import GroupProvider from "./services/GrouopProvider";
 import ConnectorProvider from "./services/ConnectorProvider";
@@ -22,7 +22,7 @@ function App() {
             <BaseOptionChartStyle/>
             <BackendProvider>
                 <UserProvider>
-                    <PlaySchoolProvider>
+                    <KitaProvider>
                         <GroupProvider>
                             <ChildrenProvider>
                                 <ConnectorProvider>
@@ -32,7 +32,7 @@ function App() {
                                 </ConnectorProvider>
                             </ChildrenProvider>
                         </GroupProvider>
-                    </PlaySchoolProvider>
+                    </KitaProvider>
                 </UserProvider>
             </BackendProvider>
         </ThemeConfig>

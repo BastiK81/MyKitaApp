@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useContext} from "react";
-import UserConnectionTableRowKita from "../rows/UserConnectionTableRowKita";
-import UserConnectionTableRow from "../rows/UserConnectionTableRow";
-import UserConnectionTableRowUser from "../rows/UserConnectionTableRowUser";
+import ConnectionTableRowKita from "../rows/ConnectionTableRowKita";
+import ConnectionTableRow from "../rows/ConnectionTableRow";
+import ConnectionTableRowUser from "../rows/ConnectionTableRowUser";
 import {TableBody} from "@mui/material";
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 
-const UserConnectionTableBody = () => {
+const ConnectionTableBody = () => {
 
     const {
         users,
@@ -22,9 +22,8 @@ const UserConnectionTableBody = () => {
                 users
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                        console.log('Add New || User')
                         return (
-                            <UserConnectionTableRowKita row={row}/>
+                            <ConnectionTableRowKita row={row}/>
                         )
                     })
             }
@@ -32,9 +31,8 @@ const UserConnectionTableBody = () => {
                 kitas
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                        console.log('Add New || Kita')
                         return (
-                            <UserConnectionTableRowUser row={row}/>
+                            <ConnectionTableRowUser row={row}/>
                         )
                     })
             }
@@ -42,9 +40,8 @@ const UserConnectionTableBody = () => {
                 connector
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                        console.log('Connector')
                         return (
-                            <UserConnectionTableRow row={row}/>
+                            <ConnectionTableRow row={row}/>
                         )
                     })
             }
@@ -52,4 +49,4 @@ const UserConnectionTableBody = () => {
     )
 }
 
-export default UserConnectionTableBody
+export default ConnectionTableBody

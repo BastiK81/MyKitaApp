@@ -1,18 +1,17 @@
 import * as React from "react";
 import {useContext} from "react";
-import {PlaySchoolItem} from "../../../services/PlaySchoolProvider";
+import {KitaItem} from "../../../services/KitaProvider";
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 import {Button, Checkbox, TableCell, TableRow} from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserMoreMenu} from "../../../components/pageSupport/gruppen";
 import {UserCom} from "../../../services/UserProvider";
 
 interface IUserConnectionTableRowUser {
-    row: PlaySchoolItem
+    row: KitaItem
 }
 
-const UserConnectionTableRowUser = (props: IUserConnectionTableRowUser) => {
+const ConnectionTableRowUser = (props: IUserConnectionTableRowUser) => {
 
     const {user} = useContext(UserCom);
     const {addUserConnection, selected, handleClickSelect} = useContext(ConnectorCom);
@@ -59,13 +58,10 @@ const UserConnectionTableRowUser = (props: IUserConnectionTableRowUser) => {
                     Connect User
                 </Button>
             </TableCell>
-            <TableCell align="right">
-                <UserMoreMenu/>
-            </TableCell>
         </TableRow>
     )
 
 
 }
 
-export default UserConnectionTableRowUser
+export default ConnectionTableRowUser

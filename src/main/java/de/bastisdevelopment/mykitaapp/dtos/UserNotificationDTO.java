@@ -1,6 +1,6 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
-import de.bastisdevelopment.mykitaapp.items.KitaUserConnectorDBItem;
+import de.bastisdevelopment.mykitaapp.items.ConnectionDBItem;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,7 +18,7 @@ public class UserNotificationDTO {
     public UserNotificationDTO() {
     }
 
-    public UserNotificationDTO(KitaUserConnectorDBItem dbItem) {
+    public UserNotificationDTO(ConnectionDBItem dbItem) {
         super();
         this.title = "Open Connection";
         this.description = "Open Kita User Connection wait for response";

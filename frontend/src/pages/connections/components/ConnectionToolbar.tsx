@@ -30,7 +30,7 @@ const SearchStyle = styled(OutlinedInput)(({theme}) => ({
     }
 }));
 
-export default function UserConnectionToolbar() {
+export default function ConnectionToolbar() {
 
     const {selected, filterName, handleFilterByName} = useContext(ConnectorCom);
 

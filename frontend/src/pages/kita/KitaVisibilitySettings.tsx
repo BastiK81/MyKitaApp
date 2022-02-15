@@ -1,38 +1,44 @@
 import {useContext, useEffect} from "react";
 import {Box, Card, CardContent, Slider, Typography} from "@mui/material";
-import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
+import {KitaCom} from "../../services/KitaProvider";
 
-const PlaySchoolVisibilitySettings = () => {
+export const KITAVISIBILITY = {
+    PRIVATE: 'PRIVATE',
+    KITA: 'KITA',
+    PUBLIC: 'PUBLIC'
+}
+
+const KitaVisibilitySettings = () => {
 
     const {
-        playSchoolItem,
+        kitaItem,
         getVisibility,
         kitaVisibility,
         setKitaVisibility,
         changeVisibility
-    } = useContext(PlaySchoolCom);
+    } = useContext(KitaCom);
 
     useEffect(() => {
-        getVisibility(playSchoolItem.id)
+        getVisibility(kitaItem.id)
         // eslint-disable-next-line
     }, []);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         let visibility = ''
         if (newValue === 50) {
-            visibility = 'KITA'
+            visibility = KITAVISIBILITY.KITA
         }
         if (newValue === 100) {
-            visibility = 'PUBLIC'
+            visibility = KITAVISIBILITY.PUBLIC
         }
         setKitaVisibility(visibility)
-        changeVisibility(playSchoolItem.id, visibility)
+        changeVisibility(kitaItem.id, visibility)
     };
 
     const getVisibilityValue = (): number => {
-        if (kitaVisibility === 'PUBLIC') {
+        if (kitaVisibility === KITAVISIBILITY.PUBLIC) {
             return 100
-        } else if (kitaVisibility === 'KITA') {
+        } else if (kitaVisibility === KITAVISIBILITY.KITA) {
             return 50
         }
         return 0
@@ -93,4 +99,4 @@ const PlaySchoolVisibilitySettings = () => {
 
 }
 
-export default PlaySchoolVisibilitySettings
+export default KitaVisibilitySettings

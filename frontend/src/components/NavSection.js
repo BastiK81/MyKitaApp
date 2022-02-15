@@ -7,7 +7,7 @@ import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
 import {alpha, styled, useTheme} from '@mui/material/styles';
 import {Box, Collapse, List, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
-import {PlaySchoolCom} from "../services/PlaySchoolProvider";
+import {KitaCom} from "../services/KitaProvider";
 
 // ----------------------------------------------------------------------
 
@@ -156,7 +156,7 @@ NavSection.propTypes = {
 
 export default function NavSection({navConfig, ...other}) {
 
-    const {hasKita} = useContext(PlaySchoolCom);
+    const {hasKita} = useContext(KitaCom);
 
     const {pathname} = useLocation();
     const match = (path) => (path ? !!matchPath({path, end: false}, pathname) : false);
