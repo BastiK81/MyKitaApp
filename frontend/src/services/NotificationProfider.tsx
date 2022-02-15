@@ -2,7 +2,7 @@ import React, {createContext, ReactElement, useContext, useState} from "react";
 import {INotifications} from "../layouts/mainPage/NotificationPopover";
 import {BackendCom} from "./BackendProvider";
 
-export interface INotificationContext{
+export interface INotificationContext {
     notifications: INotifications[]
     markAllAsRead: () => void,
     getUserNotifications: () => void
@@ -10,8 +10,10 @@ export interface INotificationContext{
 
 export const NotificationCom = createContext<INotificationContext>({
     notifications: [],
-    markAllAsRead: () => {},
-    getUserNotifications: () => {},
+    markAllAsRead: () => {
+    },
+    getUserNotifications: () => {
+    },
 })
 
 const NotificationProfider = ({children}: { children: ReactElement<any, any> }) => {
@@ -35,8 +37,9 @@ const NotificationProfider = ({children}: { children: ReactElement<any, any> }) 
             .then((json: INotifications[]) => setNotifications(json))
     }
 
-    return(<NotificationCom.Provider value={{
-        notifications, markAllAsRead, getUserNotifications}}>
+    return (<NotificationCom.Provider value={{
+        notifications, markAllAsRead, getUserNotifications
+    }}>
         {children}
     </NotificationCom.Provider>)
 

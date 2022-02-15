@@ -1,6 +1,6 @@
 import {useContext, useEffect} from "react";
 import {Box, Card, CardContent, Slider, Typography} from "@mui/material";
-import {KitaVisibility, PlaySchoolCom} from "../../services/PlaySchoolProvider";
+import {PlaySchoolCom} from "../../services/PlaySchoolProvider";
 
 const PlaySchoolVisibilitySettings = () => {
 
@@ -18,21 +18,21 @@ const PlaySchoolVisibilitySettings = () => {
     }, []);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
-        let visibility: KitaVisibility = {PRIVATE: true, KITA: false, PUBLIC: false}
+        let visibility = ''
         if (newValue === 50) {
-            visibility = {PRIVATE: true, KITA: true, PUBLIC: false}
+            visibility = 'KITA'
         }
         if (newValue === 100) {
-            visibility = {PRIVATE: true, KITA: true, PUBLIC: true}
+            visibility = 'PUBLIC'
         }
         setKitaVisibility(visibility)
         changeVisibility(playSchoolItem.id, visibility)
     };
 
     const getVisibilityValue = (): number => {
-        if (kitaVisibility['PUBLIC']) {
+        if (kitaVisibility === 'PUBLIC') {
             return 100
-        } else if (kitaVisibility['KITA']) {
+        } else if (kitaVisibility === 'KITA') {
             return 50
         }
         return 0

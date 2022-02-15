@@ -123,7 +123,7 @@ const PlaySchool = () => {
                             </LoadingButton>}
                         </Stack>
 
-                        <PlaySchoolVisibilitySettings/>
+                        {hasKita && <PlaySchoolVisibilitySettings/>}
 
                     </Form>
                 </FormikProvider>

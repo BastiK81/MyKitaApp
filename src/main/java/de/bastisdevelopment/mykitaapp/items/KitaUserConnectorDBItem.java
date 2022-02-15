@@ -49,4 +49,5 @@ public class KitaUserConnectorDBItem {
         this.implementationDate = new Date();
         this.expireDate = dto.getExpireDate();
     }
+
 }

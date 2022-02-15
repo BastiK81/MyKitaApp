@@ -2,6 +2,19 @@ import React, {createContext, ReactElement, useContext, useState} from "react";
 import {BackendCom} from "./BackendProvider";
 import {useNavigate} from "react-router-dom";
 
+export interface UserRole {
+    id: string,
+    role: string
+}
+
+export const userRoles: UserRole[] = [
+    {id: '1', role: 'ADMIN'},
+    {id: '2', role: 'USER'},
+    {id: '3', role: 'EDUCATOR'},
+    {id: '4', role: 'PARENT'},
+    {id: '5', role: 'NONE'}
+]
+
 export interface IUserProvider {
     user: UserItem,
     visibility: string,

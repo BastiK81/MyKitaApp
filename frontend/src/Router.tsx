@@ -10,8 +10,9 @@ import Groups from "./pages/Groups";
 
 import Children from "./pages/Children";
 import Welcome from "./pages/Welcome";
-import UserConnections from "./pages/userConnections/UserConnections";
 import UserSettings from "./pages/userSettings/UserSettings";
+import UserConnectionMainUser from "./pages/connections/UserConnectionMainUser";
+import UserConnectionMainKita from "./pages/connections/UserConnectionMainKita";
 
 export default function Router() {
 
@@ -24,7 +25,8 @@ export default function Router() {
                 {path: 'playSchool', element: <PlaySchool/>},
                 {path: 'groups', element: <Groups/>},
                 {path: 'children', element: <Children/>},
-                {path: 'user', element: <UserConnections/>},
+                {path: 'kitaConnection', element: <UserConnectionMainKita/>},
+                {path: 'userConnection', element: <UserConnectionMainUser/>},
                 {path: 'userSettings', element: <UserSettings/>},
             ]
         },

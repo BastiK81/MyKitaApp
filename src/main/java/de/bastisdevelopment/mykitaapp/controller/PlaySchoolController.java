@@ -2,10 +2,12 @@ package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.service.KitaService;
+import de.bastisdevelopment.mykitaapp.utils.PlaySchoolVisibility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -35,14 +37,19 @@ public class PlaySchoolController {
     }
 
     @GetMapping(path = "/getVisibility/{kitaId}")
-    public Map<String, Boolean> getVisibility(@PathVariable String kitaId) throws Exception {
+    public PlaySchoolVisibility getVisibility(@PathVariable String kitaId) throws Exception {
         logger.info("Try to get Kita visibility");
         return kitaService.getVisibility(kitaId);
     }
 
     @PostMapping(path = "/changeVisibility/{kitaId}")
-    public void changeVisibility(@PathVariable String kitaId, @RequestBody Map<String, Boolean> visibility) throws Exception {
+    public void changeVisibility(@PathVariable String kitaId, @RequestBody PlaySchoolVisibility visibility) throws Exception {
         logger.info("Change Kita visibility");
         kitaService.changeVisibility(kitaId, visibility);
+    }
+
+    @GetMapping(path = "/getAllKitas/{visibility}")
+    public List<KitaDTO> getAllKitas(@PathVariable PlaySchoolVisibility visibility) {
+        return kitaService.getAllKitas(visibility);
     }
 }
