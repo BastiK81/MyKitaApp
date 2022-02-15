@@ -4,7 +4,7 @@ import {Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mu
 
 import {ChangeEvent, MouseEventHandler} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
-import {ITableHead} from "../../../pages/Groups";
+import {ITableHead} from "../../../pages/groups/Groups";
 
 // ----------------------------------------------------------------------
 

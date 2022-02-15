@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,11 +22,16 @@ public class GroupDBItem {
     private String name;
     private String kitaId;
     private String kitaName;
-
+    private List<ChildDBItem> kinder;
+    private List<AppUserDBItem> educator;
+    private List<AppUserDBItem> parents;
 
     public GroupDBItem(GroupDTO groupDTO) {
         this.name = groupDTO.getName();
         this.kitaId = groupDTO.getKitaId();
         this.kitaName = groupDTO.getKitaName();
+        this.educator = groupDTO.getEducator();
+        this.kinder = groupDTO.getKinder();
+        this.parents = groupDTO.getParents();
     }
 }

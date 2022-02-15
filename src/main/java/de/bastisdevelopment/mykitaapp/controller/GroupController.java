@@ -24,9 +24,19 @@ public class GroupController {
         return service.addNewGroup(groupDTO);
     }
 
-    @GetMapping(value = "/getAllGroups/{kitaId}")
+    @GetMapping(value = "/getallgroups/{kitaId}")
     public List<GroupDTO> getAllGroups(@PathVariable String kitaId) {
         return service.getAllGroups(kitaId);
+    }
+
+    @GetMapping(value = "/getgroupbyid/{groupId}")
+    public GroupDTO getGroupById(@PathVariable String groupId) throws Exception {
+        return service.getGroupById(groupId);
+    }
+
+    @DeleteMapping(value = "/delete/{groupId}")
+    public void deleteGroupById(@PathVariable String groupId) {
+        service.deleteGroupById(groupId);
     }
 
 }
