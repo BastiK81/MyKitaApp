@@ -11,7 +11,7 @@ interface KinderRowMenuProps {
     kindId: string,
 }
 
-const KinderRowMenu = (props:KinderRowMenuProps) => {
+const KinderRowMenu = (props: KinderRowMenuProps) => {
 
     const {deleteKind} = useContext(KindCom);
 

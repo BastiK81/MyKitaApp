@@ -1,8 +1,8 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
-import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import de.bastisdevelopment.mykitaapp.items.GroupDBItem;
+import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import lombok.Data;
 
 import java.util.List;

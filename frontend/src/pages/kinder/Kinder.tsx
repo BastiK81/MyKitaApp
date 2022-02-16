@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserListHead, UserListToolbar, UserMoreMenu} from "../../components/pageSupport/gruppen";
+import {UserListHead, UserListToolbar} from "../../components/pageSupport/gruppen";
 import * as React from "react";
 import {ChangeEvent, FormEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
@@ -152,7 +152,7 @@ const Kinder = () => {
         if (groupId === "") {
             return ""
         }
-        const filteredItems:GroupItem[] = groupItems.filter(group => group.id === groupId)
+        const filteredItems: GroupItem[] = groupItems.filter(group => group.id === groupId)
         if (filteredItems.length > 0) {
             return filteredItems[0].name
         }

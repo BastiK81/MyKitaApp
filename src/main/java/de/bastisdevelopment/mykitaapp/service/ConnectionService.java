@@ -1,8 +1,8 @@
 package de.bastisdevelopment.mykitaapp.service;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
-import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.dtos.ConnectionDTO;
+import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.dtos.UserNotificationDTO;
 import de.bastisdevelopment.mykitaapp.items.ConnectionDBItem;
 import de.bastisdevelopment.mykitaapp.repository.ConnectionRepository;
@@ -12,7 +12,9 @@ import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ConnectionService {
@@ -76,7 +78,7 @@ public class ConnectionService {
     }
 
     public List<ConnectionDTO> getAllAcceptedUser() {
-        return repository.findByUserIdAndKitaStatusAndUserStatus(userService.getActualUser().getId(), ConnectionStatus.CONFIRMED, ConnectionStatus.CONFIRMED )
+        return repository.findByUserIdAndKitaStatusAndUserStatus(userService.getActualUser().getId(), ConnectionStatus.CONFIRMED, ConnectionStatus.CONFIRMED)
                 .stream().map(ConnectionDTO::new).toList();
     }
 
@@ -93,7 +95,7 @@ public class ConnectionService {
     public List<KitaDTO> getAllKitas() {
         List<ConnectionDBItem> connections = repository.findByUserId(userService.getActualUser().getId()).stream().toList();
         return kitaService.getAllKitas(KitaVisibility.PUBLIC).stream()
-                .filter(kitaDTO ->  connections.stream()
+                .filter(kitaDTO -> connections.stream()
                         .filter(dbItem -> dbItem.getKitaId().equals(kitaDTO.getId())).toList().isEmpty()).toList().stream().toList();
     }
 

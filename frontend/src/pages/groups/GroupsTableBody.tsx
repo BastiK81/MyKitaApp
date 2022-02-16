@@ -1,6 +1,4 @@
 import {Checkbox, TableBody, TableCell, TableRow} from "@mui/material";
-import Label from "../../components/Label";
-import {sentenceCase} from "change-case";
 import * as React from "react";
 import {ChangeEvent, useContext} from "react";
 import {GroupCom} from "../../services/GrouopProvider";

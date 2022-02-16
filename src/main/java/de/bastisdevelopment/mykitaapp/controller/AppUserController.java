@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -44,7 +43,7 @@ public class AppUserController {
     }
 
     @PostMapping(path = "/setUserVisibility")
-    public void setUserVisibility(@RequestBody UserVisibility visibility){
+    public void setUserVisibility(@RequestBody UserVisibility visibility) {
         service.setUserVisibility(visibility);
     }
 
