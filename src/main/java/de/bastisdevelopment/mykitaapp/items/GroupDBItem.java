@@ -22,7 +22,7 @@ public class GroupDBItem {
     private String name;
     private String kitaId;
     private String kitaName;
-    private List<ChildDBItem> kinder;
+    private List<KindDBItem> kinder;
     private List<AppUserDBItem> educator;
     private List<AppUserDBItem> parents;
 
@@ -33,5 +33,9 @@ public class GroupDBItem {
         this.educator = groupDTO.getEducator();
         this.kinder = groupDTO.getKinder();
         this.parents = groupDTO.getParents();
+    }
+
+    public void addKind(KindDBItem child) {
+        this.kinder.add(child);
     }
 }

@@ -78,6 +78,7 @@ const BackendProvider = ({children}: { children: ReactElement<any, any> }) => {
                 navigate('/main/welcome', {replace: true});
             })
             .catch(() => {
+                setNewJwt('')
                 navigate('/404', {replace: true});
             });
     }

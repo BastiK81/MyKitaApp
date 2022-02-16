@@ -1,7 +1,7 @@
 import React, {createContext, Dispatch, ReactElement, useContext, useState} from "react";
 import {BackendCom} from "./BackendProvider";
 import {KitaCom} from "./KitaProvider";
-import {json} from "stream/consumers";
+import {KindItem} from "./KinderProvider";
 
 export interface IGroupProvider {
     groupItems: GroupItem[],
@@ -11,8 +11,6 @@ export interface IGroupProvider {
     setRowsPerPage: Dispatch<React.SetStateAction<number>>,
     selected: string[],
     setSelected: Dispatch<React.SetStateAction<string[]>>,
-    groupSettingsId: string,
-    setGroupSettingsId: Dispatch<React.SetStateAction<string>>,
     groupItem: GroupItem,
 
     addGroup: (data: {}) => void
@@ -25,11 +23,12 @@ export interface GroupItem {
     id: string,
     name: string,
     kitaId: string,
-    kitaName: string
+    kitaName: string,
+    kinder: KindItem[],
 }
 
 export const GroupCom = createContext<IGroupProvider>({
-    groupItem: {id:'', name:'', kitaId:'', kitaName:''},
+    groupItem: {id: '', name: '', kitaId: '', kitaName: '', kinder: []},
     getGroupById(groupId: string): void {
     },
     groupItems: [],
@@ -45,11 +44,6 @@ export const GroupCom = createContext<IGroupProvider>({
     setSelected: () => {
         throw new Error("could not select item")
     },
-    groupSettingsId: '',
-    setGroupSettingsId: () => {
-        throw new Error("Could not set GroupId")
-    },
-
     refreshAllGroups: () => {
         throw new Error("Could not refresh Groups")
     },
@@ -66,16 +60,15 @@ const GroupProvider = ({children}: { children: ReactElement<any, any> }) => {
     const {callBackend} = useContext(BackendCom)
     const {kitaItem} = useContext(KitaCom);
 
-    const [groupSettingsId, setGroupSettingsId] = useState('');
-    const [groupItem, setGroupItem] = useState<GroupItem>({id:'', name:'', kitaId:'', kitaName:''});
+    const [groupItem, setGroupItem] = useState<GroupItem>({id: '', name: '', kitaId: '', kitaName: '', kinder: []});
     const [groupItems, setGroupItems] = useState<GroupItem[]>([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [selected, setSelected] = useState<string[]>([]);
 
-    const getGroupById = (groupId:string) => {
+    const getGroupById = (groupId: string) => {
         callBackend('/api/group/getgroupbyid/' + groupId, 'GET', {})
-            .then((json:GroupItem) => setGroupItem(json))
+            .then((json: GroupItem) => setGroupItem(json))
     }
 
     const addGroup = (data: {}) => {
@@ -112,8 +105,6 @@ const GroupProvider = ({children}: { children: ReactElement<any, any> }) => {
             setRowsPerPage,
             selected,
             setSelected,
-            groupSettingsId,
-            setGroupSettingsId,
             groupItem,
             addGroup,
             refreshAllGroups,

@@ -7,6 +7,8 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import {LoginForm} from '../components/authentication/login';
+import {UserCom} from "../services/UserProvider";
+import {useContext, useEffect} from "react";
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +38,14 @@ const ContentStyle = styled('div')(({theme}) => ({
 }));
 
 export default function Login() {
+
+    const {refreshUser} = useContext(UserCom);
+
+    useEffect(() => {
+        refreshUser(true)
+        // eslint-disable-next-line
+    }, []);
+
     return (
         <RootStyle title="Login | My Kita App">
             <AuthLayout>

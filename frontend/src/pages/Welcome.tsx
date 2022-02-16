@@ -8,7 +8,7 @@ const Welcome = () => {
     const {refreshUser} = useContext(UserCom)
 
     useEffect(() => {
-        refreshUser()
+        refreshUser(false)
         refreshKita()
         // eslint-disable-next-line
     }, [])

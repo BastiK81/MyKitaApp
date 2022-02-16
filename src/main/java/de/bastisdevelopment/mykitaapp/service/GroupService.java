@@ -1,6 +1,7 @@
 package de.bastisdevelopment.mykitaapp.service;
 
 import de.bastisdevelopment.mykitaapp.dtos.GroupDTO;
+import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import de.bastisdevelopment.mykitaapp.items.GroupDBItem;
 import de.bastisdevelopment.mykitaapp.repository.GroupRepository;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,12 @@ public class GroupService {
     public GroupDTO getGroupById(String groupId) throws Exception {
         return new GroupDTO(repository.findById(groupId)
                 .orElseThrow(() -> new Exception("Group " + groupId + " not found!")));
+    }
+
+    public void addKindToGroup(KindDBItem kind) throws Exception {
+        GroupDBItem groupDBItem = repository.findById(kind.getGroupId())
+                .orElseThrow(() -> new Exception(String.format("Group with id %s not found",kind.getGroupId())));
+        groupDBItem.addKind(kind);
+        repository.save(groupDBItem);
     }
 }

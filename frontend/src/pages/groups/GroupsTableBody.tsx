@@ -35,7 +35,7 @@ const GroupsTableBody = () => {
             {groupItems
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
-                        const {id, name, kitaId, kitaName} = row;
+                        const {id, name, kitaName, kinder} = row;
                         const isItemSelected = selected.indexOf(name) !== -1;
                         return (
                             <TableRow
@@ -54,14 +54,7 @@ const GroupsTableBody = () => {
                                 </TableCell>
                                 <TableCell align="left">{name}</TableCell>
                                 <TableCell align="left">{kitaName}</TableCell>
-                                <TableCell align="left">
-                                    <Label
-                                        variant="ghost"
-                                        color={(kitaId === 'banned' && 'error') || 'success'}
-                                    >
-                                        {sentenceCase(kitaId)}
-                                    </Label>
-                                </TableCell>
+                                <TableCell align="left">{'Anzahl Kinder ' + kinder.length}</TableCell>
                                 <TableCell align="right">
                                     <GroupRowMenu groupId={id}/>
                                 </TableCell>

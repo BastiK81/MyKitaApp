@@ -12,7 +12,6 @@ import java.util.List;
 @RequestMapping("/api/group")
 public class GroupController {
 
-    private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
     private final GroupService service;
 
     public GroupController(GroupService service) {

@@ -5,25 +5,26 @@ import moreVerticalFill from "@iconify/icons-eva/more-vertical-fill";
 import trash2Outline from "@iconify/icons-eva/trash-2-outline";
 import {Link as RouterLink} from "react-router-dom";
 import editFill from "@iconify/icons-eva/edit-fill";
-import {GroupCom} from "../../services/GrouopProvider";
+import {KindCom} from "../../services/KinderProvider";
 
-interface GroupRowMenuProps {
-    groupId: string,
+interface KinderRowMenuProps {
+    kindId: string,
 }
 
-const GroupRowMenu = (props: GroupRowMenuProps) => {
+const KinderRowMenu = (props:KinderRowMenuProps) => {
 
-    const {getGroupById, deleteGroup} = useContext(GroupCom);
+    const {deleteKind} = useContext(KindCom);
 
     const ref = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleCLickTrash = () => {
-        deleteGroup(props.groupId)
+        console.log(props.kindId)
+        deleteKind(props.kindId)
     }
 
     const handleCLickSettings = () => {
-        getGroupById(props.groupId)
+
     }
 
     return (
@@ -51,7 +52,7 @@ const GroupRowMenu = (props: GroupRowMenuProps) => {
                 </MenuItem>
 
                 <MenuItem onClick={handleCLickSettings}
-                          component={RouterLink} to="/main/groupSettings" sx={{color: 'text.secondary'}}>
+                          component={RouterLink} to="#" sx={{color: 'text.secondary'}}>
                     <ListItemIcon>
                         <Icon icon={editFill} width={24} height={24}/>
                     </ListItemIcon>
@@ -64,4 +65,4 @@ const GroupRowMenu = (props: GroupRowMenuProps) => {
 
 }
 
-export default GroupRowMenu
+export default KinderRowMenu

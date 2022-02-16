@@ -1,4 +1,4 @@
-import Page from "../components/Page";
+import Page from "../../components/Page";
 import {
     Button,
     Card,
@@ -21,18 +21,19 @@ import {
 } from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserListHead, UserListToolbar, UserMoreMenu} from "../components/pageSupport/gruppen";
+import {UserListHead, UserListToolbar, UserMoreMenu} from "../../components/pageSupport/gruppen";
 import * as React from "react";
 import {ChangeEvent, FormEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
-import Scrollbar from "../components/Scrollbar";
-import SearchNotFound from "../forRefactoring/components/SearchNotFound";
+import Scrollbar from "../../components/Scrollbar";
+import SearchNotFound from "../../components/SearchNotFound";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {DatePicker} from "@mui/lab";
-import {ChildCom} from "../services/psChildProvider";
-import {GroupCom} from "../services/GrouopProvider";
-import {KitaCom} from "../services/KitaProvider";
+import {KindCom} from "../../services/KinderProvider";
+import {GroupCom, GroupItem} from "../../services/GrouopProvider";
+import {KitaCom} from "../../services/KitaProvider";
+import KinderRowMenu from "./KinderRowMenu";
 
 export interface ITABLE_HEAD {
     id: string,
@@ -49,14 +50,14 @@ const TABLE_HEAD: ITABLE_HEAD[] = [
     {id: 'groupId', label: 'Group', alignRight: false},
 ];
 
-const Children = () => {
+const Kinder = () => {
 
-    const {refreshChildren, childItems, addNewChild} = useContext(ChildCom);
+    const {refreshKinder, childItems, addNewChild} = useContext(KindCom);
     const {kitaItem} = useContext(KitaCom);
     const {refreshAllGroups, groupItems} = useContext(GroupCom);
 
     useEffect(() => {
-        refreshChildren(kitaItem.id)
+        refreshKinder(kitaItem.id)
         refreshAllGroups(kitaItem.id)
         // eslint-disable-next-line
     }, []);
@@ -151,7 +152,11 @@ const Children = () => {
         if (groupId === "") {
             return ""
         }
-        return groupItems.filter(group => group.id === groupId)[0].name
+        const filteredItems:GroupItem[] = groupItems.filter(group => group.id === groupId)
+        if (filteredItems.length > 0) {
+            return filteredItems[0].name
+        }
+        return ""
     }
 
     return (
@@ -288,7 +293,7 @@ const Children = () => {
                                                             <TableCell align="left">{kitaItem.name}</TableCell>
                                                             <TableCell align="left">{getGroupName(groupId)}</TableCell>
                                                             <TableCell align="right">
-                                                                <UserMoreMenu/>
+                                                                <KinderRowMenu kindId={id}/>
                                                             </TableCell>
                                                         </TableRow>
                                                     )
@@ -328,4 +333,4 @@ const Children = () => {
     )
 }
 
-export default Children
+export default Kinder

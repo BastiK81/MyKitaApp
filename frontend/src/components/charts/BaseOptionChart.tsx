@@ -36,6 +36,7 @@ export function BaseOptionChartStyle() {
                             border: 0,
                             textAlign: 'center',
                             fontWeight: theme.typography.fontWeightBold,
+                            // @ts-ignore
                             backgroundColor: theme.palette.grey[500_16],
                             color: theme.palette.text[theme.palette.mode === 'light' ? 'secondary' : 'primary']
                         }
@@ -81,10 +82,15 @@ export default function BaseOptionChart() {
         // Colors
         colors: [
             theme.palette.primary.main,
+            // @ts-ignore
             theme.palette.chart.yellow[0],
+            // @ts-ignore
             theme.palette.chart.blue[0],
+            // @ts-ignore
             theme.palette.chart.violet[0],
+            // @ts-ignore
             theme.palette.chart.green[0],
+            // @ts-ignore
             theme.palette.chart.red[0]
         ],
 
@@ -197,6 +203,7 @@ export default function BaseOptionChart() {
             radialBar: {
                 track: {
                     strokeWidth: '100%',
+                    // @ts-ignore
                     background: theme.palette.grey[500_16]
                 },
                 dataLabels: {

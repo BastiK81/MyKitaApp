@@ -1,7 +1,7 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
-import de.bastisdevelopment.mykitaapp.items.ChildDBItem;
+import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import de.bastisdevelopment.mykitaapp.items.GroupDBItem;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ public class GroupDTO {
     private String name;
     private String kitaId;
     private String kitaName;
-    private List<ChildDBItem> kinder;
+    private List<KindDBItem> kinder;
     private List<AppUserDBItem> educator;
     private List<AppUserDBItem> parents;
 

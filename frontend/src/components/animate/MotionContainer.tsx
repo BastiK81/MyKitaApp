@@ -1,18 +1,19 @@
-import PropTypes from 'prop-types';
 import {motion} from 'framer-motion';
 // material
 import {Box} from '@mui/material';
 //
-import {varWrapEnter} from './variants';
+import React from "react";
+import {varWrapEnter} from "./variants/Wrap";
 
 // ----------------------------------------------------------------------
 
-MotionContainer.propTypes = {
-    open: PropTypes.bool.isRequired,
-    children: PropTypes.node
-};
+interface MotionContainerProps {
+    children: React.ReactNode
+    open: boolean
+}
 
-export default function MotionContainer({open, children, ...other}) {
+const MotionContainer = ({open, children, ...other}: MotionContainerProps) => {
+
     return (
         <Box
             component={motion.div}
@@ -25,3 +26,5 @@ export default function MotionContainer({open, children, ...other}) {
         </Box>
     );
 }
+
+export default MotionContainer

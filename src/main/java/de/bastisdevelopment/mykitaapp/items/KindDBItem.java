@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document("childItems")
-public class ChildDBItem {
+public class KindDBItem {
 
     @Id
     private String id;
@@ -28,7 +28,7 @@ public class ChildDBItem {
     private String kitaId;
     private String groupId;
 
-    public ChildDBItem(ChildDTO childDTO) {
+    public KindDBItem(ChildDTO childDTO) {
         super();
         this.firstName = childDTO.getFirstName();
         this.lastName = childDTO.getLastName();

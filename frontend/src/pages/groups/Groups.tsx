@@ -20,7 +20,7 @@ import * as React from "react";
 import {ChangeEvent, MouseEventHandler, useContext, useEffect, useState} from "react";
 import {SortDirection} from "@mui/material/TableCell/TableCell";
 import Scrollbar from "../../components/Scrollbar";
-import SearchNotFound from "../../forRefactoring/components/SearchNotFound";
+import SearchNotFound from "../../components/SearchNotFound";
 import {GroupCom} from "../../services/GrouopProvider";
 import {KitaCom} from "../../services/KitaProvider";
 import GroupsTableBody from "./GroupsTableBody";

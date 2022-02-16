@@ -19,7 +19,7 @@ export interface IUserProvider {
     user: UserItem,
     visibility: string,
     getVisibility: () => void,
-    refreshUser: () => void,
+    refreshUser: (reload:boolean) => void,
     allUser: UserItem[]
     refreshAllUser: (visibility: string) => void,
     setUserVisibility: (visibility: string) => void,
@@ -83,14 +83,19 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
             });
     }
 
-    const refreshUser = () => {
+    const refreshUser = (reload:boolean) => {
         callBackend("/api/user/getuserinformation", 'GET', {})
             .then((json: UserItem) => {
                 resetUser(json)
+                if (reload) {
+                    navigate('/main/welcome', {replace: true});
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
-                navigate('/404', {replace: true});
+                if (!reload) {
+                    navigate('/404', {replace: true});
+                }
             })
     }
 

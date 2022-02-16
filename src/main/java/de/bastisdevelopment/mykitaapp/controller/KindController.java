@@ -10,13 +10,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/child")
-public class ChildController {
+public class KindController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ChildController.class);
+    private static final Logger logger = LoggerFactory.getLogger(KindController.class);
 
     private final ChildService service;
 
-    public ChildController(ChildService service) {
+    public KindController(ChildService service) {
         this.service = service;
     }
 
@@ -26,7 +26,12 @@ public class ChildController {
     }
 
     @GetMapping(path = "/getAllChildren/{kitaId}")
-    public List<ChildDTO> getAllChilds(@PathVariable String kitaId) {
+    public List<ChildDTO> getAllChildren(@PathVariable String kitaId) {
         return service.getAllChilds(kitaId);
+    }
+
+    @DeleteMapping(value = "/delete/{childId}")
+    public void deleteChildById(@PathVariable String childId) {
+        service.deleteChildById(childId);
     }
 }
