@@ -11,6 +11,7 @@ import {Avatar, Box, Button, Divider, IconButton, MenuItem, Typography} from '@m
 //
 import MenuPopover from "../../components/MenuPopover";
 import {UserCom} from "../../services/UserProvider";
+import {BackendCom} from "../../services/BackendProvider";
 
 
 // ----------------------------------------------------------------------
@@ -38,6 +39,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
 
     const {user} = useContext(UserCom)
+    const {logout} = useContext(BackendCom);
 
     const anchorRef = useRef(null);
     const [open, setOpen] = useState(false);
@@ -48,6 +50,10 @@ export default function AccountPopover() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleLogout = () => {
+        logout()
+    }
 
     return (
         <>
@@ -114,7 +120,9 @@ export default function AccountPopover() {
                 ))}
 
                 <Box sx={{p: 2, pt: 1.5}}>
-                    <Button fullWidth color="inherit" variant="outlined">
+                    <Button fullWidth color="inherit"
+                            onClick={handleLogout}
+                            variant="outlined">
                         Logout
                     </Button>
                 </Box>

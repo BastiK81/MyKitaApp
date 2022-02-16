@@ -37,8 +37,6 @@ const BackendProvider = ({children}: { children: ReactElement<any, any> }) => {
         setJwt(jwt)
     }
 
-    const logout = () => setJwt("")
-
     async function callBackend(url: string, requestMethod: string, data: {}) {
         const requestInit: RequestInit = {
             method: requestMethod,
@@ -78,8 +76,14 @@ const BackendProvider = ({children}: { children: ReactElement<any, any> }) => {
                 navigate('/main/welcome', {replace: true});
             })
             .catch(() => {
+                setNewJwt('')
                 navigate('/404', {replace: true});
             });
+    }
+
+    const logout = () => {
+        setNewJwt('')
+        navigate('/login', {replace: true});
     }
 
     return (

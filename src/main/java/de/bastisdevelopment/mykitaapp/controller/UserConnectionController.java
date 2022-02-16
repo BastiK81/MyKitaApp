@@ -1,8 +1,8 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
-import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.dtos.ConnectionDTO;
+import de.bastisdevelopment.mykitaapp.dtos.KitaDTO;
 import de.bastisdevelopment.mykitaapp.service.ConnectionService;
 import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import org.slf4j.Logger;
@@ -74,17 +74,17 @@ public class UserConnectionController {
         return connectorService.getAllConnectableUser(playSchoolId);
     }
 
-    @PostMapping(path = "change/{id}/{role}" )
+    @PostMapping(path = "change/{id}/{role}")
     public void changeConnection(@PathVariable String id, @PathVariable String role) throws Exception {
         connectorService.changeConnection(id, UserRole.valueOf(role));
     }
 
-    @PostMapping(path = "confirm/{id}" )
+    @PostMapping(path = "confirm/{id}")
     public void confirmConnection(@PathVariable String id) throws Exception {
         connectorService.confirmConnection(id);
     }
 
-    @PostMapping(path = "delete/{id}" )
+    @PostMapping(path = "delete/{id}")
     public void deleteConnection(@PathVariable String id) {
         connectorService.deleteConnection(id);
     }

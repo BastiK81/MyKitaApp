@@ -21,7 +21,7 @@ const sidebarConfig: ISidebarConfig[] = [
         title: 'Kita',
         path: '/main/playSchool',
         icon: getIcon(homeFill),
-        alwaysShow: true
+        alwaysShow: false
     },
     {
         title: 'Gruppen',

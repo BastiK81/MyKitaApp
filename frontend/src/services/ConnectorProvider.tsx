@@ -79,7 +79,8 @@ export const ConnectorCom = createContext<IConnectorProvider>({
     },
     confirmConnection: () => {
     },
-    deleteConnection: () => {},
+    deleteConnection: () => {
+    },
     filterName: '',
     alignment: '',
     title: '',
@@ -245,7 +246,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
         showSelection(alignment, pageSelection)
     }
 
-    const deleteConnection = (id:string) => {
+    const deleteConnection = (id: string) => {
         callBackend("/api/userConnection/delete/" + id, 'POST', {})
             .catch((error) => {
                 console.error('Error:', error);

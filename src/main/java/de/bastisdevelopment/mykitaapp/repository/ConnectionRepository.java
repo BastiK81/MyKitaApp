@@ -5,7 +5,6 @@ import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ public interface ConnectionRepository extends MongoRepository<ConnectionDBItem, 
 
     List<ConnectionDBItem> findByUserIdAndUserStatus(String id, ConnectionStatus userStatus);
 
-    List<ConnectionDBItem>  findByUserIdAndKitaStatus(String id, ConnectionStatus kitaStatus);
+    List<ConnectionDBItem> findByUserIdAndKitaStatus(String id, ConnectionStatus kitaStatus);
 
     List<ConnectionDBItem> findByKitaIdAndUserStatus(String playSchoolId, ConnectionStatus userStatus);
 

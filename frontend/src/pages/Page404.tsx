@@ -4,8 +4,10 @@ import {Link as RouterLink} from 'react-router-dom';
 import {styled} from '@mui/material/styles';
 import {Box, Button, Container, Typography} from '@mui/material';
 // components
-import {MotionContainer, varBounceIn} from '../forRefactoring/components/animate';
 import Page from '../components/Page';
+import MotionContainer from "../components/animate/MotionContainer";
+import {varBounceIn} from "../components/animate/variants/bounce/BounceIn";
+
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +25,7 @@ export default function Page404() {
     return (
         <RootStyle title="404 Page Not Found | Minimal-UI">
             <Container>
-                <MotionContainer initial="initial" open>
+                <MotionContainer open={true}>
                     <Box sx={{maxWidth: 480, margin: 'auto', textAlign: 'center'}}>
                         <motion.div variants={varBounceIn}>
                             <Typography variant="h3" paragraph>
