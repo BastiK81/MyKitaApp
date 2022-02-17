@@ -1,5 +1,6 @@
 package de.bastisdevelopment.mykitaapp.service;
 
+import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.dtos.ChildDTO;
 import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import de.bastisdevelopment.mykitaapp.repository.ChildRepository;
@@ -59,5 +60,11 @@ public class ChildService {
             e.printStackTrace();
         }
         childRepository.save(item);
+    }
+
+    public void updateParents(String id, List<AppUserDTO> parents) throws Exception {
+        KindDBItem kind = childRepository.findById(id).orElseThrow(() ->  new Exception("Child not found"));
+        kind.setEltern(parents);
+        childRepository.save(kind);
     }
 }

@@ -49,10 +49,15 @@ export interface IConnectorProvider {
     handleSelectAllConsClick: (event: ChangeEvent<HTMLInputElement>) => void,
     handleClickSelect: (event: ChangeEvent<HTMLInputElement>, name: string) => void,
     showSelection: (newAlignment: string, selection: string) => void,
+    getAllParents: () => void,
+    parentUser: UserItem[],
 }
 
 export const ConnectorCom = createContext<IConnectorProvider>({
+    parentUser: [],
     connector: [],
+    getAllParents(): void {
+    },
     users: [],
     kitas: [],
     getAllKitas: () => {
@@ -108,7 +113,7 @@ export const ConnectorCom = createContext<IConnectorProvider>({
     handleClickSelect: () => {
     },
     showSelection: () => {
-    },
+    }
 })
 
 export interface ConnectorItem {
@@ -131,6 +136,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     const [users, setUsers] = useState<UserItem[]>([])
     const [kitas, setKitas] = useState<KitaItem[]>([]);
 
+    const [parentUser, setParentUser] = useState<UserItem[]>([]);
     const [pageSelection, setPageSelection] = useState('');
     const [filterName, setFilterName] = useState('');
     const [alignment, setAlignment] = React.useState('Confirmed');
@@ -142,6 +148,15 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [itemCount, setItemCount] = useState(0);
+
+    const getAllParents = () => {
+        callBackend("/api/userConnection/getallparents/" + kitaItem.id, 'GET', {}, false)
+            .then((json: UserItem[]) => setParentUser(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+    }
 
     const refreshUsers = (playSchoolId: string) => {
         callBackend("/api/userConnection/getAllConnectableUser/" + playSchoolId, 'GET', {}, false)
@@ -361,6 +376,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
                 connector,
                 users,
                 kitas,
+                parentUser,
                 getAllKitas,
                 refreshUsers,
                 getAllAccepted,
@@ -387,6 +403,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
                 itemCount,
                 pageSelection,
 
+                getAllParents,
                 handleFilterByName,
                 handleSelectAllUserClick,
                 handleRequestSort,

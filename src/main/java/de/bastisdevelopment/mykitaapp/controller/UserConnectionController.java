@@ -22,6 +22,11 @@ public class UserConnectionController {
         this.connectorService = connectorService;
     }
 
+    @GetMapping(path = "getallparents/{kitaId}")
+    public List<AppUserDTO> getAllParents(@PathVariable String kitaId) {
+        return connectorService.getAllParents(kitaId);
+    }
+
     @PostMapping(path = "addKitaSide")
     public void addNewKitaSide(@RequestBody ConnectionDTO dto) throws Exception {
         logger.info("Add Kita User Connection");

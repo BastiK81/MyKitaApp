@@ -25,7 +25,7 @@ public class KindDBItem {
     @Indexed
     private String lastName;
     private Date dateOfBirth;
-    private List<AppUserDTO> parents;
+    private List<AppUserDTO> eltern;
     private String kitaId;
     private String groupId;
 
@@ -34,7 +34,7 @@ public class KindDBItem {
         this.firstName = child.getFirstName();
         this.lastName = child.getLastName();
         this.dateOfBirth = child.getDateOfBirth();
-        this.parents = child.getParents();
+        this.eltern = child.getEltern();
         this.kitaId = child.getKitaId();
         this.groupId = child.getGroupId();
     }
@@ -43,7 +43,7 @@ public class KindDBItem {
         this.firstName = child.getFirstName();
         this.lastName = child.getLastName();
         this.dateOfBirth = child.getDateOfBirth();
-        this.parents = child.getParents();
+        this.eltern = child.getEltern();
         this.groupId = child.getGroupId();
     }
 }

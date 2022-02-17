@@ -19,6 +19,7 @@ import {KindCom} from "../../services/KinderProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import {GroupCom} from "../../services/GrouopProvider";
+import Eltern from "./Eltern";
 
 const KindSettings = () => {
 
@@ -63,6 +64,7 @@ const KindSettings = () => {
                         <Card>
                             <Stack spacing={3} padding={3}>
                                 <TextField
+                                    key={'Vorname'}
                                     fullWidth
                                     label="Vorname"
                                     value={firstName}
@@ -72,6 +74,7 @@ const KindSettings = () => {
                                     }}
                                 />
                                 <TextField
+                                    key={"Nachname"}
                                     fullWidth
                                     label="Nachname"
                                     value={lastName}
@@ -127,7 +130,7 @@ const KindSettings = () => {
                         </Card>
                     </Grid>
                     <Grid item xs={24} sm={12} md={6}>
-
+                        <Eltern kind={kind}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
                         <Card>

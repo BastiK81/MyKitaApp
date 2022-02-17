@@ -267,7 +267,7 @@ const Kinder = () => {
                                                         firstName,
                                                         lastName,
                                                         dateOfBirth,
-                                                        parents,
+                                                        eltern,
                                                         groupId
                                                     } = row;
                                                     const isItemSelected = selected.indexOf(firstName) !== -1;
@@ -280,19 +280,21 @@ const Kinder = () => {
                                                             selected={isItemSelected}
                                                             aria-checked={isItemSelected}
                                                         >
-                                                            <TableCell padding="checkbox">
+                                                            <TableCell id={'checkbox'} padding="checkbox">
                                                                 <Checkbox
                                                                     checked={isItemSelected}
                                                                     onChange={(event) => handleClick(event, id)}
                                                                 />
                                                             </TableCell>
-                                                            <TableCell align="left">{firstName}</TableCell>
-                                                            <TableCell align="left">{lastName}</TableCell>
-                                                            <TableCell align="left">{dateOfBirth}</TableCell>
-                                                            <TableCell align="left">{parents}</TableCell>
-                                                            <TableCell align="left">{kitaItem.name}</TableCell>
-                                                            <TableCell align="left">{getGroupName(groupId)}</TableCell>
-                                                            <TableCell align="right">
+                                                            <TableCell id={'firstName'} align="left">{firstName}</TableCell>
+                                                            <TableCell id={'lastName'} align="left">{lastName}</TableCell>
+                                                            <TableCell id={'dateOfBirth'}
+                                                                       align="left">{dateOfBirth}</TableCell>
+                                                            <TableCell id={'eltern'} align="left">{eltern}</TableCell>
+                                                            <TableCell id={'kita'} align="left">{kitaItem.name}</TableCell>
+                                                            <TableCell id={'group'}
+                                                                       align="left">{getGroupName(groupId)}</TableCell>
+                                                            <TableCell id={'menu'} align="right">
                                                                 <KinderRowMenu kind={row}/>
                                                             </TableCell>
                                                         </TableRow>

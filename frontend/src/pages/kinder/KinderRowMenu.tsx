@@ -42,20 +42,19 @@ const KinderRowMenu = (props: KinderRowMenuProps) => {
                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                 transformOrigin={{vertical: 'top', horizontal: 'right'}}
             >
-                <MenuItem sx={{color: 'text.secondary'}}
-                          onClick={handleCLickTrash}>
-                    <ListItemIcon>
-                        <Icon icon={trash2Outline} width={24} height={24}/>
-                    </ListItemIcon>
-                    <ListItemText primary="Delete" primaryTypographyProps={{variant: 'body2'}}/>
-                </MenuItem>
-
                 <MenuItem onClick={handleCLickSettings}
                           component={RouterLink} to="/main/kindSettings" sx={{color: 'text.secondary'}}>
                     <ListItemIcon>
                         <Icon icon={editFill} width={24} height={24}/>
                     </ListItemIcon>
                     <ListItemText primary="Edit" primaryTypographyProps={{variant: 'body2'}}/>
+                </MenuItem>
+                <MenuItem sx={{color: 'text.secondary'}}
+                          onClick={handleCLickTrash}>
+                    <ListItemIcon>
+                        <Icon icon={trash2Outline} width={24} height={24}/>
+                    </ListItemIcon>
+                    <ListItemText primary="Delete" primaryTypographyProps={{variant: 'body2'}}/>
                 </MenuItem>
             </Menu>
         </>

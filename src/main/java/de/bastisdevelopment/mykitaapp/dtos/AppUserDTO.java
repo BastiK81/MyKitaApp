@@ -17,4 +17,11 @@ public class AppUserDTO {
         this.lastName = user.getLastName();
         this.firstName = user.getFirstName();
     }
+
+    public AppUserDTO(String id, String email, String lastName, String firstName) {
+        this.id = id;
+        this.email = email;
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
 }

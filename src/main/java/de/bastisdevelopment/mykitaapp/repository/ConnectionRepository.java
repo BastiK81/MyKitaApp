@@ -2,6 +2,7 @@ package de.bastisdevelopment.mykitaapp.repository;
 
 import de.bastisdevelopment.mykitaapp.items.ConnectionDBItem;
 import de.bastisdevelopment.mykitaapp.utils.ConnectionStatus;
+import de.bastisdevelopment.mykitaapp.utils.UserRole;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -29,5 +30,6 @@ public interface ConnectionRepository extends MongoRepository<ConnectionDBItem, 
 
     List<ConnectionDBItem> findByKitaIdAndKitaStatusAndUserStatus(String playSchoolId, ConnectionStatus kitaStatus, ConnectionStatus userStatus);
 
+    List<ConnectionDBItem> findByKitaIdAndUserRole(String kitaId, UserRole parent);
 }
 
