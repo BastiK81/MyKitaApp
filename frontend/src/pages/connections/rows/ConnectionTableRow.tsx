@@ -14,9 +14,8 @@ import {
 } from "@mui/material";
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import {UserCom, userRoles} from "../../../services/UserProvider";
 import RowMenu from "./RowMenu";
-import {KitaCom} from "../../../services/KitaProvider";
+import {userRoles} from "../../../services/UserProvider";
 
 interface IUserConnectionTableRow {
     row: ConnectorItem
@@ -32,8 +31,6 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
         handleClickSelect,
         pageSelection
     } = useContext(ConnectorCom);
-    const {allUser} = useContext(UserCom);
-    const {kitaItem} = useContext(KitaCom);
 
     const {row} = props
 

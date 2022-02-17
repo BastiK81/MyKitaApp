@@ -1,3 +1,4 @@
+import * as React from "react";
 import {useContext, useEffect, useState} from "react";
 import {
     Box,
@@ -17,9 +18,7 @@ import {DatePicker, LoadingButton} from "@mui/lab";
 import {KindCom} from "../../services/KinderProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import * as React from "react";
 import {GroupCom} from "../../services/GrouopProvider";
-import {UserItem} from "../../services/UserProvider";
 
 const KindSettings = () => {
 
@@ -48,7 +47,8 @@ const KindSettings = () => {
             dateOfBirth: dateOfBirth,
             parents: [],
             kitaId: kind.kitaId,
-            groupId: selectedGroup})
+            groupId: selectedGroup
+        })
     }
 
     return (
