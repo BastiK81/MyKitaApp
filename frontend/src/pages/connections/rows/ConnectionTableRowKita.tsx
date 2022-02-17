@@ -51,17 +51,15 @@ const ConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
             selected={isItemSelected}
             aria-checked={isItemSelected}
         >
-            <TableCell padding="checkbox">
+            <TableCell id={'checkbox'} padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
                     onChange={(event) => handleClickSelect(event, firstName)}
                 />
             </TableCell>
-            <TableCell align="left">{firstName}</TableCell>
-            <TableCell align="left">{lastName}</TableCell>
-            <TableCell align="left">
-            </TableCell>
-            <TableCell align="left">
+            <TableCell id={'firstname'} align="left">{firstName}</TableCell>
+            <TableCell id={'lastname'} align="left">{lastName}</TableCell>
+            <TableCell id={'role'} align="left">
                 <FormControl>
                     <InputLabel id="rolePicker-label">Role</InputLabel>
                     <Select
@@ -80,7 +78,7 @@ const ConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
                     </Select>
                 </FormControl>
             </TableCell>
-            <TableCell align="left">
+            <TableCell id={'add'} align="left">
                 <Button
                     type="submit"
                     variant="contained"

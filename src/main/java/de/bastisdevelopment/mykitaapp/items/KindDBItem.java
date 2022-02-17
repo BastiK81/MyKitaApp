@@ -1,5 +1,6 @@
 package de.bastisdevelopment.mykitaapp.items;
 
+import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.dtos.ChildDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,17 +25,25 @@ public class KindDBItem {
     @Indexed
     private String lastName;
     private Date dateOfBirth;
-    private List<String> parents;
+    private List<AppUserDTO> parents;
     private String kitaId;
     private String groupId;
 
-    public KindDBItem(ChildDTO childDTO) {
+    public KindDBItem(ChildDTO child) {
         super();
-        this.firstName = childDTO.getFirstName();
-        this.lastName = childDTO.getLastName();
-        this.dateOfBirth = childDTO.getDateOfBirth();
-        this.parents = childDTO.getParents();
-        this.kitaId = childDTO.getKitaId();
-        this.groupId = childDTO.getGroupId();
+        this.firstName = child.getFirstName();
+        this.lastName = child.getLastName();
+        this.dateOfBirth = child.getDateOfBirth();
+        this.parents = child.getParents();
+        this.kitaId = child.getKitaId();
+        this.groupId = child.getGroupId();
+    }
+
+    public void update(ChildDTO child) {
+        this.firstName = child.getFirstName();
+        this.lastName = child.getLastName();
+        this.dateOfBirth = child.getDateOfBirth();
+        this.parents = child.getParents();
+        this.groupId = child.getGroupId();
     }
 }

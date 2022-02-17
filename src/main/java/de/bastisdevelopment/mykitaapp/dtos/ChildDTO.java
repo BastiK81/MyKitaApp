@@ -1,5 +1,6 @@
 package de.bastisdevelopment.mykitaapp.dtos;
 
+import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import lombok.Data;
 
@@ -13,9 +14,12 @@ public class ChildDTO {
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
-    private List<String> parents;
+    private List<AppUserDTO> parents;
     private String kitaId;
     private String groupId;
+
+    public ChildDTO() {
+    }
 
     public ChildDTO(KindDBItem child) {
         super();
@@ -28,7 +32,19 @@ public class ChildDTO {
         this.parents = child.getParents();
     }
 
-    public ChildDTO(String firstName, String lastName, Date dateOfBirth, List<String> parents, String kitaId, String groupId) {
+    public ChildDTO(String id, String firstName, String lastName, Date dateOfBirth, List<AppUserDTO> parents, String kitaId, String groupId) {
+        super();
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.parents = parents;
+        this.kitaId = kitaId;
+        this.groupId = groupId;
+    }
+
+    public ChildDTO(String firstName, String lastName, Date dateOfBirth, List<AppUserDTO> parents, String kitaId, String groupId) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;

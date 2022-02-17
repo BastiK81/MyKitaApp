@@ -3,8 +3,6 @@ package de.bastisdevelopment.mykitaapp.controller;
 import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.service.AppUserService;
 import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,7 +13,6 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class AppUserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AppUserController.class);
     private final AppUserService service;
 
     public AppUserController(AppUserService service) {
@@ -24,7 +21,6 @@ public class AppUserController {
 
     @GetMapping(path = "/getuserinformation")
     public AppUserDTO getUserInformation() {
-        logger.info("Try to get User Information");
         return service.getInformationOfActiveUser();
     }
 
@@ -38,7 +34,6 @@ public class AppUserController {
 
     @GetMapping(path = "/getUserVisibility")
     public UserVisibility getUserVisibility() {
-        logger.info("Get Visibility");
         return service.getUSerVisibility();
     }
 

@@ -67,12 +67,12 @@ const GroupProvider = ({children}: { children: ReactElement<any, any> }) => {
     const [selected, setSelected] = useState<string[]>([]);
 
     const getGroupById = (groupId: string) => {
-        callBackend('/api/group/getgroupbyid/' + groupId, 'GET', {})
+        callBackend('/api/group/getgroupbyid/' + groupId, 'GET', {}, false)
             .then((json: GroupItem) => setGroupItem(json))
     }
 
     const addGroup = (data: {}) => {
-        callBackend('/api/group/addnewgroup', 'POST', data)
+        callBackend('/api/group/addnewgroup', 'POST', data, true)
             .then((json: GroupItem[]) => setGroupItems(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -80,7 +80,7 @@ const GroupProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const refreshAllGroups = (playSchoolId: string) => {
-        callBackend('/api/group/getallgroups/' + playSchoolId, 'GET', {})
+        callBackend('/api/group/getallgroups/' + playSchoolId, 'GET', {}, false)
             .then((json: GroupItem[]) => setGroupItems(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -88,7 +88,7 @@ const GroupProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const deleteGroup = (groupId: string) => {
-        callBackend('/api/group/delete/' + groupId, 'DELETE', {})
+        callBackend('/api/group/delete/' + groupId, 'DELETE', {}, false)
             .catch((error) => {
                 console.error('Error:', error);
             });

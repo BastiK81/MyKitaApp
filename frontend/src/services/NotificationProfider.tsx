@@ -33,7 +33,7 @@ const NotificationProfider = ({children}: { children: ReactElement<any, any> }) 
     };
 
     const getUserNotifications = () => {
-        callBackend('/api/userNotification', 'GET', {})
+        callBackend('/api/userNotification', 'GET', {}, false)
             .then((json: INotifications[]) => setNotifications(json))
     }
 

@@ -38,4 +38,8 @@ public class GroupDBItem {
     public void addKind(KindDBItem child) {
         this.kinder.add(child);
     }
+
+    public void removeKind(KindDBItem kind) {
+        this.kinder.removeAll(this.kinder.stream().filter(kindDBItem -> kindDBItem.getId().equals(kind.getId())).toList());
+    }
 }

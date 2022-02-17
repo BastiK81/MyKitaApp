@@ -2,8 +2,6 @@ package de.bastisdevelopment.mykitaapp.controller;
 
 import de.bastisdevelopment.mykitaapp.dtos.ChildDTO;
 import de.bastisdevelopment.mykitaapp.service.ChildService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +9,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/child")
 public class KindController {
-
-    private static final Logger logger = LoggerFactory.getLogger(KindController.class);
 
     private final ChildService service;
 
@@ -27,11 +23,16 @@ public class KindController {
 
     @GetMapping(path = "/getAllChildren/{kitaId}")
     public List<ChildDTO> getAllChildren(@PathVariable String kitaId) {
-        return service.getAllChilds(kitaId);
+        return service.getAllChildren(kitaId);
     }
 
     @DeleteMapping(value = "/delete/{childId}")
-    public void deleteChildById(@PathVariable String childId) {
+    public void deleteChildById(@PathVariable String childId) throws Exception {
         service.deleteChildById(childId);
+    }
+
+    @PutMapping(path = "/updatechild")
+    public void updateChild(@RequestBody ChildDTO child) throws Exception {
+        service.updateChild(child);
     }
 }

@@ -3,16 +3,12 @@ package de.bastisdevelopment.mykitaapp.service;
 import de.bastisdevelopment.mykitaapp.dtos.ChildDTO;
 import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import de.bastisdevelopment.mykitaapp.repository.ChildRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ChildService {
-
-    private static final Logger logger = LoggerFactory.getLogger(ChildService.class);
 
     private final ChildRepository childRepository;
     private final GroupService groupService;
@@ -32,14 +28,36 @@ public class ChildService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return this.getAllChilds(child.getKitaId());
+        return this.getAllChildren(child.getKitaId());
     }
 
-    public List<ChildDTO> getAllChilds(String kitaId) {
+    public List<ChildDTO> getAllChildren(String kitaId) {
         return childRepository.findByKitaId(kitaId).stream().map(ChildDTO::new).toList();
     }
 
-    public void deleteChildById(String childId) {
+    public void deleteChildById(String childId) throws Exception {
+        KindDBItem kind = childRepository.findById(childId).orElseThrow(() -> new Exception("Kind not found"));
+        try {
+            groupService.deleteChildFromGroup(kind);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         childRepository.deleteById(childId);
+    }
+
+    public void updateChild(ChildDTO child) throws Exception {
+        KindDBItem item = childRepository.findById(child.getId()).orElseThrow(() ->  new Exception("Child not found"));
+        try {
+            groupService.deleteChildFromGroup(item);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        item.update(child);
+        try {
+            groupService.addKindToGroup(item);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        childRepository.save(item);
     }
 }

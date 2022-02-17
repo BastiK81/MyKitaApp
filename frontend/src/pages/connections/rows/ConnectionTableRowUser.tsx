@@ -36,19 +36,15 @@ const ConnectionTableRowUser = (props: IUserConnectionTableRowUser) => {
             selected={isItemSelected}
             aria-checked={isItemSelected}
         >
-            <TableCell padding="checkbox">
+            <TableCell id={'checkbox'} padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
                     onChange={(event) => handleClickSelect(event, name)}
                 />
             </TableCell>
-            <TableCell align="left">{name}</TableCell>
-            <TableCell align="left">{city}</TableCell>
-            <TableCell align="left">
-            </TableCell>
-            <TableCell align="left">
-            </TableCell>
-            <TableCell align="left">
+            <TableCell id={'name'} align="left">{name}</TableCell>
+            <TableCell id={'city'} align="left">{city}</TableCell>
+            <TableCell id={'add'} align="left">
                 <Button
                     type="submit"
                     variant="contained"
