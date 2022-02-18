@@ -144,7 +144,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     const [itemCount, setItemCount] = useState(0);
 
     const refreshUsers = (playSchoolId: string) => {
-        callBackend("/api/userConnection/getAllConnectableUser/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllConnectableUser/" + playSchoolId, 'GET', {}, false)
             .then((json: UserItem[]) => setUsers(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -152,7 +152,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const getAllAccepted = (playSchoolId: string) => {
-        callBackend("/api/userConnection/getAllAccepted/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllAccepted/" + playSchoolId, 'GET', {}, false)
             .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -160,7 +160,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const getAllInProgress = (playSchoolId: string) => {
-        callBackend("/api/userConnection/getAllInProgress/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllInProgress/" + playSchoolId, 'GET', {}, false)
             .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -168,7 +168,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const getAllPending = (playSchoolId: string) => {
-        callBackend("/api/userConnection/getAllPending/" + playSchoolId, 'GET', {})
+        callBackend("/api/userConnection/getAllPending/" + playSchoolId, 'GET', {}, false)
             .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -176,7 +176,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const getAllAcceptedUser = () => {
-        callBackend("/api/userConnection/getAllAcceptedUser/", 'GET', {})
+        callBackend("/api/userConnection/getAllAcceptedUser/", 'GET', {}, false)
             .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -184,7 +184,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const getAllInProgressUser = () => {
-        callBackend("/api/userConnection/getAllInProgressUser/", 'GET', {})
+        callBackend("/api/userConnection/getAllInProgressUser/", 'GET', {}, false)
             .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -192,7 +192,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const getAllPendingUser = () => {
-        callBackend("/api/userConnection/getAllPendingUser/", 'GET', {})
+        callBackend("/api/userConnection/getAllPendingUser/", 'GET', {}, false)
             .then((json: ConnectorItem[]) => setConnector(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -200,7 +200,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const getAllKitas = () => {
-        callBackend("/api/userConnection/getAllKitas", 'GET', {})
+        callBackend("/api/userConnection/getAllKitas", 'GET', {}, false)
             .then((json: KitaItem[]) => setKitas(json))
     }
 
@@ -210,7 +210,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
             kitaId: playSchoolId,
             userRole: 'NONE'
         }
-        callBackend("/api/userConnection/addUserSide", 'POST', data)
+        callBackend("/api/userConnection/addUserSide", 'POST', data, true)
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -223,7 +223,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
             kitaId: playSchoolId,
             userRole: userRole,
         }
-        callBackend("/api/userConnection/addKitaSide", 'POST', data)
+        callBackend("/api/userConnection/addKitaSide", 'POST', data, true)
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -231,7 +231,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const changeConnection = (id: string, userRole: string) => {
-        callBackend("/api/userConnection/change/" + id + "/" + userRole, 'POST', {})
+        callBackend("/api/userConnection/change/" + id + "/" + userRole, 'POST', {}, true)
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -239,7 +239,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const confirmConnection = (id: string) => {
-        callBackend("/api/userConnection/confirm/" + id, 'POST', {})
+        callBackend("/api/userConnection/confirm/" + id, 'POST', {}, true)
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -247,7 +247,7 @@ const ConnectorProvider = ({children}: { children: ReactElement<any, any> }) => 
     }
 
     const deleteConnection = (id: string) => {
-        callBackend("/api/userConnection/delete/" + id, 'POST', {})
+        callBackend("/api/userConnection/delete/" + id, 'POST', {}, true)
             .catch((error) => {
                 console.error('Error:', error);
             });

@@ -64,7 +64,7 @@ const KitaProvider = ({children}: { children: ReactElement<any, any> }) => {
     })
 
     const addNewKita = (data: {}) => {
-        callBackend('/api/kita/addkita', 'POST', data)
+        callBackend('/api/kita/addkita', 'POST', data, true)
             .then((json: KitaItem) => {
                 setKitaItem(json)
                 setHasKita(true)
@@ -75,7 +75,7 @@ const KitaProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const refreshKita = () => {
-        callBackend('/api/kita/getkita', 'GET', {})
+        callBackend('/api/kita/getkita', 'GET', {}, false)
             .then((json: KitaItem) => {
                 setHasKita(true)
                 setKitaItem(json)
@@ -93,14 +93,14 @@ const KitaProvider = ({children}: { children: ReactElement<any, any> }) => {
             kitaId: kitaId,
             userRole: userRole,
         }
-        callBackend("/api/kita/addkitauserconnector", 'POST', data)
+        callBackend("/api/kita/addkitauserconnector", 'POST', data, true)
             .catch((error) => {
                 console.error('Error:', error);
             });
     }
 
     const getVisibility = (kitaId: string) => {
-        callBackend("/api/kita/getVisibility/" + kitaId, 'GET', {})
+        callBackend("/api/kita/getVisibility/" + kitaId, 'GET', {}, false)
             .then((json) => setKitaVisibility(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -108,7 +108,7 @@ const KitaProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const changeVisibility = (kitaId: string, data: string) => {
-        callBackend("/api/kita/changeVisibility/" + kitaId, 'POST', data)
+        callBackend("/api/kita/changeVisibility/" + kitaId, 'POST', data, true)
             .catch((error) => {
                 console.error('Error:', error);
             });

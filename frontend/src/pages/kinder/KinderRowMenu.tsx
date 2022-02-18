@@ -5,26 +5,25 @@ import moreVerticalFill from "@iconify/icons-eva/more-vertical-fill";
 import trash2Outline from "@iconify/icons-eva/trash-2-outline";
 import {Link as RouterLink} from "react-router-dom";
 import editFill from "@iconify/icons-eva/edit-fill";
-import {KindCom} from "../../services/KinderProvider";
+import {KindCom, KindItem} from "../../services/KinderProvider";
 
 interface KinderRowMenuProps {
-    kindId: string,
+    kind: KindItem,
 }
 
 const KinderRowMenu = (props: KinderRowMenuProps) => {
 
-    const {deleteKind} = useContext(KindCom);
+    const {deleteKind, resetKindItem} = useContext(KindCom);
 
     const ref = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleCLickTrash = () => {
-        console.log(props.kindId)
-        deleteKind(props.kindId)
+        deleteKind(props.kind.id)
     }
 
     const handleCLickSettings = () => {
-
+        resetKindItem(props.kind)
     }
 
     return (
@@ -52,7 +51,7 @@ const KinderRowMenu = (props: KinderRowMenuProps) => {
                 </MenuItem>
 
                 <MenuItem onClick={handleCLickSettings}
-                          component={RouterLink} to="#" sx={{color: 'text.secondary'}}>
+                          component={RouterLink} to="/main/kindSettings" sx={{color: 'text.secondary'}}>
                     <ListItemIcon>
                         <Icon icon={editFill} width={24} height={24}/>
                     </ListItemIcon>

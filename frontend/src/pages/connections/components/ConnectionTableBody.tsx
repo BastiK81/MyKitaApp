@@ -23,7 +23,8 @@ const ConnectionTableBody = () => {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                         return (
-                            <ConnectionTableRowKita row={row}/>
+                            <ConnectionTableRowKita
+                                row={row}/>
                         )
                     })
             }

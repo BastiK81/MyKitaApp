@@ -14,4 +14,6 @@ public interface ChildRepository extends MongoRepository<KindDBItem, String> {
     Optional<KindDBItem> findByFirstNameAndLastNameAndDateOfBirth(String firstName, String lastName, Date dateOfBirth);
 
     List<KindDBItem> findByKitaId(String kitaId);
+
+    List<KindDBItem> findAllByGroupId(String groupId);
 }

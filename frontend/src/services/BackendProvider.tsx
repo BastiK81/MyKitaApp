@@ -5,7 +5,7 @@ export interface IBackendContext {
     jwt: string,
     setNewJwt: (jwt: string) => void,
     logout: () => void,
-    callBackend: (url: string, requestMethod: string, data: {}) => Promise<any>
+    callBackend: (url: string, requestMethod: string, data: {}, setData: boolean) => Promise<any>
     loginRegister: (url: string, data: {}) => void
 }
 
@@ -37,7 +37,7 @@ const BackendProvider = ({children}: { children: ReactElement<any, any> }) => {
         setJwt(jwt)
     }
 
-    async function callBackend(url: string, requestMethod: string, data: {}) {
+    async function callBackend(url: string, requestMethod: string, data: {}, setData: boolean) {
         const requestInit: RequestInit = {
             method: requestMethod,
             headers: {
@@ -45,7 +45,7 @@ const BackendProvider = ({children}: { children: ReactElement<any, any> }) => {
                 'Authorization': 'Bearer ' + jwt,
             }
         }
-        if (requestMethod === 'POST') {
+        if (setData) {
             requestInit.body = JSON.stringify(data)
         }
         const response = await fetch(url, requestInit)

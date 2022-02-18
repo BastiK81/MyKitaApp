@@ -76,7 +76,7 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const refreshAllUser = (visibility: string) => {
-        callBackend("/api/user/getalluser/" + visibility, 'GET', {})
+        callBackend("/api/user/getalluser/" + visibility, 'GET', {}, false)
             .then((json: UserItem[]) => resetAllUser(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -84,7 +84,7 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const refreshUser = (reload: boolean) => {
-        callBackend("/api/user/getuserinformation", 'GET', {})
+        callBackend("/api/user/getuserinformation", 'GET', {}, false)
             .then((json: UserItem) => {
                 resetUser(json)
                 if (reload) {
@@ -100,7 +100,7 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const getVisibility = () => {
-        callBackend("/api/user/getUserVisibility", 'GET', {})
+        callBackend("/api/user/getUserVisibility", 'GET', {}, false)
             .then((json: string) => setVisibility(json))
             .catch((error) => {
                 console.error('Error:', error);
@@ -109,7 +109,7 @@ const UserProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     const setUserVisibility = (visibility: string) => {
         setVisibility(visibility)
-        callBackend("/api/user/setUserVisibility", 'POST', visibility)
+        callBackend("/api/user/setUserVisibility", 'POST', visibility, true)
             .catch((error) => {
                 console.error('Error:', error);
             })

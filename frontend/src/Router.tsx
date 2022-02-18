@@ -14,6 +14,7 @@ import UserSettings from "./pages/userSettings/UserSettings";
 import ConnectionMainUser from "./pages/connections/ConnectionMainUser";
 import ConnectionMainKita from "./pages/connections/ConnectionMainKita";
 import GroupSettings from "./pages/groups/GroupSettings";
+import KindSettings from "./pages/kinder/KindSettings";
 
 export default function Router() {
 
@@ -30,6 +31,7 @@ export default function Router() {
                 {path: 'userConnection', element: <ConnectionMainUser/>},
                 {path: 'userSettings', element: <UserSettings/>},
                 {path: 'groupSettings', element: <GroupSettings/>},
+                {path: 'kindSettings', element: <KindSettings/>},
             ]
         },
         {

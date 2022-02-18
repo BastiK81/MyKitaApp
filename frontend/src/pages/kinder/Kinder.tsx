@@ -52,7 +52,7 @@ const TABLE_HEAD: ITABLE_HEAD[] = [
 
 const Kinder = () => {
 
-    const {refreshKinder, childItems, addNewChild} = useContext(KindCom);
+    const {refreshKinder, kindItems, addNewChild} = useContext(KindCom);
     const {kitaItem} = useContext(KitaCom);
     const {refreshAllGroups, groupItems} = useContext(GroupCom);
 
@@ -73,7 +73,7 @@ const Kinder = () => {
 
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - groupItems.length) : 0;
 
-    const isUserNotFound = childItems.length === 0;
+    const isUserNotFound = kindItems.length === 0;
 
 
     const handleRequestSort = (event: MouseEventHandler<HTMLAnchorElement>, property: string) => {
@@ -84,7 +84,7 @@ const Kinder = () => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds: string[] = childItems.map((n) => n.firstName);
+            const newSelecteds: string[] = kindItems.map((n) => n.firstName);
             setSelected(newSelecteds);
             return;
         }
@@ -141,7 +141,7 @@ const Kinder = () => {
             firstName: firstName,
             lastName: lastName,
             dateOfBirth: dateOfBirth,
-            parents: [''],
+            parents: [],
             kitaId: kitaItem.id,
             groupId: selectedGroup
         }
@@ -216,7 +216,7 @@ const Kinder = () => {
                                             <Select
                                                 labelId="demo-simple-select-helper-label"
                                                 id="demo-simple-select-helper"
-                                                label="Age"
+                                                label="Group"
                                                 value={selectedGroup}
                                                 onChange={handleChange}
                                             >
@@ -259,7 +259,7 @@ const Kinder = () => {
                                         onSelectAllClick={handleSelectAllClick}
                                     />
                                     <TableBody>
-                                        {childItems
+                                        {kindItems
                                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                             .map((row) => {
                                                     const {
@@ -293,7 +293,7 @@ const Kinder = () => {
                                                             <TableCell align="left">{kitaItem.name}</TableCell>
                                                             <TableCell align="left">{getGroupName(groupId)}</TableCell>
                                                             <TableCell align="right">
-                                                                <KinderRowMenu kindId={id}/>
+                                                                <KinderRowMenu kind={row}/>
                                                             </TableCell>
                                                         </TableRow>
                                                     )
@@ -320,7 +320,7 @@ const Kinder = () => {
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={childItems.length}
+                            count={kindItems.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
