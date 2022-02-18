@@ -4,6 +4,7 @@ import {useContext, useEffect} from "react";
 import ConnectionSelectionSwitch from "./components/ConnectionSelectionSwitch";
 import ConnectionTable from "./components/ConnectionTable";
 import {ConnectorCom} from "../../services/ConnectorProvider";
+import {Container} from "@mui/material";
 
 const ConnectionMainKita = () => {
 
@@ -15,11 +16,11 @@ const ConnectionMainKita = () => {
     }, []);
 
     return (
-        <>
+        <Container maxWidth="xl">
             <ConnectionTitle title={title}/>
             <ConnectionSelectionSwitch/>
             <ConnectionTable/>
-        </>
+        </Container>
     )
 
 }

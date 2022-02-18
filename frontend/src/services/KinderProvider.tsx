@@ -81,9 +81,7 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     const refreshKinder = (KitaId: string) => {
         callBackend('/api/child/getAllChildren/' + KitaId, 'GET', {}, false)
-            .then((json: KindItem[]) => {
-                setKindItems(json)
-            })
+            .then((json: KindItem[]) => setKindItems(json))
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -109,7 +107,6 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
     }
 
     const updateParents = (kindId: string, data: {}) => {
-        console.log(data)
         callBackend('/api/child/updateparents/' + kindId, 'PUT', data, true)
             .catch((error) => {
                 console.error('Error:', error);

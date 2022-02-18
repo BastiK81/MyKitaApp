@@ -11,6 +11,9 @@ public class AppUserDTO {
     private String lastName;
     private String firstName;
 
+    public AppUserDTO() {
+    }
+
     public AppUserDTO(AppUserDBItem user) {
         this.id = user.getId();
         this.email = user.getEmail();

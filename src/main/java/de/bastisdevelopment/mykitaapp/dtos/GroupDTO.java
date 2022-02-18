@@ -29,7 +29,6 @@ public class GroupDTO {
     }
 
     public GroupDTO(String name, String kitaId, String kitaName) {
-        super();
         this.name = name;
         this.kitaId = kitaId;
         this.kitaName = kitaName;

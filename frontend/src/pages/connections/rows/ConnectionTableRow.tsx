@@ -75,7 +75,7 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
             <TableCell key={'userstatus'} id={'userstatus'} align="left">{userStatus}</TableCell>
             <TableCell key={'kitastatus'} id={'kitastatus'} align="left">{kitaStatus}</TableCell>
             <TableCell key={'role'} id={'role'} align="left">
-                {(alignment === 'In Progress' && pageSelection === 'Kita') &&
+                {(alignment !== 'Pending' && pageSelection === 'Kita') &&
                 <FormControl>
                     <InputLabel id="rolePicker-label">Role</InputLabel>
                     <Select

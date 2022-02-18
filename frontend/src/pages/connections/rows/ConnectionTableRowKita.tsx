@@ -71,8 +71,10 @@ const ConnectionTableRowKita = (props: IUserConnectionTableRowKita) => {
                     >
                         {userRoles.map((role) => {
                             return (
-                                <MenuItem id={role.id}
-                                          value={role.role}>{role.role}</MenuItem>
+                                <MenuItem
+                                    id={role.id}
+                                    key={role.id}
+                                    value={role.role}>{role.role}</MenuItem>
                             )
                         })}
                     </Select>

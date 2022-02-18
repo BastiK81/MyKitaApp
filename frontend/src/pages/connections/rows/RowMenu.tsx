@@ -5,7 +5,7 @@ import {Link as RouterLink} from 'react-router-dom';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 // material
-import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem} from '@mui/material';
+import {Container, IconButton, ListItemIcon, ListItemText, Menu, MenuItem} from '@mui/material';
 import {ConnectorCom} from "../../../services/ConnectorProvider";
 
 interface RowMenuProps {
@@ -23,7 +23,7 @@ const RowMenu = (props: RowMenuProps) => {
     }
 
     return (
-        <>
+        <Container>
             <IconButton ref={ref} onClick={() => setIsOpen(true)}>
                 <Icon icon={moreVerticalFill} width={20} height={20}/>
             </IconButton>
@@ -53,7 +53,7 @@ const RowMenu = (props: RowMenuProps) => {
                     <ListItemText primary="Delete" primaryTypographyProps={{variant: 'body2'}}/>
                 </MenuItem>
             </Menu>
-        </>
+        </Container>
     );
 }
 

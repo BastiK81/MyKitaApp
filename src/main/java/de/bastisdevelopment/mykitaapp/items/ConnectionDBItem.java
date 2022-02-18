@@ -28,7 +28,6 @@ public class ConnectionDBItem {
     }
 
     public ConnectionDBItem(String id, String userId, String kitaId, ConnectionStatus userStatus, ConnectionStatus kitaStatus, UserRole userRole, Date implementationDate, Date expireDate) {
-        super();
         this.id = id;
         this.userId = userId;
         this.kitaId = kitaId;
@@ -40,7 +39,6 @@ public class ConnectionDBItem {
     }
 
     public ConnectionDBItem(ConnectionDTO dto) {
-        super();
         this.userId = dto.getUserId();
         this.kitaId = dto.getKitaId();
         this.userRole = dto.getUserRole();

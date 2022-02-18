@@ -47,7 +47,7 @@ public class ChildService {
     }
 
     public void updateChild(ChildDTO child) throws Exception {
-        KindDBItem item = childRepository.findById(child.getId()).orElseThrow(() ->  new Exception("Child not found"));
+        KindDBItem item = childRepository.findById(child.getId()).orElseThrow(() -> new Exception("Child not found"));
         try {
             groupService.deleteChildFromGroup(item);
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class ChildService {
     }
 
     public void updateParents(String id, List<AppUserDTO> parents) throws Exception {
-        KindDBItem kind = childRepository.findById(id).orElseThrow(() ->  new Exception("Child not found"));
+        KindDBItem kind = childRepository.findById(id).orElseThrow(() -> new Exception("Child not found"));
         kind.setEltern(parents);
         childRepository.save(kind);
     }

@@ -160,8 +160,8 @@ const Kinder = () => {
     }
 
     return (
-        <Page title="Kita Gruppen">
-            <Container>
+        <Page title="Kita Kinder">
+            <Container maxWidth="xl">
                 <Stack spacing={2}>
                     <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} spacing={2}>
                         <Typography variant="h4" gutterBottom>
@@ -290,7 +290,12 @@ const Kinder = () => {
                                                             <TableCell id={'lastName'} align="left">{lastName}</TableCell>
                                                             <TableCell id={'dateOfBirth'}
                                                                        align="left">{dateOfBirth}</TableCell>
-                                                            <TableCell id={'eltern'} align="left">{eltern}</TableCell>
+                                                            <TableCell id={'eltern'}
+                                                                       align="left">{eltern.map((item) => {
+                                                                           return(
+                                                                               item.firstName
+                                                                           )
+                                                            })}</TableCell>
                                                             <TableCell id={'kita'} align="left">{kitaItem.name}</TableCell>
                                                             <TableCell id={'group'}
                                                                        align="left">{getGroupName(groupId)}</TableCell>

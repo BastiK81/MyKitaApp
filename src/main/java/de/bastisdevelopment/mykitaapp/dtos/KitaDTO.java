@@ -24,7 +24,6 @@ public class KitaDTO {
     }
 
     public KitaDTO(String name, String street, String houseNumber, String postcode, String city) {
-        super();
         this.name = name;
         this.street = street;
         this.houseNumber = houseNumber;

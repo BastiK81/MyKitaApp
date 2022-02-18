@@ -30,7 +30,6 @@ public class KindDBItem {
     private String groupId;
 
     public KindDBItem(ChildDTO child) {
-        super();
         this.firstName = child.getFirstName();
         this.lastName = child.getLastName();
         this.dateOfBirth = child.getDateOfBirth();

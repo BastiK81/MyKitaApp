@@ -21,7 +21,6 @@ public class ChildDTO {
     }
 
     public ChildDTO(KindDBItem child) {
-        super();
         this.id = child.getId();
         this.firstName = child.getFirstName();
         this.lastName = child.getLastName();
@@ -32,7 +31,6 @@ public class ChildDTO {
     }
 
     public ChildDTO(String id, String firstName, String lastName, Date dateOfBirth, List<AppUserDTO> parents, String kitaId, String groupId) {
-        super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,7 +41,6 @@ public class ChildDTO {
     }
 
     public ChildDTO(String firstName, String lastName, Date dateOfBirth, List<AppUserDTO> parents, String kitaId, String groupId) {
-        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;

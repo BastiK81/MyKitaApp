@@ -74,8 +74,12 @@ function NavItem({item, active}) {
 
     if (children) {
         return (
-            <>
+            <div
+                key={title + "divchildren"}
+                id={title + "divchildren"}>
                 <ListItemStyle
+                    key={title + "children"}
+                    id={title + "children"}
                     onClick={handleOpen}
                     sx={{
                         ...(isActiveRoot && activeRootStyle)
@@ -99,7 +103,6 @@ function NavItem({item, active}) {
 
                             return (
                                 <ListItemStyle
-                                    key={title}
                                     component={RouterLink}
                                     to={path}
                                     sx={{
@@ -131,7 +134,7 @@ function NavItem({item, active}) {
                         })}
                     </List>
                 </Collapse>
-            </>
+            </div>
         );
     }
 
@@ -168,7 +171,6 @@ export default function NavSection({navConfig, ...other}) {
                     if (item.alwaysShow || hasKita) {
                         return (<NavItem id={item.title} key={item.title} item={item} active={match}/>)
                     }
-                    return <></>
                 })}
             </List>
         </Box>

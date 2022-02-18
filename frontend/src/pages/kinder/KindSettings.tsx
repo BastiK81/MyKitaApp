@@ -27,18 +27,14 @@ const KindSettings = () => {
     const {refreshAllGroups, groupItems} = useContext(GroupCom);
 
     useEffect(() => {
-        setFirstName(kind.firstName)
-        setLastName(kind.lastName)
-        setSelectedGroup(kind.groupId)
-        setDateOfBirth(kind.dateOfBirth)
         refreshAllGroups(kind.kitaId)
         // eslint-disable-next-line
     }, []);
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState<Date | null>(new Date());
-    const [selectedGroup, setSelectedGroup] = React.useState('');
+    const [firstName, setFirstName] = useState(kind.firstName)
+    const [lastName, setLastName] = useState(kind.lastName)
+    const [dateOfBirth, setDateOfBirth] = useState<Date | null>(kind.dateOfBirth)
+    const [selectedGroup, setSelectedGroup] = useState(kind.groupId)
 
     const handleCLickSave = () => {
         updateKind({
