@@ -4,8 +4,6 @@ import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.items.AppUserDBItem;
 import de.bastisdevelopment.mykitaapp.repository.AppUserRepository;
 import de.bastisdevelopment.mykitaapp.utils.UserVisibility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,14 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class AppUserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
     private final AppUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -40,24 +37,20 @@ public class AppUserService {
 
     public String signIn(AppUserDBItem user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            logger.warn(String.format("User with email: %s already exist", user.getEmail()));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user already exist");
         }
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         user.initialiseVisibility();
         user.initialiseUserRole();
         userRepository.save(user);
-        logger.info(String.format("User: %s created", user.getEmail()));
         return jwtUtils.createToken(new HashMap<>(), user.getEmail());
     }
 
     public String logIn(AppUserDBItem user) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-            logger.info("User logged in");
             return jwtUtils.createToken(new HashMap<>(), user.getEmail());
         } catch (AuthenticationException e) {
-            logger.warn(String.format("Invalid credentials user: %s", user.getEmail()));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid credentials");
         }
     }
@@ -74,7 +67,6 @@ public class AppUserService {
     public AppUserDBItem getActualUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        logger.info(String.format("Get actual User %s", currentPrincipalName));
         return userRepository.findByEmail(currentPrincipalName)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + currentPrincipalName + " not found!"));
     }
@@ -94,5 +86,11 @@ public class AppUserService {
         AppUserDBItem userDBItem = getActualUser();
         userDBItem.setVisibility(visibility);
         userRepository.save(userDBItem);
+    }
+
+    public List<AppUserDTO> getUserFromIdList(List<String> userIds) {
+        List<AppUserDTO> users = new ArrayList<>();
+        userRepository.findAllById(userIds).forEach(appUserDBItem -> users.add(new AppUserDTO(appUserDBItem)));
+        return users;
     }
 }

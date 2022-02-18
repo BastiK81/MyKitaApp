@@ -101,7 +101,7 @@ const Groups = () => {
 
     return (
         <Page title="Kita Gruppen">
-            <Container>
+            <Container maxWidth="xl">
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} spacing={2}>
                     <Typography variant="h4" gutterBottom>
                         Kita Groups

@@ -19,7 +19,6 @@ public class UserNotificationDTO {
     }
 
     public UserNotificationDTO(ConnectionDBItem dbItem) {
-        super();
         this.title = "Open Connection";
         this.description = "Open Kita User Connection wait for response";
         this.type = "UserKitaConnection";

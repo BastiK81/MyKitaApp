@@ -117,4 +117,9 @@ public class ConnectionService {
     public void deleteConnection(String id) {
         repository.deleteById(id);
     }
+
+    public List<AppUserDTO> getAllParents(String kitaId) {
+        List<String> userIds = repository.findByKitaIdAndUserRole(kitaId, UserRole.PARENT).stream().map(ConnectionDBItem::getUserId).toList();
+        return userService.getUserFromIdList(userIds);
+    }
 }

@@ -10,7 +10,8 @@ export interface IKindProvider {
     addNewChild: (data: {}) => void,
     deleteKind: (kindId: string) => void,
     resetKindItem: (value: KindItem) => void,
-    updateKind: (data: {}) => void
+    updateKind: (data: {}) => void,
+    updateParents: (kindId: string, data: {}) => void,
 }
 
 export interface KindItem {
@@ -18,13 +19,15 @@ export interface KindItem {
     firstName: string,
     lastName: string,
     dateOfBirth: Date,
-    parents: UserItem[],
+    eltern: UserItem[],
     kitaId: string,
     groupId: string
 }
 
 export const KindCom = createContext<IKindProvider>({
-    updateKind(data: {}): void {
+    updateParents(): void {
+    },
+    updateKind(): void {
         throw new Error("Could not change Kind")
     },
     kindItems: [],
@@ -33,14 +36,14 @@ export const KindCom = createContext<IKindProvider>({
         firstName: '',
         lastName: '',
         dateOfBirth: new Date(),
-        parents: [],
+        eltern: [],
         kitaId: '',
         groupId: ''
     },
-    resetKindItem(value: KindItem): void {
+    resetKindItem(): void {
         throw new Error("Could not reset Kind")
     },
-    deleteKind(kindId: string): void {
+    deleteKind(): void {
         throw new Error("Could not delete Kind")
     },
     refreshKinder: () => {
@@ -62,7 +65,7 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
         firstName: '',
         lastName: '',
         dateOfBirth: new Date(),
-        parents: [],
+        eltern: [],
         kitaId: '',
         groupId: ''
     });
@@ -78,9 +81,7 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     const refreshKinder = (KitaId: string) => {
         callBackend('/api/child/getAllChildren/' + KitaId, 'GET', {}, false)
-            .then((json: KindItem[]) => {
-                setKindItems(json)
-            })
+            .then((json: KindItem[]) => setKindItems(json))
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -105,9 +106,17 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
             });
     }
 
+    const updateParents = (kindId: string, data: {}) => {
+        callBackend('/api/child/updateparents/' + kindId, 'PUT', data, true)
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+
     return (
         <KindCom.Provider
-            value={{kind, updateKind, resetKindItem, deleteKind, kindItems, addNewChild, refreshKinder}}>
+            value={{kind, updateParents, updateKind, resetKindItem, deleteKind, kindItems, addNewChild, refreshKinder}}>
             {children}
         </KindCom.Provider>
     )

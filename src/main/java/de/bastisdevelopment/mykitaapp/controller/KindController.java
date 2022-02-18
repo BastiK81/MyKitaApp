@@ -1,5 +1,6 @@
 package de.bastisdevelopment.mykitaapp.controller;
 
+import de.bastisdevelopment.mykitaapp.dtos.AppUserDTO;
 import de.bastisdevelopment.mykitaapp.dtos.ChildDTO;
 import de.bastisdevelopment.mykitaapp.service.ChildService;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,10 @@ public class KindController {
     @PutMapping(path = "/updatechild")
     public void updateChild(@RequestBody ChildDTO child) throws Exception {
         service.updateChild(child);
+    }
+
+    @PutMapping(path = "/updateparents/{id}")
+    public void updateParents(@RequestBody List<AppUserDTO> parents, @PathVariable String id) throws Exception {
+        service.updateParents(id, parents);
     }
 }

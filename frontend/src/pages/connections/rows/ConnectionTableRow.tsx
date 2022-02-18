@@ -64,18 +64,18 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
             selected={isItemSelected}
             aria-checked={isItemSelected}
         >
-            <TableCell id={'checkbox'} padding="checkbox">
+            <TableCell key={'checkbox'} id={'checkbox'} padding="checkbox">
                 <Checkbox
                     checked={isItemSelected}
                     onChange={(event) => handleClickSelect(event, id)}
                 />
             </TableCell>
-            <TableCell id={'user'} align="left">{userId}</TableCell>
-            <TableCell id={'kita'} align="left">{kitaId}</TableCell>
-            <TableCell id={'userstatus'} align="left">{userStatus}</TableCell>
-            <TableCell id={'kitastatus'} align="left">{kitaStatus}</TableCell>
-            <TableCell id={'role'} align="left">
-                {(alignment === 'In Progress' && pageSelection === 'Kita') &&
+            <TableCell key={'user'} id={'user'} align="left">{userId}</TableCell>
+            <TableCell key={'kita'} align="left">{kitaId}</TableCell>
+            <TableCell key={'userstatus'} id={'userstatus'} align="left">{userStatus}</TableCell>
+            <TableCell key={'kitastatus'} id={'kitastatus'} align="left">{kitaStatus}</TableCell>
+            <TableCell key={'role'} id={'role'} align="left">
+                {(alignment !== 'Pending' && pageSelection === 'Kita') &&
                 <FormControl>
                     <InputLabel id="rolePicker-label">Role</InputLabel>
                     <Select
@@ -98,8 +98,8 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
                     pageSelection === 'User' && <TableCell align="left">{userRole}</TableCell>
                 }
             </TableCell>
-            <TableCell id={'impdate'} align="left">{implementationDate}</TableCell>
-            <TableCell id={'expdate'} align="left">{expireDate}</TableCell>
+            <TableCell key={'impdate'} id={'impdate'} align="left">{implementationDate}</TableCell>
+            <TableCell key={'expdate'} id={'expdate'} align="left">{expireDate}</TableCell>
             {hasChanges && <TableCell id={'changes'} align="left">
                 <Button
                     type="submit"
@@ -111,7 +111,7 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
                 </Button>
             </TableCell>}
             {alignment === 'In Progress' &&
-            <TableCell id={'submit'} align="left">
+            <TableCell key={'submit'} id={'submit'} align="left">
                 <Button
                     type="submit"
                     variant="contained"
@@ -121,7 +121,7 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
                     Confirm
                 </Button>
             </TableCell>}
-            <TableCell id={'menu'} align="right">
+            <TableCell key={'menu'} id={'menu'} align="right">
                 <RowMenu connectionId={id}/>
             </TableCell>
         </TableRow>

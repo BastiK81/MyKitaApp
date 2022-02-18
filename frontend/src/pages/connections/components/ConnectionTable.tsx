@@ -20,7 +20,7 @@ const ConnectionTable = () => {
         <Card>
             <ConnectionToolbar/>
             <Scrollbar>
-                <TableContainer sx={{minWidth: 1000}}>
+                <TableContainer>
                     <Table>
                         <ConnectionTableHead/>
                         <ConnectionTableBody/>

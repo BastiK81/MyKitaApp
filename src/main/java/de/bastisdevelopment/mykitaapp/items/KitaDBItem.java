@@ -30,7 +30,6 @@ public class KitaDBItem {
     private KitaVisibility visibility;
 
     public KitaDBItem(KitaDTO kitaDTO) {
-        super();
         this.name = kitaDTO.getName();
         this.street = kitaDTO.getStreet();
         this.houseNumber = kitaDTO.getHouseNumber();

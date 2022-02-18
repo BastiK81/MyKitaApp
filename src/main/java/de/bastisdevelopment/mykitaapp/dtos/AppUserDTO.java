@@ -11,10 +11,20 @@ public class AppUserDTO {
     private String lastName;
     private String firstName;
 
+    public AppUserDTO() {
+    }
+
     public AppUserDTO(AppUserDBItem user) {
         this.id = user.getId();
         this.email = user.getEmail();
         this.lastName = user.getLastName();
         this.firstName = user.getFirstName();
+    }
+
+    public AppUserDTO(String id, String email, String lastName, String firstName) {
+        this.id = id;
+        this.email = email;
+        this.lastName = lastName;
+        this.firstName = firstName;
     }
 }

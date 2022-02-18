@@ -23,7 +23,6 @@ public class ConnectionDTO {
     }
 
     public ConnectionDTO(ConnectionDBItem dbItem) {
-        super();
         this.id = dbItem.getId();
         this.userId = dbItem.getUserId();
         this.kitaId = dbItem.getKitaId();
@@ -35,7 +34,6 @@ public class ConnectionDTO {
     }
 
     public ConnectionDTO(String userId, String kitaId, UserRole userRole) {
-        super();
         this.userId = userId;
         this.kitaId = kitaId;
         this.userRole = userRole;

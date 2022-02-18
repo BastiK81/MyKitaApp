@@ -20,7 +20,7 @@ const MENU_OPTIONS = [
     {
         label: 'Home',
         icon: homeFill,
-        linkTo: '/'
+        linkTo: '/main/welcome'
     },
     {
         label: 'Profile',

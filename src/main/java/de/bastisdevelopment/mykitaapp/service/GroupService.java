@@ -38,8 +38,7 @@ public class GroupService {
 
     public void deleteGroupById(String groupId) {
         List<KindDBItem> kinder = childRepository.findAllByGroupId(groupId);
-        for (KindDBItem kind:kinder)
-        {
+        for (KindDBItem kind : kinder) {
             kind.setGroupId("");
             childRepository.save(kind);
         }

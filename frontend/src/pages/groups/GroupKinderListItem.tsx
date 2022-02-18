@@ -43,7 +43,7 @@ const GroupKinderListItem = (props: GroupKinderListItemProps) => {
                         <ListItemIcon>
                             <SocialDistanceIcon/>
                         </ListItemIcon>
-                        <ListItemText primary="Parents"/>
+                        <ListItemText primary="Eltern"/>
                     </ListItemButton>
                 </List>
             </Collapse>
