@@ -18,6 +18,12 @@ export interface ISidebarConfig {
 
 const sidebarConfig: ISidebarConfig[] = [
     {
+        title: 'User Menu',
+        path: '/main/usermenu',
+        icon: getIcon(homeFill),
+        alwaysShow: true
+    },
+    {
         title: 'Kita',
         path: '/main/playSchool',
         icon: getIcon(homeFill),

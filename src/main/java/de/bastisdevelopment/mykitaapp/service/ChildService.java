@@ -69,4 +69,11 @@ public class ChildService {
         kind.setEltern(parents);
         childRepository.save(kind);
     }
+
+    public List<ChildDTO> getKinderToUser(String userId) {
+        return childRepository.findAll().stream()
+                .filter(kindDBItem -> kindDBItem.getEltern().stream()
+                        .filter(appUserDTO -> !appUserDTO.getId().equals(userId)).toList().isEmpty())
+                            .map(ChildDTO::new).toList();
+    }
 }
