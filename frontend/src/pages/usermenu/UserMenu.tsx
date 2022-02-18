@@ -49,6 +49,10 @@ const UserMenu = () => {
         return name
     }
 
+    const handleAbmelden = () => {
+      console.log("Abmelden")
+    }
+
     return (
         <Container maxWidth="xl">
             <Grid container spacing={2}>
@@ -81,19 +85,20 @@ const UserMenu = () => {
 
                                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                     <DatePicker
-                                                        disableFuture
-                                                        label="Date of Birth"
+                                                        label="Abmelden von"
                                                         openTo="year"
                                                         views={['year', 'month', 'day']}
                                                         value={dateVon}
-                                                        onChange={(newValue) => setDateVon(newValue)}
+                                                        onChange={(newValue) => {
+                                                            setDateVon(newValue)
+                                                            setDateBis(newValue)
+                                                        }}
                                                         renderInput={(params) => <TextField {...params} />}
                                                     />
                                                 </LocalizationProvider>
                                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                     <DatePicker
-                                                        disableFuture
-                                                        label="Date of Birth"
+                                                        label="Abmelden bis"
                                                         openTo="year"
                                                         views={['year', 'month', 'day']}
                                                         value={dateBis}
@@ -102,7 +107,7 @@ const UserMenu = () => {
                                                     />
                                                 </LocalizationProvider>
                                                 <CardActions>
-                                                    <Button size="small">Abmelden</Button>
+                                                    <Button onClick={handleAbmelden} size="small">Abmelden</Button>
                                                 </CardActions>
                                             </Stack>
                                         </CardContent>
