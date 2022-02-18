@@ -291,10 +291,10 @@ const Kinder = () => {
                                                             <TableCell id={'dateOfBirth'}
                                                                        align="left">{dateOfBirth}</TableCell>
                                                             <TableCell id={'eltern'}
-                                                                       align="left">{eltern.map((item) => {
-                                                                           return(
-                                                                               item.firstName
-                                                                           )
+                                                                       align="left">{eltern !== null && eltern.map((item) => {
+                                                                return (
+                                                                    item.firstName
+                                                                )
                                                             })}</TableCell>
                                                             <TableCell id={'kita'} align="left">{kitaItem.name}</TableCell>
                                                             <TableCell id={'group'}
