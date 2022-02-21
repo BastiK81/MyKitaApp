@@ -9,25 +9,18 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {GroupCom} from "../../services/GrouopProvider";
-import {ConnectorCom} from "../../services/ConnectorProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {DatePicker} from "@mui/lab";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
 const UserMenu = () => {
 
-    const {getAllAcceptedUser, connector} = useContext(ConnectorCom)
     const {user} = useContext(UserCom);
     const {getKinderToUser, kindItems} = useContext(KindCom);
-    const {refreshAllGroups, groupItems} = useContext(GroupCom);
-
+    const {groupItem, getGroupById} = useContext(GroupCom);
 
     useEffect(() => {
-        getAllAcceptedUser()
         getKinderToUser(user.id)
-        if (connector !== null) {
-            refreshAllGroups(connector[0].kitaId)
-        }
         // eslint-disable-next-line
     }, []);
 
@@ -40,13 +33,8 @@ const UserMenu = () => {
     }
 
     const getGroupName = (groupId: string) => {
-        let name = ''
-        groupItems.forEach((groupItem) => {
-            if (groupItem.id === groupId && name === "") {
-                name = groupItem.name
-            }
-        })
-        return name
+        getGroupById(groupId)
+        return groupItem.name
     }
 
     const handleAbmelden = () => {
@@ -82,7 +70,6 @@ const UserMenu = () => {
                                     <Grid item xs={4}>
                                         <CardContent>
                                             <Stack justifyContent="flex-end" spacing={2}>
-
                                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                     <DatePicker
                                                         label="Abmelden von"
@@ -111,11 +98,8 @@ const UserMenu = () => {
                                                 </CardActions>
                                             </Stack>
                                         </CardContent>
-
-
                                     </Grid>
                                 </Stack>
-
                             </Card>
                         )
                     })}
