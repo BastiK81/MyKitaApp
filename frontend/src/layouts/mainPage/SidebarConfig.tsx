@@ -30,6 +30,18 @@ const sidebarConfig: ISidebarConfig[] = [
         alwaysShow: false
     },
     {
+        title: 'Kita Information',
+        path: '/main/kitainfromations',
+        icon: getIcon(homeFill),
+        alwaysShow: true
+    },
+    {
+        title: 'Gruppen Information',
+        path: '/main/groupinfromations',
+        icon: getIcon(homeFill),
+        alwaysShow: true
+    },
+    {
         title: 'Gruppen',
         path: '/main/groups',
         icon: getIcon(peopleFill),
