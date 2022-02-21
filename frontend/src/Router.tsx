@@ -15,6 +15,9 @@ import ConnectionMainUser from "./pages/connections/ConnectionMainUser";
 import ConnectionMainKita from "./pages/connections/ConnectionMainKita";
 import GroupSettings from "./pages/groups/GroupSettings";
 import KindSettings from "./pages/kinder/KindSettings";
+import UserMenu from "./pages/usermenu/UserMenu";
+import KitaInformation from "./pages/informations/KitaInformation";
+import GroupInformation from "./pages/informations/GroupInformation";
 
 export default function Router() {
 
@@ -24,9 +27,12 @@ export default function Router() {
             element: <MainLayout/>,
             children: [
                 {path: 'welcome', element: <Welcome/>},
+                {path: 'usermenu', element: <UserMenu/>},
                 {path: 'playSchool', element: <Kita/>},
                 {path: 'groups', element: <Groups/>},
                 {path: 'children', element: <Kinder/>},
+                {path: 'kitainfromations', element: <KitaInformation/>},
+                {path: 'groupinfromations', element: <GroupInformation/>},
                 {path: 'kitaConnection', element: <ConnectionMainKita/>},
                 {path: 'userConnection', element: <ConnectionMainUser/>},
                 {path: 'userSettings', element: <UserSettings/>},

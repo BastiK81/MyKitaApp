@@ -12,6 +12,7 @@ export interface IKindProvider {
     resetKindItem: (value: KindItem) => void,
     updateKind: (data: {}) => void,
     updateParents: (kindId: string, data: {}) => void,
+    getKinderToUser: (userId:string) => void,
 }
 
 export interface KindItem {
@@ -26,6 +27,8 @@ export interface KindItem {
 
 export const KindCom = createContext<IKindProvider>({
     updateParents(): void {
+    },
+    getKinderToUser(userId: string): void {
     },
     updateKind(): void {
         throw new Error("Could not change Kind")
@@ -87,6 +90,14 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
             });
     }
 
+    const getKinderToUser = (userId:string) => {
+        callBackend('/api/child/getkindertouser/' + userId, 'GET', {}, false)
+            .then((json: KindItem[]) => setKindItems(json))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
     const deleteKind = (kindId: string) => {
         callBackend('/api/child/delete/' + kindId, 'DELETE', {}, false)
             .catch((error) => {
@@ -116,7 +127,7 @@ const ChildrenProvider = ({children}: { children: ReactElement<any, any> }) => {
 
     return (
         <KindCom.Provider
-            value={{kind, updateParents, updateKind, resetKindItem, deleteKind, kindItems, addNewChild, refreshKinder}}>
+            value={{kind, getKinderToUser, updateParents, updateKind, resetKindItem, deleteKind, kindItems, addNewChild, refreshKinder}}>
             {children}
         </KindCom.Provider>
     )

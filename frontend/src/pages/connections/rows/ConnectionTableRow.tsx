@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {ConnectorCom, ConnectorItem} from "../../../services/ConnectorProvider";
 import {
     Button,
@@ -15,7 +15,8 @@ import {
 import {Icon} from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import RowMenu from "./RowMenu";
-import {userRoles} from "../../../services/UserProvider";
+import {UserCom, userRoles} from "../../../services/UserProvider";
+import {KitaCom} from "../../../services/KitaProvider";
 
 interface IUserConnectionTableRow {
     row: ConnectorItem
@@ -25,25 +26,27 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
 
     const {
         confirmConnection,
-        changeConnection,
         alignment,
         selected,
         handleClickSelect,
         pageSelection
     } = useContext(ConnectorCom);
+    const {kitaItem} = useContext(KitaCom);
+    const {allUser, refreshAllUser} = useContext(UserCom);
+
+    useEffect(() => {
+        refreshAllUser('VISIBLE')
+        // eslint-disable-next-line
+    }, []);
 
     const {row} = props
 
-    const {id, userId, kitaId, userStatus, kitaStatus, userRole, implementationDate, expireDate} = row;
+    const {id, userId, userStatus, kitaStatus, userRole, implementationDate, expireDate} = row;
 
     const [selectedUserRole, setSelectedUserRole] = useState(userRole);
     const [hasChanges, setHasChanges] = useState(false);
 
     const isItemSelected = selected.indexOf(id) !== -1;
-
-    const handleChangeConnection = () => {
-        changeConnection(id, selectedUserRole)
-    }
 
     const handleChangeUserRole = (event: SelectChangeEvent) => {
         setSelectedUserRole(event.target.value);
@@ -52,6 +55,16 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
 
     const handleConfirmConnection = () => {
         confirmConnection(id)
+    }
+
+    const getUserName = (userId: String) => {
+        let username = userId
+        allUser.forEach((user) => {
+            if (user.id === userId) {
+                username = user.firstName + " " + user.lastName
+            }
+        })
+        return username
     }
 
     return (
@@ -70,12 +83,12 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
                     onChange={(event) => handleClickSelect(event, id)}
                 />
             </TableCell>
-            <TableCell key={'user'} id={'user'} align="left">{userId}</TableCell>
-            <TableCell key={'kita'} align="left">{kitaId}</TableCell>
+            <TableCell key={'user'} id={'user'} align="left">{getUserName(userId)}</TableCell>
+            <TableCell key={'kita'} align="left">{kitaItem.name}</TableCell>
             <TableCell key={'userstatus'} id={'userstatus'} align="left">{userStatus}</TableCell>
             <TableCell key={'kitastatus'} id={'kitastatus'} align="left">{kitaStatus}</TableCell>
             <TableCell key={'role'} id={'role'} align="left">
-                {(alignment !== 'Pending' && pageSelection === 'Kita') &&
+                {(pageSelection === 'Kita') &&
                 <FormControl>
                     <InputLabel id="rolePicker-label">Role</InputLabel>
                     <Select
@@ -100,16 +113,6 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
             </TableCell>
             <TableCell key={'impdate'} id={'impdate'} align="left">{implementationDate}</TableCell>
             <TableCell key={'expdate'} id={'expdate'} align="left">{expireDate}</TableCell>
-            {hasChanges && <TableCell id={'changes'} align="left">
-                <Button
-                    type="submit"
-                    variant="contained"
-                    startIcon={<Icon icon={plusFill}/>}
-                    onClick={handleChangeConnection}
-                >
-                    Change Connection
-                </Button>
-            </TableCell>}
             {alignment === 'In Progress' &&
             <TableCell key={'submit'} id={'submit'} align="left">
                 <Button
@@ -122,7 +125,7 @@ const ConnectionTableRow = (props: IUserConnectionTableRow) => {
                 </Button>
             </TableCell>}
             <TableCell key={'menu'} id={'menu'} align="right">
-                <RowMenu connectionId={id}/>
+                <RowMenu id={id} hasChanges={hasChanges} userRole={selectedUserRole} connectionId={id}/>
             </TableCell>
         </TableRow>
     )

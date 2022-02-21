@@ -102,13 +102,16 @@ const Eltern = (props: ParentsProps) => {
                     <ListItemButton
                         key={'Available User'}
                         onClick={handleClickAvailable}>
-                        <ListItemText primary={'Available User'} secondary={getAvailableUser().length + ' User Available'}/>
+                        <ListItemText primary={'Available User'}
+                                      secondary={getAvailableUser().length + ' User Available'}/>
                         {openAvailable ? <ExpandLess/> : <ExpandMore/>}
                     </ListItemButton>
 
                     <Collapse in={openAvailable} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            {parentUser !== null && getAvailableUser().map((user) => <ElternItem kind={props.kind} eltern={user} checked={false}/>)}
+                            {parentUser !== null && getAvailableUser().map((user) => <ElternItem kind={props.kind}
+                                                                                                 eltern={user}
+                                                                                                 checked={false}/>)}
                         </List>
                     </Collapse>
                 </List>

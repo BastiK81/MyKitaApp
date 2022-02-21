@@ -1,7 +1,6 @@
 import {Icon} from '@iconify/react';
 import {useContext, useRef, useState} from 'react';
 import editFill from '@iconify/icons-eva/edit-fill';
-import {Link as RouterLink} from 'react-router-dom';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 // material
@@ -10,16 +9,25 @@ import {ConnectorCom} from "../../../services/ConnectorProvider";
 
 interface RowMenuProps {
     connectionId: string
+    hasChanges: boolean
+    id: string
+    userRole: string
 }
 
 const RowMenu = (props: RowMenuProps) => {
 
-    const {deleteConnection} = useContext(ConnectorCom);
+    const {deleteConnection, changeConnection} = useContext(ConnectorCom);
     const ref = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleCLickTrash = () => {
         deleteConnection(props.connectionId)
+    }
+
+    const handleCLickEdit = () => {
+        if (props.hasChanges) {
+            changeConnection(props.id, props.userRole)
+        }
     }
 
     return (
@@ -38,7 +46,9 @@ const RowMenu = (props: RowMenuProps) => {
                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                 transformOrigin={{vertical: 'top', horizontal: 'right'}}
             >
-                <MenuItem component={RouterLink} to="#" sx={{color: 'text.secondary'}}>
+                <MenuItem
+                    onClick={handleCLickEdit}
+                    sx={{color: 'text.secondary'}}>
                     <ListItemIcon>
                         <Icon icon={editFill} width={24} height={24}/>
                     </ListItemIcon>

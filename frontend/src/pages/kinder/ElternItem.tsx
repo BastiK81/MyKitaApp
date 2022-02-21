@@ -34,25 +34,25 @@ const ElternItem = (props: ParentsItemProps) => {
     }
 
     return (
-            <Box
-                key={props.eltern.id}
-                justifyContent="space-between" sx={{display: 'flex', flexDirection: 'row', ml: 4}}>
-                {!props.checked &&
-                <Button color="primary">{props.eltern.firstName + " " + props.eltern.lastName}</Button>
-                }
-                {!props.checked &&
-                <IconButton onClick={handleAdd} aria-label="add">
-                    <AddIcon color="success"/>
-                </IconButton>
-                }
-                {props.checked &&
-                <Button color="secondary">{props.eltern.firstName + " " + props.eltern.lastName}</Button>}
-                {props.checked &&
-                <IconButton onClick={handleDelete} aria-label="delete">
-                    <ClearIcon sx={{color: red[500]}}/>
-                </IconButton>
-                }
-            </Box>
+        <Box
+            key={props.eltern.id}
+            justifyContent="space-between" sx={{display: 'flex', flexDirection: 'row', ml: 4}}>
+            {!props.checked &&
+            <Button color="primary">{props.eltern.firstName + " " + props.eltern.lastName}</Button>
+            }
+            {!props.checked &&
+            <IconButton onClick={handleAdd} aria-label="add">
+                <AddIcon color="success"/>
+            </IconButton>
+            }
+            {props.checked &&
+            <Button color="secondary">{props.eltern.firstName + " " + props.eltern.lastName}</Button>}
+            {props.checked &&
+            <IconButton onClick={handleDelete} aria-label="delete">
+                <ClearIcon sx={{color: red[500]}}/>
+            </IconButton>
+            }
+        </Box>
     )
 }
 

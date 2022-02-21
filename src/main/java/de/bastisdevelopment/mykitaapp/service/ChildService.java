@@ -6,6 +6,7 @@ import de.bastisdevelopment.mykitaapp.items.KindDBItem;
 import de.bastisdevelopment.mykitaapp.repository.ChildRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +24,7 @@ public class ChildService {
         if (childRepository.findByFirstNameAndLastNameAndDateOfBirth(child.getFirstName(), child.getLastName(), child.getDateOfBirth()).isPresent()) {
             throw new Exception(String.format("Child with name: %s lastName: %s and date of birth: %s already exist", child.getFirstName(), child.getLastName(), child.getDateOfBirth().toString()));
         }
+        child.setEltern(new ArrayList<>());
         KindDBItem newKind = childRepository.save(new KindDBItem(child));
         try {
             groupService.addKindToGroup(newKind);
@@ -66,5 +68,12 @@ public class ChildService {
         KindDBItem kind = childRepository.findById(id).orElseThrow(() -> new Exception("Child not found"));
         kind.setEltern(parents);
         childRepository.save(kind);
+    }
+
+    public List<ChildDTO> getKinderToUser(String userId) {
+        return childRepository.findAll().stream()
+                .filter(kindDBItem -> kindDBItem.getEltern().stream()
+                        .filter(appUserDTO -> !appUserDTO.getId().equals(userId)).toList().isEmpty())
+                            .map(ChildDTO::new).toList();
     }
 }

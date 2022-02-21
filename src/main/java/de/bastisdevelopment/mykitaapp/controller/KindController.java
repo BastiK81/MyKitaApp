@@ -27,6 +27,11 @@ public class KindController {
         return service.getAllChildren(kitaId);
     }
 
+    @GetMapping(path = "/getkindertouser/{userId}")
+    public List<ChildDTO> getKinderToUser(@PathVariable String userId) {
+        return service.getKinderToUser(userId);
+    }
+
     @DeleteMapping(value = "/delete/{childId}")
     public void deleteChildById(@PathVariable String childId) throws Exception {
         service.deleteChildById(childId);
