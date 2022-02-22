@@ -42,7 +42,7 @@ const POSTS = [
 const KitaInformation = () => {
 
     return (
-        <Page title="Dashboard: Blog | Minimal-UI">
+        <Page title="Kita Information">
             <Container>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                     <Typography variant="h4" gutterBottom>
