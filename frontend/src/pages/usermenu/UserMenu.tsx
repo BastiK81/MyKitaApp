@@ -38,7 +38,7 @@ const UserMenu = () => {
     }
 
     const handleAbmelden = () => {
-      console.log("Abmelden")
+        console.log("Abmelden")
     }
 
     return (
